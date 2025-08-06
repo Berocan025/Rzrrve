@@ -1,0 +1,642 @@
+/* Villa Reservation System - Public Styles */
+
+/* Reset ve genel stiller */
+.vrs-container * {
+    box-sizing: border-box;
+}
+
+.vrs-container {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    color: #333;
+    line-height: 1.6;
+}
+
+/* Ana rezervasyon formu */
+.villa-reservation-form {
+    max-width: 800px;
+    margin: 20px 0;
+    padding: 30px;
+    background: #fff;
+    border-radius: 12px;
+    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.1);
+    border: 1px solid #e1e5e9;
+}
+
+.villa-reservation-form h3 {
+    color: #2c3e50;
+    margin-bottom: 25px;
+    padding-bottom: 15px;
+    border-bottom: 3px solid #3498db;
+    font-size: 24px;
+    font-weight: 600;
+}
+
+/* Form bölümleri */
+.form-section {
+    margin-bottom: 30px;
+    padding: 25px;
+    background: #f8f9fa;
+    border-radius: 8px;
+    border-left: 4px solid #3498db;
+}
+
+.form-section h4 {
+    color: #34495e;
+    margin-bottom: 20px;
+    font-size: 18px;
+    font-weight: 600;
+}
+
+/* Form grupları */
+.form-group {
+    margin-bottom: 20px;
+}
+
+.form-group label {
+    display: block;
+    margin-bottom: 8px;
+    font-weight: 600;
+    color: #2c3e50;
+    font-size: 14px;
+}
+
+.form-group input,
+.form-group select,
+.form-group textarea {
+    width: 100%;
+    padding: 12px 16px;
+    border: 2px solid #ddd;
+    border-radius: 6px;
+    font-size: 16px;
+    transition: border-color 0.3s ease, box-shadow 0.3s ease;
+    background-color: #fff;
+}
+
+.form-group input:focus,
+.form-group select:focus,
+.form-group textarea:focus {
+    outline: none;
+    border-color: #3498db;
+    box-shadow: 0 0 0 3px rgba(52, 152, 219, 0.1);
+}
+
+.form-group textarea {
+    min-height: 100px;
+    resize: vertical;
+}
+
+/* Tarih seçici */
+.date-inputs {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 15px;
+}
+
+.date-input {
+    position: relative;
+}
+
+.date-input input {
+    background-image: url('data:image/svg+xml;charset=utf-8,<svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="%23666" stroke-width="2"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>');
+    background-repeat: no-repeat;
+    background-position: right 12px center;
+    background-size: 20px;
+    padding-right: 45px;
+    cursor: pointer;
+}
+
+/* Misafir sayıları */
+.guest-inputs {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 15px;
+}
+
+.guest-counter {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.guest-counter label {
+    flex: 1;
+    margin-bottom: 0;
+}
+
+.counter-controls {
+    display: flex;
+    align-items: center;
+    border: 2px solid #ddd;
+    border-radius: 6px;
+    background: #fff;
+}
+
+.counter-btn {
+    width: 40px;
+    height: 40px;
+    border: none;
+    background: #f8f9fa;
+    color: #495057;
+    font-size: 18px;
+    font-weight: bold;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.counter-btn:hover {
+    background: #e9ecef;
+    color: #212529;
+}
+
+.counter-btn:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+}
+
+.counter-value {
+    padding: 10px 15px;
+    min-width: 50px;
+    text-align: center;
+    font-weight: 600;
+    color: #2c3e50;
+}
+
+/* Çocuk yaş aralıkları */
+.children-ages {
+    margin-top: 15px;
+    padding: 15px;
+    background: #fff;
+    border: 1px solid #e1e5e9;
+    border-radius: 6px;
+}
+
+.children-ages h5 {
+    margin-bottom: 10px;
+    color: #34495e;
+    font-size: 14px;
+}
+
+.age-selectors {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+    gap: 10px;
+}
+
+/* Fiyat bilgisi */
+.price-section {
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    color: white;
+    border-left: 4px solid #5a67d8;
+}
+
+.price-section h4 {
+    color: white;
+}
+
+.price-display {
+    background: rgba(255, 255, 255, 0.1);
+    border-radius: 8px;
+    padding: 20px;
+    margin-top: 15px;
+}
+
+.price-loading {
+    text-align: center;
+    padding: 20px;
+}
+
+.price-loading .spinner {
+    width: 30px;
+    height: 30px;
+    border: 3px solid rgba(255, 255, 255, 0.3);
+    border-top: 3px solid white;
+    border-radius: 50%;
+    animation: spin 1s linear infinite;
+    margin: 0 auto 10px;
+}
+
+@keyframes spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+}
+
+.price-details {
+    display: none;
+}
+
+.price-details.visible {
+    display: block;
+}
+
+.price-breakdown {
+    margin-bottom: 15px;
+}
+
+.price-item {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 8px;
+    padding: 5px 0;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.2);
+}
+
+.price-item:last-child {
+    border-bottom: none;
+}
+
+.price-total {
+    font-size: 20px;
+    font-weight: bold;
+    padding: 15px;
+    background: rgba(255, 255, 255, 0.1);
+    border-radius: 6px;
+    text-align: center;
+    margin-top: 15px;
+}
+
+/* Mesajlar */
+.vrs-message {
+    padding: 15px;
+    border-radius: 6px;
+    margin: 15px 0;
+    display: none;
+}
+
+.vrs-message.visible {
+    display: block;
+}
+
+.vrs-error {
+    background: #fee;
+    border: 1px solid #fcc;
+    color: #c33;
+}
+
+.vrs-success {
+    background: #efe;
+    border: 1px solid #cfc;
+    color: #363;
+}
+
+.vrs-warning {
+    background: #fff3cd;
+    border: 1px solid #ffeaa7;
+    color: #856404;
+}
+
+/* Submit butonu */
+.submit-section {
+    text-align: center;
+    margin-top: 30px;
+    padding-top: 25px;
+    border-top: 2px solid #e1e5e9;
+}
+
+.vrs-submit-btn {
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    color: white;
+    border: none;
+    padding: 15px 40px;
+    font-size: 18px;
+    font-weight: 600;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    min-width: 200px;
+    position: relative;
+}
+
+.vrs-submit-btn:hover:not(:disabled) {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 25px rgba(102, 126, 234, 0.3);
+}
+
+.vrs-submit-btn:disabled {
+    opacity: 0.6;
+    cursor: not-allowed;
+    transform: none;
+}
+
+.vrs-submit-btn .spinner {
+    width: 20px;
+    height: 20px;
+    border: 2px solid rgba(255, 255, 255, 0.3);
+    border-top: 2px solid white;
+    border-radius: 50%;
+    animation: spin 1s linear infinite;
+    display: inline-block;
+    margin-right: 10px;
+}
+
+/* Şartlar ve koşullar */
+.terms-section {
+    background: #f8f9fa;
+    border-left: 4px solid #28a745;
+}
+
+.terms-checkbox {
+    display: flex;
+    align-items: flex-start;
+    gap: 10px;
+    margin: 15px 0;
+}
+
+.terms-checkbox input[type="checkbox"] {
+    width: auto;
+    margin-top: 3px;
+}
+
+.terms-checkbox label {
+    margin-bottom: 0;
+    font-size: 14px;
+    line-height: 1.5;
+}
+
+.terms-checkbox a {
+    color: #3498db;
+    text-decoration: none;
+}
+
+.terms-checkbox a:hover {
+    text-decoration: underline;
+}
+
+/* Rezervasyonlarım sayfası */
+.my-reservations {
+    max-width: 1000px;
+    margin: 20px 0;
+}
+
+.reservation-card {
+    background: #fff;
+    border-radius: 8px;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+    margin-bottom: 20px;
+    overflow: hidden;
+    border: 1px solid #e1e5e9;
+}
+
+.reservation-header {
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    color: white;
+    padding: 20px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.reservation-title {
+    font-size: 18px;
+    font-weight: 600;
+    margin: 0;
+}
+
+.reservation-status {
+    padding: 6px 12px;
+    border-radius: 20px;
+    font-size: 12px;
+    font-weight: 600;
+    text-transform: uppercase;
+}
+
+.status-confirmed {
+    background: #28a745;
+}
+
+.status-pending {
+    background: #ffc107;
+    color: #212529;
+}
+
+.status-cancelled {
+    background: #dc3545;
+}
+
+.reservation-body {
+    padding: 25px;
+}
+
+.reservation-details {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 20px;
+    margin-bottom: 20px;
+}
+
+.detail-item {
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+}
+
+.detail-label {
+    font-weight: 600;
+    color: #666;
+    font-size: 12px;
+    text-transform: uppercase;
+}
+
+.detail-value {
+    font-size: 16px;
+    color: #2c3e50;
+}
+
+.reservation-actions {
+    border-top: 1px solid #e1e5e9;
+    padding-top: 20px;
+    display: flex;
+    gap: 10px;
+    flex-wrap: wrap;
+}
+
+.btn {
+    padding: 10px 20px;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+    font-size: 14px;
+    font-weight: 600;
+    text-decoration: none;
+    display: inline-block;
+    transition: all 0.2s ease;
+}
+
+.btn-primary {
+    background: #3498db;
+    color: white;
+}
+
+.btn-danger {
+    background: #e74c3c;
+    color: white;
+}
+
+.btn:hover {
+    transform: translateY(-1px);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+}
+
+/* Responsive tasarım */
+@media (max-width: 768px) {
+    .villa-reservation-form {
+        margin: 10px;
+        padding: 20px;
+    }
+    
+    .date-inputs,
+    .guest-inputs {
+        grid-template-columns: 1fr;
+    }
+    
+    .form-section {
+        padding: 20px;
+    }
+    
+    .reservation-header {
+        flex-direction: column;
+        gap: 15px;
+        text-align: center;
+    }
+    
+    .reservation-details {
+        grid-template-columns: 1fr;
+        gap: 15px;
+    }
+    
+    .reservation-actions {
+        flex-direction: column;
+    }
+    
+    .counter-controls {
+        width: 120px;
+    }
+}
+
+@media (max-width: 480px) {
+    .villa-reservation-form {
+        padding: 15px;
+    }
+    
+    .form-section h4 {
+        font-size: 16px;
+    }
+    
+    .age-selectors {
+        grid-template-columns: 1fr;
+    }
+}
+
+/* jQuery UI Datepicker özelleştirme */
+.ui-datepicker {
+    background: #fff;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15);
+    padding: 10px;
+    font-family: inherit;
+}
+
+.ui-datepicker-header {
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    color: white;
+    border-radius: 6px;
+    margin-bottom: 10px;
+    padding: 10px;
+    text-align: center;
+}
+
+.ui-datepicker-prev,
+.ui-datepicker-next {
+    background: rgba(255, 255, 255, 0.2);
+    border: none;
+    border-radius: 4px;
+    color: white;
+    padding: 5px 10px;
+    cursor: pointer;
+}
+
+.ui-datepicker-prev:hover,
+.ui-datepicker-next:hover {
+    background: rgba(255, 255, 255, 0.3);
+}
+
+.ui-datepicker-calendar {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+.ui-datepicker-calendar th,
+.ui-datepicker-calendar td {
+    padding: 8px;
+    text-align: center;
+    border: none;
+}
+
+.ui-datepicker-calendar th {
+    background: #f8f9fa;
+    font-weight: 600;
+    color: #666;
+}
+
+.ui-datepicker-calendar td a {
+    display: block;
+    padding: 8px;
+    border-radius: 4px;
+    text-decoration: none;
+    color: #333;
+    transition: all 0.2s ease;
+}
+
+.ui-datepicker-calendar td a:hover {
+    background: #3498db;
+    color: white;
+}
+
+.ui-datepicker-calendar .ui-state-disabled a {
+    color: #ccc;
+    background: #f8f9fa;
+    cursor: not-allowed;
+}
+
+.ui-datepicker-calendar .ui-state-active a {
+    background: #3498db;
+    color: white;
+}
+
+/* Özel durumlar */
+.blocked-date {
+    background: #e74c3c !important;
+    color: white !important;
+    cursor: not-allowed !important;
+}
+
+.available-date {
+    background: #27ae60 !important;
+    color: white !important;
+}
+
+/* Loading overlay */
+.vrs-loading-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.5);
+    z-index: 9999;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.vrs-loading-spinner {
+    width: 50px;
+    height: 50px;
+    border: 4px solid rgba(255, 255, 255, 0.3);
+    border-top: 4px solid white;
+    border-radius: 50%;
+    animation: spin 1s linear infinite;
+}

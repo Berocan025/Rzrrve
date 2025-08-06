@@ -1,0 +1,744 @@
+/* Villa Reservation System - Admin Styles */
+
+/* Dashboard Layout */
+.vrs-dashboard {
+    margin-top: 20px;
+}
+
+/* Statistics Grid */
+.vrs-stats-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 20px;
+    margin-bottom: 30px;
+}
+
+.vrs-stat-card {
+    background: #fff;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    padding: 20px;
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+    transition: all 0.3s ease;
+}
+
+.vrs-stat-card:hover {
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    transform: translateY(-2px);
+}
+
+.vrs-stat-card.pending {
+    border-left: 4px solid #f39c12;
+}
+
+.vrs-stat-card.confirmed {
+    border-left: 4px solid #27ae60;
+}
+
+.vrs-stat-icon {
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    background: #f8f9fa;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 24px;
+    color: #3498db;
+}
+
+.vrs-stat-card.pending .vrs-stat-icon {
+    background: #fef9e7;
+    color: #f39c12;
+}
+
+.vrs-stat-card.confirmed .vrs-stat-icon {
+    background: #eafaf1;
+    color: #27ae60;
+}
+
+.vrs-stat-content h3 {
+    margin: 0 0 5px 0;
+    font-size: 28px;
+    font-weight: bold;
+    color: #2c3e50;
+}
+
+.vrs-stat-content p {
+    margin: 0;
+    color: #7f8c8d;
+    font-size: 14px;
+}
+
+/* Quick Actions */
+.vrs-quick-actions {
+    background: #fff;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    padding: 20px;
+    margin-bottom: 30px;
+}
+
+.vrs-quick-actions h2 {
+    margin-top: 0;
+    margin-bottom: 15px;
+    color: #2c3e50;
+    font-size: 20px;
+}
+
+.vrs-action-buttons {
+    display: flex;
+    gap: 10px;
+    flex-wrap: wrap;
+}
+
+.vrs-action-buttons .button {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 10px 15px;
+    font-size: 14px;
+}
+
+.vrs-action-buttons .dashicons {
+    font-size: 16px;
+}
+
+/* Recent Reservations */
+.vrs-recent-reservations {
+    background: #fff;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    padding: 20px;
+    margin-bottom: 30px;
+}
+
+.vrs-recent-reservations h2 {
+    margin-top: 0;
+    margin-bottom: 20px;
+    color: #2c3e50;
+    font-size: 20px;
+}
+
+.vrs-table-container {
+    overflow-x: auto;
+    margin-bottom: 20px;
+}
+
+.vrs-table-container table {
+    min-width: 800px;
+}
+
+.vrs-status {
+    display: inline-block;
+    padding: 4px 12px;
+    border-radius: 20px;
+    font-size: 12px;
+    font-weight: 600;
+    text-transform: uppercase;
+}
+
+.vrs-status-pending {
+    background: #fef9e7;
+    color: #f39c12;
+    border: 1px solid #f39c12;
+}
+
+.vrs-status-confirmed {
+    background: #eafaf1;
+    color: #27ae60;
+    border: 1px solid #27ae60;
+}
+
+.vrs-status-cancelled {
+    background: #fbeaea;
+    color: #e74c3c;
+    border: 1px solid #e74c3c;
+}
+
+.vrs-status-completed {
+    background: #e8f4f8;
+    color: #3498db;
+    border: 1px solid #3498db;
+}
+
+.vrs-view-all {
+    text-align: center;
+}
+
+.vrs-no-data {
+    text-align: center;
+    padding: 40px 20px;
+    color: #7f8c8d;
+}
+
+.vrs-no-data p {
+    font-size: 16px;
+    margin-bottom: 20px;
+}
+
+/* System Status */
+.vrs-system-status {
+    background: #fff;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    padding: 20px;
+    margin-bottom: 30px;
+}
+
+.vrs-system-status h2 {
+    margin-top: 0;
+    margin-bottom: 20px;
+    color: #2c3e50;
+    font-size: 20px;
+}
+
+.vrs-status-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 15px;
+    margin-bottom: 20px;
+}
+
+.vrs-status-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 15px;
+    background: #f8f9fa;
+    border-radius: 6px;
+    border: 1px solid #e9ecef;
+}
+
+.vrs-status-label {
+    font-weight: 600;
+    color: #2c3e50;
+}
+
+.vrs-status-value {
+    padding: 4px 12px;
+    border-radius: 20px;
+    font-size: 12px;
+    font-weight: 600;
+    text-transform: uppercase;
+}
+
+.vrs-status-value.active {
+    background: #27ae60;
+    color: white;
+}
+
+.vrs-status-value.inactive {
+    background: #e74c3c;
+    color: white;
+}
+
+.vrs-status-actions {
+    display: flex;
+    gap: 10px;
+    flex-wrap: wrap;
+}
+
+/* Modal Styles */
+.vrs-modal {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.5);
+    z-index: 100000;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.vrs-modal-content {
+    background: #fff;
+    border-radius: 8px;
+    max-width: 500px;
+    width: 90%;
+    max-height: 90vh;
+    overflow-y: auto;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+}
+
+.vrs-modal-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 20px;
+    border-bottom: 1px solid #ddd;
+}
+
+.vrs-modal-header h3 {
+    margin: 0;
+    color: #2c3e50;
+}
+
+.vrs-modal-close {
+    font-size: 24px;
+    cursor: pointer;
+    color: #7f8c8d;
+    line-height: 1;
+}
+
+.vrs-modal-close:hover {
+    color: #2c3e50;
+}
+
+.vrs-modal-body {
+    padding: 20px;
+}
+
+.vrs-modal-footer {
+    display: flex;
+    justify-content: flex-end;
+    gap: 10px;
+    padding: 20px;
+    border-top: 1px solid #ddd;
+}
+
+/* Form Styles */
+.vrs-form-table {
+    background: #fff;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    overflow: hidden;
+}
+
+.vrs-form-table th {
+    background: #f8f9fa;
+    border-bottom: 1px solid #ddd;
+    padding: 15px 20px;
+    text-align: left;
+    font-weight: 600;
+    color: #2c3e50;
+    width: 200px;
+}
+
+.vrs-form-table td {
+    padding: 15px 20px;
+    border-bottom: 1px solid #f0f0f0;
+}
+
+.vrs-form-table tr:last-child td,
+.vrs-form-table tr:last-child th {
+    border-bottom: none;
+}
+
+.vrs-form-table input[type="text"],
+.vrs-form-table input[type="email"],
+.vrs-form-table input[type="time"],
+.vrs-form-table input[type="number"],
+.vrs-form-table select,
+.vrs-form-table textarea {
+    width: 100%;
+    max-width: 400px;
+    padding: 8px 12px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    font-size: 14px;
+}
+
+.vrs-form-table textarea {
+    height: 100px;
+    resize: vertical;
+}
+
+.vrs-form-description {
+    margin-top: 5px;
+    font-size: 13px;
+    color: #666;
+    font-style: italic;
+}
+
+/* Calendar Styles */
+.vrs-calendar-container {
+    background: #fff;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    padding: 20px;
+}
+
+.vrs-calendar-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+}
+
+.vrs-calendar-nav {
+    display: flex;
+    gap: 10px;
+    align-items: center;
+}
+
+.vrs-calendar-nav select {
+    padding: 5px 10px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+}
+
+.vrs-calendar-grid {
+    display: grid;
+    grid-template-columns: repeat(7, 1fr);
+    gap: 1px;
+    background: #ddd;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    overflow: hidden;
+}
+
+.vrs-calendar-day {
+    background: #fff;
+    padding: 10px 5px;
+    min-height: 80px;
+    font-size: 12px;
+    position: relative;
+}
+
+.vrs-calendar-day.header {
+    background: #f8f9fa;
+    font-weight: 600;
+    text-align: center;
+    min-height: auto;
+    padding: 10px 5px;
+}
+
+.vrs-calendar-day.other-month {
+    background: #f8f9fa;
+    color: #ccc;
+}
+
+.vrs-calendar-day-number {
+    font-weight: 600;
+    margin-bottom: 5px;
+}
+
+.vrs-calendar-reservation {
+    background: #3498db;
+    color: white;
+    font-size: 10px;
+    padding: 2px 4px;
+    border-radius: 2px;
+    margin-bottom: 2px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+.vrs-calendar-reservation.status-pending {
+    background: #f39c12;
+}
+
+.vrs-calendar-reservation.status-confirmed {
+    background: #27ae60;
+}
+
+.vrs-calendar-reservation.status-cancelled {
+    background: #e74c3c;
+}
+
+/* Reports Styles */
+.vrs-reports-container {
+    background: #fff;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    padding: 20px;
+    margin-bottom: 20px;
+}
+
+.vrs-reports-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+    flex-wrap: wrap;
+    gap: 15px;
+}
+
+.vrs-date-filters {
+    display: flex;
+    gap: 10px;
+    align-items: center;
+    flex-wrap: wrap;
+}
+
+.vrs-date-filters input {
+    padding: 6px 10px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+}
+
+.vrs-chart-container {
+    margin: 20px 0;
+    height: 300px;
+    background: #f8f9fa;
+    border: 1px solid #e9ecef;
+    border-radius: 4px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #6c757d;
+}
+
+.vrs-report-stats {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 15px;
+    margin: 20px 0;
+}
+
+.vrs-report-stat {
+    background: #f8f9fa;
+    border: 1px solid #e9ecef;
+    border-radius: 6px;
+    padding: 15px;
+    text-align: center;
+}
+
+.vrs-report-stat h4 {
+    margin: 0 0 10px 0;
+    color: #495057;
+    font-size: 14px;
+    text-transform: uppercase;
+}
+
+.vrs-report-stat .value {
+    font-size: 24px;
+    font-weight: bold;
+    color: #2c3e50;
+}
+
+/* Settings Styles */
+.vrs-settings-section {
+    background: #fff;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    margin-bottom: 20px;
+    overflow: hidden;
+}
+
+.vrs-settings-section h3 {
+    background: #f8f9fa;
+    margin: 0;
+    padding: 15px 20px;
+    border-bottom: 1px solid #ddd;
+    color: #2c3e50;
+    font-size: 16px;
+}
+
+.vrs-settings-section .inside {
+    padding: 20px;
+}
+
+.vrs-settings-row {
+    display: flex;
+    align-items: flex-start;
+    margin-bottom: 20px;
+    gap: 20px;
+}
+
+.vrs-settings-row:last-child {
+    margin-bottom: 0;
+}
+
+.vrs-settings-label {
+    flex: 0 0 200px;
+    font-weight: 600;
+    color: #2c3e50;
+    padding-top: 6px;
+}
+
+.vrs-settings-input {
+    flex: 1;
+}
+
+.vrs-settings-input input,
+.vrs-settings-input select,
+.vrs-settings-input textarea {
+    width: 100%;
+    max-width: 400px;
+    padding: 8px 12px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    font-size: 14px;
+}
+
+.vrs-settings-description {
+    margin-top: 5px;
+    font-size: 13px;
+    color: #666;
+    line-height: 1.4;
+}
+
+.vrs-checkbox-list {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 10px;
+}
+
+.vrs-checkbox-item {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.vrs-checkbox-item input[type="checkbox"] {
+    margin: 0;
+}
+
+/* Responsive Design */
+@media (max-width: 1200px) {
+    .vrs-stats-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+}
+
+@media (max-width: 768px) {
+    .vrs-stats-grid {
+        grid-template-columns: 1fr;
+    }
+    
+    .vrs-action-buttons {
+        flex-direction: column;
+    }
+    
+    .vrs-action-buttons .button {
+        justify-content: center;
+        text-align: center;
+    }
+    
+    .vrs-reports-header {
+        flex-direction: column;
+        align-items: stretch;
+    }
+    
+    .vrs-date-filters {
+        justify-content: center;
+    }
+    
+    .vrs-calendar-grid {
+        font-size: 11px;
+    }
+    
+    .vrs-calendar-day {
+        min-height: 60px;
+        padding: 5px 2px;
+    }
+    
+    .vrs-settings-row {
+        flex-direction: column;
+        gap: 10px;
+    }
+    
+    .vrs-settings-label {
+        flex: none;
+        padding-top: 0;
+    }
+    
+    .vrs-modal-content {
+        width: 95%;
+    }
+    
+    .vrs-modal-header,
+    .vrs-modal-body,
+    .vrs-modal-footer {
+        padding: 15px;
+    }
+}
+
+@media (max-width: 480px) {
+    .vrs-dashboard {
+        margin-top: 10px;
+    }
+    
+    .vrs-stats-grid,
+    .vrs-quick-actions,
+    .vrs-recent-reservations,
+    .vrs-system-status,
+    .vrs-reports-container,
+    .vrs-settings-section {
+        margin-left: -10px;
+        margin-right: -10px;
+        border-radius: 0;
+        border-left: none;
+        border-right: none;
+    }
+    
+    .vrs-table-container {
+        margin-left: -20px;
+        margin-right: -20px;
+    }
+    
+    .vrs-status-grid {
+        grid-template-columns: 1fr;
+    }
+    
+    .vrs-status-actions {
+        flex-direction: column;
+    }
+}
+
+/* Print Styles */
+@media print {
+    .vrs-action-buttons,
+    .button,
+    .vrs-modal,
+    .vrs-quick-actions {
+        display: none !important;
+    }
+    
+    .vrs-dashboard {
+        background: white !important;
+    }
+    
+    .vrs-stat-card,
+    .vrs-recent-reservations,
+    .vrs-system-status {
+        border: 1px solid #ddd !important;
+        box-shadow: none !important;
+        break-inside: avoid;
+    }
+}
+
+/* Accessibility */
+.vrs-sr-only {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    padding: 0;
+    margin: -1px;
+    overflow: hidden;
+    clip: rect(0, 0, 0, 0);
+    white-space: nowrap;
+    border: 0;
+}
+
+/* High contrast mode */
+@media (prefers-contrast: high) {
+    .vrs-stat-card,
+    .vrs-quick-actions,
+    .vrs-recent-reservations,
+    .vrs-system-status {
+        border: 2px solid #000 !important;
+    }
+    
+    .vrs-status,
+    .vrs-status-value {
+        border: 2px solid #000 !important;
+    }
+}
+
+/* Focus styles for accessibility */
+.button:focus,
+input:focus,
+select:focus,
+textarea:focus {
+    outline: 2px solid #3498db;
+    outline-offset: 1px;
+}
