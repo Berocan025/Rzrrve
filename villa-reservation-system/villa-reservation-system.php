@@ -499,5 +499,10 @@ class VillaReservationSystem {
     }
 }
 
+// Aktivasyon ve deaktivasyon hooks
+register_activation_hook(__FILE__, array('VillaReservationSystem', 'activate'));
+register_deactivation_hook(__FILE__, array('VillaReservationSystem', 'deactivate'));
+register_uninstall_hook(__FILE__, array('VillaReservationSystem', 'uninstall'));
+
 // Plugin'i başlat
 VillaReservationSystem::get_instance();

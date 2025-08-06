@@ -1,542 +1,588 @@
 /**
  * Villa Reservation System - Admin Scripts
+ * 
+ * @package VillaReservationSystem
+ * @version 1.0.0
  */
 
 jQuery(document).ready(function($) {
+    'use strict';
     
-    // Pricing type toggle
-    $('.vrs-pricing-type-radio').on('change', function() {
-        var selectedType = $(this).val();
-        $('.vrs-pricing-fields').removeClass('active');
-        $('.vrs-pricing-fields[data-type="' + selectedType + '"]').addClass('active');
-    });
-    
-    // Initialize pricing fields on page load
-    var activePricingType = $('.vrs-pricing-type-radio:checked').val();
-    if (activePricingType) {
-        $('.vrs-pricing-fields[data-type="' + activePricingType + '"]').addClass('active');
-    }
-    
-    // Google Sheets test connection
-    $('.vrs-test-connection').on('click', function(e) {
-        e.preventDefault();
-        
-        var $button = $(this);
-        var villaId = $button.data('villa-id');
-        var originalText = $button.text();
-        
-        $button.text(vrsAdmin.testingText).prop('disabled', true);
-        
-        $.ajax({
-            url: ajaxurl,
-            type: 'POST',
-            data: {
-                action: 'vrs_test_google_sheets_connection',
-                villa_id: villaId,
-                nonce: vrsAdmin.nonce
-            },
-            success: function(response) {
-                if (response.success) {
-                    showAdminMessage(vrsAdmin.connectionSuccessText, 'success');
-                    updateSyncStatus('success', vrsAdmin.connectionSuccessText);
-                } else {
-                    showAdminMessage(vrsAdmin.connectionFailedText + ' ' + (response.data.message || ''), 'error');
-                    updateSyncStatus('error', response.data.message || vrsAdmin.connectionFailedText);
-                }
-            },
-            error: function() {
-                showAdminMessage(vrsAdmin.ajaxErrorText, 'error');
-                updateSyncStatus('error', vrsAdmin.ajaxErrorText);
-            },
-            complete: function() {
-                $button.text(originalText).prop('disabled', false);
-            }
-        });
-    });
-    
-    // Google Sheets sync now
-    $('.vrs-sync-now').on('click', function(e) {
-        e.preventDefault();
-        
-        var $button = $(this);
-        var villaId = $button.data('villa-id');
-        var originalText = $button.text();
-        
-        $button.text(vrsAdmin.syncingText).prop('disabled', true);
-        
-        $.ajax({
-            url: ajaxurl,
-            type: 'POST',
-            data: {
-                action: 'vrs_sync_google_sheets_now',
-                villa_id: villaId,
-                nonce: vrsAdmin.nonce
-            },
-            success: function(response) {
-                if (response.success) {
-                    showAdminMessage(vrsAdmin.syncSuccessText, 'success');
-                    updateSyncStatus('success', vrsAdmin.syncSuccessText);
-                    updateLastSyncTime();
-                } else {
-                    showAdminMessage(vrsAdmin.syncFailedText + ' ' + (response.data.message || ''), 'error');
-                    updateSyncStatus('error', response.data.message || vrsAdmin.syncFailedText);
-                }
-            },
-            error: function() {
-                showAdminMessage(vrsAdmin.ajaxErrorText, 'error');
-                updateSyncStatus('error', vrsAdmin.ajaxErrorText);
-            },
-            complete: function() {
-                $button.text(originalText).prop('disabled', false);
-            }
-        });
-    });
-    
-    // Villa settings AJAX update
-    $('.vrs-villa-settings-form').on('submit', function(e) {
-        e.preventDefault();
-        
-        var $form = $(this);
-        var $submitButton = $form.find('input[type="submit"]');
-        var originalText = $submitButton.val();
-        
-        $submitButton.val(vrsAdmin.savingText).prop('disabled', true);
-        
-        $.ajax({
-            url: ajaxurl,
-            type: 'POST',
-            data: $form.serialize() + '&action=vrs_update_villa_settings&nonce=' + vrsAdmin.nonce,
-            success: function(response) {
-                if (response.success) {
-                    showAdminMessage(vrsAdmin.settingsUpdatedText, 'success');
-                } else {
-                    showAdminMessage(vrsAdmin.settingsUpdateFailedText + ' ' + (response.data.message || ''), 'error');
-                }
-            },
-            error: function() {
-                showAdminMessage(vrsAdmin.ajaxErrorText, 'error');
-            },
-            complete: function() {
-                $submitButton.val(originalText).prop('disabled', false);
-            }
-        });
-    });
-    
-    // Reservation status change
-    $('.vrs-reservation-status-select').on('change', function() {
-        var $select = $(this);
-        var reservationId = $select.data('reservation-id');
-        var newStatus = $select.val();
-        var originalStatus = $select.data('original-status');
-        
-        if (newStatus === originalStatus) {
-            return;
-        }
-        
-        if (!confirm(vrsAdmin.confirmStatusChangeText)) {
-            $select.val(originalStatus);
-            return;
-        }
-        
-        $.ajax({
-            url: ajaxurl,
-            type: 'POST',
-            data: {
-                action: 'vrs_update_reservation_status',
-                reservation_id: reservationId,
-                status: newStatus,
-                nonce: vrsAdmin.nonce
-            },
-            success: function(response) {
-                if (response.success) {
-                    showAdminMessage(vrsAdmin.statusUpdatedText, 'success');
-                    $select.data('original-status', newStatus);
-                    updateReservationRow(reservationId, newStatus);
-                } else {
-                    showAdminMessage(vrsAdmin.statusUpdateFailedText + ' ' + (response.data.message || ''), 'error');
-                    $select.val(originalStatus);
-                }
-            },
-            error: function() {
-                showAdminMessage(vrsAdmin.ajaxErrorText, 'error');
-                $select.val(originalStatus);
-            }
-        });
-    });
-    
-    // Cancel reservation
-    $('.vrs-cancel-reservation').on('click', function(e) {
-        e.preventDefault();
-        
-        if (!confirm(vrsAdmin.confirmCancelText)) {
-            return;
-        }
-        
-        var $button = $(this);
-        var reservationId = $button.data('reservation-id');
-        var originalText = $button.text();
-        
-        $button.text(vrsAdmin.cancellingText).prop('disabled', true);
-        
-        $.ajax({
-            url: ajaxurl,
-            type: 'POST',
-            data: {
-                action: 'vrs_cancel_reservation',
-                reservation_id: reservationId,
-                nonce: vrsAdmin.nonce
-            },
-            success: function(response) {
-                if (response.success) {
-                    showAdminMessage(vrsAdmin.cancelSuccessText, 'success');
-                    updateReservationRow(reservationId, 'cancelled');
-                    $button.remove();
-                } else {
-                    showAdminMessage(vrsAdmin.cancelFailedText + ' ' + (response.data.message || ''), 'error');
-                    $button.text(originalText).prop('disabled', false);
-                }
-            },
-            error: function() {
-                showAdminMessage(vrsAdmin.ajaxErrorText, 'error');
-                $button.text(originalText).prop('disabled', false);
-            }
-        });
-    });
-    
-    // Reservation filters
-    $('.vrs-reservation-filters select, .vrs-reservation-filters input').on('change', function() {
-        var $form = $(this).closest('form');
-        $form.submit();
-    });
-    
-    // Calendar villa selection
-    $('#vrs-calendar-villa-select').on('change', function() {
-        var villaId = $(this).val();
-        if (villaId) {
-            loadCalendar(villaId);
-        } else {
-            $('#vrs-calendar-display').html('<p>' + vrsAdmin.selectVillaText + '</p>');
-        }
-    });
-    
-    // Load calendar for selected villa
-    function loadCalendar(villaId) {
-        var $calendarDisplay = $('#vrs-calendar-display');
-        $calendarDisplay.html('<div class="vrs-loading"><div class="vrs-loading-spinner"></div>' + vrsAdmin.loadingCalendarText + '</div>');
-        
-        $.ajax({
-            url: ajaxurl,
-            type: 'POST',
-            data: {
-                action: 'vrs_load_calendar',
-                villa_id: villaId,
-                nonce: vrsAdmin.nonce
-            },
-            success: function(response) {
-                if (response.success) {
-                    $calendarDisplay.html(response.data.html);
-                    initializeCalendarEvents();
-                } else {
-                    $calendarDisplay.html('<div class="vrs-error"><h4>' + vrsAdmin.calendarLoadFailedText + '</h4><p>' + (response.data.message || '') + '</p></div>');
-                }
-            },
-            error: function() {
-                $calendarDisplay.html('<div class="vrs-error"><h4>' + vrsAdmin.calendarLoadErrorText + '</h4><p>' + vrsAdmin.ajaxErrorText + '</p></div>');
-            }
-        });
-    }
-    
-    // Initialize calendar events
-    function initializeCalendarEvents() {
-        // Calendar navigation
-        $('.vrs-calendar-nav button').on('click', function() {
-            var direction = $(this).data('direction');
-            var currentMonth = $('.vrs-calendar-header').data('current-month');
-            var currentYear = $('.vrs-calendar-header').data('current-year');
-            var villaId = $('#vrs-calendar-villa-select').val();
-            
-            // Calculate new month/year
-            var newDate = new Date(currentYear, currentMonth + direction, 1);
-            var newMonth = newDate.getMonth();
-            var newYear = newDate.getFullYear();
-            
-            loadCalendarMonth(villaId, newMonth, newYear);
-        });
-        
-        // Date blocking/unblocking
-        $('.vrs-calendar-date').on('click', function() {
-            var $date = $(this);
-            var date = $date.data('date');
-            var villaId = $('#vrs-calendar-villa-select').val();
-            var isBlocked = $date.hasClass('blocked');
-            
-            if (isBlocked) {
-                unblockDate(villaId, date, $date);
-            } else {
-                blockDate(villaId, date, $date);
-            }
-        });
-    }
-    
-    // Block date
-    function blockDate(villaId, date, $dateElement) {
-        $.ajax({
-            url: ajaxurl,
-            type: 'POST',
-            data: {
-                action: 'vrs_block_date',
-                villa_id: villaId,
-                date: date,
-                nonce: vrsAdmin.nonce
-            },
-            success: function(response) {
-                if (response.success) {
-                    $dateElement.addClass('blocked');
-                    showAdminMessage(vrsAdmin.dateBlockedText, 'success');
-                } else {
-                    showAdminMessage(vrsAdmin.dateBlockFailedText + ' ' + (response.data.message || ''), 'error');
-                }
-            },
-            error: function() {
-                showAdminMessage(vrsAdmin.dateBlockErrorText, 'error');
-            }
-        });
-    }
-    
-    // Unblock date
-    function unblockDate(villaId, date, $dateElement) {
-        $.ajax({
-            url: ajaxurl,
-            type: 'POST',
-            data: {
-                action: 'vrs_unblock_date',
-                villa_id: villaId,
-                date: date,
-                nonce: vrsAdmin.nonce
-            },
-            success: function(response) {
-                if (response.success) {
-                    $dateElement.removeClass('blocked');
-                    showAdminMessage(vrsAdmin.dateUnblockedText, 'success');
-                } else {
-                    showAdminMessage(vrsAdmin.dateUnblockFailedText + ' ' + (response.data.message || ''), 'error');
-                }
-            },
-            error: function() {
-                showAdminMessage(vrsAdmin.dateUnblockErrorText, 'error');
-            }
-        });
-    }
-    
-    // Load specific calendar month
-    function loadCalendarMonth(villaId, month, year) {
-        var $calendarDisplay = $('#vrs-calendar-display');
-        $calendarDisplay.html('<div class="vrs-loading"><div class="vrs-loading-spinner"></div>' + vrsAdmin.loadingCalendarText + '</div>');
-        
-        $.ajax({
-            url: ajaxurl,
-            type: 'POST',
-            data: {
-                action: 'vrs_load_calendar',
-                villa_id: villaId,
-                month: month,
-                year: year,
-                nonce: vrsAdmin.nonce
-            },
-            success: function(response) {
-                if (response.success) {
-                    $calendarDisplay.html(response.data.html);
-                    initializeCalendarEvents();
-                } else {
-                    $calendarDisplay.html('<div class="vrs-error"><h4>' + vrsAdmin.calendarLoadFailedText + '</h4><p>' + (response.data.message || '') + '</p></div>');
-                }
-            },
-            error: function() {
-                $calendarDisplay.html('<div class="vrs-error"><h4>' + vrsAdmin.calendarLoadErrorText + '</h4><p>' + vrsAdmin.ajaxErrorText + '</p></div>');
-            }
-        });
-    }
-    
-    // Helper functions
-    function showAdminMessage(message, type) {
-        var messageClass = 'notice-' + type;
-        var $notice = $('<div class="notice ' + messageClass + ' is-dismissible"><p>' + message + '</p></div>');
-        
-        $('.wrap h1').after($notice);
-        
-        // Auto-hide after 5 seconds
-        setTimeout(function() {
-            $notice.fadeOut(function() {
-                $(this).remove();
-            });
-        }, 5000);
-        
-        // Add dismiss functionality
-        $notice.on('click', '.notice-dismiss', function() {
-            $notice.fadeOut(function() {
-                $(this).remove();
-            });
-        });
-    }
-    
-    function updateSyncStatus(status, message) {
-        var $syncStatus = $('.vrs-sync-status');
-        $syncStatus.removeClass('success error warning').addClass(status);
-        $syncStatus.text(message);
-    }
-    
-    function updateLastSyncTime() {
-        var now = new Date();
-        var timeString = now.toLocaleString();
-        $('.vrs-last-sync-time').text(timeString);
-    }
-    
-    function updateReservationRow(reservationId, newStatus) {
-        var $row = $('[data-reservation-id="' + reservationId + '"]').closest('tr');
-        var $statusCell = $row.find('.reservation-status');
-        
-        // Update status badge
-        var statusLabels = {
-            'pending': vrsAdmin.statusLabels.pending,
-            'confirmed': vrsAdmin.statusLabels.confirmed,
-            'cancelled': vrsAdmin.statusLabels.cancelled,
-            'completed': vrsAdmin.statusLabels.completed
+    // Admin AJAX handler
+    function adminAjax(action, data, callback) {
+        var requestData = {
+            action: 'vrs_admin_action',
+            admin_action: action,
+            nonce: vrsAdmin.nonce
         };
         
-        var statusClass = 'vrs-status-' + newStatus;
-        var statusLabel = statusLabels[newStatus] || newStatus;
+        $.extend(requestData, data);
         
-        $statusCell.html('<span class="vrs-status-badge ' + statusClass + '">' + statusLabel + '</span>');
-        
-        // Update row styling if needed
-        $row.removeClass('status-pending status-confirmed status-cancelled status-completed')
-            .addClass('status-' + newStatus);
+        $.post(vrsAdmin.ajaxurl, requestData)
+            .done(function(response) {
+                if (response.success) {
+                    if (callback && typeof callback === 'function') {
+                        callback(true, response.data);
+                    }
+                    showNotice(response.data.message || vrsAdmin.strings.success, 'success');
+                } else {
+                    if (callback && typeof callback === 'function') {
+                        callback(false, response.data);
+                    }
+                    showNotice(response.data.message || vrsAdmin.strings.error, 'error');
+                }
+            })
+            .fail(function() {
+                if (callback && typeof callback === 'function') {
+                    callback(false, null);
+                }
+                showNotice(vrsAdmin.strings.error, 'error');
+            });
     }
     
-    // Google Sheets credentials upload
-    $('#vrs-google-credentials-form').on('submit', function(e) {
-        var fileInput = $('#google_credentials_file')[0];
-        if (!fileInput.files.length) {
-            e.preventDefault();
-            alert(vrsAdmin.selectFileText);
-            return;
-        }
+    // Show admin notice
+    function showNotice(message, type) {
+        var noticeClass = 'notice notice-' + type + ' is-dismissible';
+        var noticeHtml = '<div class="' + noticeClass + '"><p>' + message + '</p><button type="button" class="notice-dismiss"><span class="screen-reader-text">Dismiss this notice.</span></button></div>';
         
-        var file = fileInput.files[0];
-        if (file.type !== 'application/json') {
-            e.preventDefault();
-            alert(vrsAdmin.invalidFileTypeText);
-            return;
+        $('.wrap h1').after(noticeHtml);
+        
+        // Auto dismiss success notices after 3 seconds
+        if (type === 'success') {
+            setTimeout(function() {
+                $('.notice-success').fadeOut();
+            }, 3000);
         }
-    });
+    }
     
-    // Villa meta box tabs (if implementing tabbed interface)
-    $('.vrs-meta-box-tab').on('click', function(e) {
+    // Loading state management
+    function setLoadingState(element, loading) {
+        if (loading) {
+            element.prop('disabled', true).addClass('loading');
+            element.find('.text').hide();
+            if (!element.find('.spinner').length) {
+                element.append('<span class="spinner is-active" style="float: none; margin: 0 5px;"></span>');
+            }
+        } else {
+            element.prop('disabled', false).removeClass('loading');
+            element.find('.text').show();
+            element.find('.spinner').remove();
+        }
+    }
+    
+    // Confirm and Cancel Reservations
+    $(document).on('click', '.vrs-confirm-reservation', function(e) {
         e.preventDefault();
-        var tabId = $(this).data('tab');
         
-        // Hide all tab contents
-        $('.vrs-meta-box-content').hide();
-        $('.vrs-meta-box-tab').removeClass('active');
+        var button = $(this);
+        var reservationId = button.data('id');
         
-        // Show selected tab
-        $('#' + tabId).show();
-        $(this).addClass('active');
+        if (!reservationId) {
+            showNotice('Geçersiz rezervasyon ID.', 'error');
+            return;
+        }
+        
+        if (!confirm('Bu rezervasyonu onaylamak istediğinizden emin misiniz?')) {
+            return;
+        }
+        
+        setLoadingState(button, true);
+        
+        adminAjax('confirm_reservation', {
+            reservation_id: reservationId
+        }, function(success, data) {
+            setLoadingState(button, false);
+            
+            if (success) {
+                // Update status in table
+                var row = button.closest('tr');
+                row.find('.vrs-status').removeClass('pending').addClass('confirmed').text('Onaylandı');
+                button.remove();
+                
+                // Remove cancel button if it's still pending
+                var cancelBtn = row.find('.vrs-cancel-reservation');
+                if (cancelBtn.length) {
+                    cancelBtn.text('İptal Et');
+                }
+            }
+        });
     });
     
-    // Initialize first tab as active
-    $('.vrs-meta-box-tab:first').trigger('click');
+    $(document).on('click', '.vrs-cancel-reservation', function(e) {
+        e.preventDefault();
+        
+        var button = $(this);
+        var reservationId = button.data('id');
+        
+        if (!reservationId) {
+            showNotice('Geçersiz rezervasyon ID.', 'error');
+            return;
+        }
+        
+        if (!confirm(vrsAdmin.strings.confirm_cancel)) {
+            return;
+        }
+        
+        setLoadingState(button, true);
+        
+        adminAjax('cancel_reservation', {
+            reservation_id: reservationId
+        }, function(success, data) {
+            setLoadingState(button, false);
+            
+            if (success) {
+                // Update status in table
+                var row = button.closest('tr');
+                row.find('.vrs-status').removeClass('pending confirmed').addClass('cancelled').text('İptal');
+                row.find('.vrs-confirm-reservation, .vrs-cancel-reservation').remove();
+            }
+        });
+    });
+    
+    // Google Sheets sync
+    $(document).on('click', '.vrs-sync-villa', function(e) {
+        e.preventDefault();
+        
+        var button = $(this);
+        var villaId = button.data('villa');
+        
+        if (!villaId) {
+            showNotice('Geçersiz villa ID.', 'error');
+            return;
+        }
+        
+        setLoadingState(button, true);
+        
+        adminAjax('sync_villa', {
+            villa_id: villaId
+        }, function(success, data) {
+            setLoadingState(button, false);
+            
+            if (success) {
+                // Update last sync time in table
+                var row = button.closest('tr');
+                var now = new Date();
+                var timeString = now.toLocaleDateString('tr-TR') + ' ' + now.toLocaleTimeString('tr-TR', {hour: '2-digit', minute: '2-digit'});
+                row.find('td:nth-child(4)').text(timeString);
+            }
+        });
+    });
+    
+    // Villa meta box interactions
+    $(document).on('click', '.vrs-test-connection', function(e) {
+        e.preventDefault();
+        
+        var button = $(this);
+        var villaId = button.data('villa-id');
+        
+        if (!villaId) {
+            showNotice('Villa ID bulunamadı.', 'error');
+            return;
+        }
+        
+        setLoadingState(button, true);
+        
+        $.post(ajaxurl, {
+            action: 'vrs_test_villa_connection',
+            villa_id: villaId,
+            nonce: $('#vrs_nonce').val()
+        })
+        .done(function(response) {
+            setLoadingState(button, false);
+            
+            if (response.success) {
+                showNotice('Bağlantı başarılı!', 'success');
+                $('.vrs-sync-status').removeClass('error').addClass('success').text('Bağlı');
+            } else {
+                showNotice(response.data.message || 'Bağlantı hatası!', 'error');
+                $('.vrs-sync-status').removeClass('success').addClass('error').text('Hata');
+            }
+        })
+        .fail(function() {
+            setLoadingState(button, false);
+            showNotice('Bağlantı test edilirken hata oluştu.', 'error');
+        });
+    });
+    
+    $(document).on('click', '.vrs-sync-now', function(e) {
+        e.preventDefault();
+        
+        var button = $(this);
+        var villaId = button.data('villa-id');
+        
+        if (!villaId) {
+            showNotice('Villa ID bulunamadı.', 'error');
+            return;
+        }
+        
+        setLoadingState(button, true);
+        
+        $.post(ajaxurl, {
+            action: 'vrs_sync_villa_now',
+            villa_id: villaId,
+            nonce: $('#vrs_nonce').val()
+        })
+        .done(function(response) {
+            setLoadingState(button, false);
+            
+            if (response.success) {
+                showNotice('Senkronizasyon tamamlandı!', 'success');
+                var now = new Date();
+                $('.vrs-last-sync').text(now.toLocaleDateString('tr-TR') + ' ' + now.toLocaleTimeString('tr-TR'));
+            } else {
+                showNotice(response.data.message || 'Senkronizasyon hatası!', 'error');
+            }
+        })
+        .fail(function() {
+            setLoadingState(button, false);
+            showNotice('Senkronizasyon sırasında hata oluştu.', 'error');
+        });
+    });
+    
+    // Pricing type toggle
+    $(document).on('change', 'input[name="_vrs_pricing_type"]', function() {
+        var pricingType = $(this).val();
+        var fixedFields = $('.vrs-pricing-fixed');
+        var perPersonFields = $('.vrs-pricing-per-person');
+        
+        if (pricingType === 'fixed') {
+            fixedFields.show();
+            perPersonFields.hide();
+        } else {
+            fixedFields.hide();
+            perPersonFields.show();
+        }
+    });
+    
+    // Initialize pricing fields visibility
+    if ($('input[name="_vrs_pricing_type"]:checked').length) {
+        $('input[name="_vrs_pricing_type"]:checked').trigger('change');
+    }
+    
+    // Calendar navigation
+    $(document).on('click', '.vrs-calendar-nav a', function(e) {
+        e.preventDefault();
+        window.location.href = $(this).attr('href');
+    });
+    
+    // Calendar day click
+    $(document).on('click', '.vrs-calendar-day:not(.other-month)', function() {
+        var date = $(this).data('date');
+        if (date) {
+            // Open day detail modal or navigate to day view
+            // This can be expanded based on requirements
+            console.log('Calendar day clicked:', date);
+        }
+    });
+    
+    // Reservation details modal
+    $(document).on('click', '.vrs-calendar-reservation', function(e) {
+        e.stopPropagation();
+        var reservationId = $(this).data('reservation-id');
+        if (reservationId) {
+            // Open reservation details
+            window.open(
+                vrsAdmin.adminUrl + 'admin.php?page=vrs-reservation-details&id=' + reservationId,
+                '_blank'
+            );
+        }
+    });
+    
+    // Form validation for settings
+    $('form[action*="vrs-settings"]').on('submit', function(e) {
+        var isValid = true;
+        var form = $(this);
+        
+        // Validate email fields
+        form.find('input[type="email"]').each(function() {
+            var email = $(this).val();
+            if (email && !isValidEmail(email)) {
+                showNotice('Geçersiz e-posta adresi: ' + email, 'error');
+                isValid = false;
+                return false;
+            }
+        });
+        
+        // Validate number fields
+        form.find('input[type="number"]').each(function() {
+            var min = $(this).attr('min');
+            var max = $(this).attr('max');
+            var value = parseInt($(this).val());
+            
+            if (min && value < parseInt(min)) {
+                showNotice('Minimum değer: ' + min, 'error');
+                isValid = false;
+                return false;
+            }
+            
+            if (max && value > parseInt(max)) {
+                showNotice('Maksimum değer: ' + max, 'error');
+                isValid = false;
+                return false;
+            }
+        });
+        
+        if (!isValid) {
+            e.preventDefault();
+        }
+    });
+    
+    // File upload validation for Google Sheets
+    $('input[name="credentials_file"]').on('change', function() {
+        var file = this.files[0];
+        
+        if (file) {
+            // Check file type
+            if (file.type !== 'application/json') {
+                showNotice('Sadece JSON dosyaları kabul edilir.', 'error');
+                $(this).val('');
+                return;
+            }
+            
+            // Check file size (max 1MB)
+            if (file.size > 1024 * 1024) {
+                showNotice('Dosya boyutu 1MB\'dan küçük olmalıdır.', 'error');
+                $(this).val('');
+                return;
+            }
+        }
+    });
+    
+    // Data export functionality
+    $(document).on('click', '.vrs-export-data', function(e) {
+        e.preventDefault();
+        
+        var button = $(this);
+        var exportType = button.data('type');
+        var startDate = $('input[name="start_date"]').val();
+        var endDate = $('input[name="end_date"]').val();
+        
+        if (!startDate || !endDate) {
+            showNotice('Lütfen tarih aralığı seçin.', 'error');
+            return;
+        }
+        
+        // Create download URL
+        var downloadUrl = vrsAdmin.adminUrl + 'admin-ajax.php?action=vrs_export_data&type=' + exportType + 
+                         '&start_date=' + startDate + '&end_date=' + endDate + '&nonce=' + vrsAdmin.nonce;
+        
+        // Trigger download
+        window.location.href = downloadUrl;
+    });
+    
+    // Auto-refresh functionality for dashboard
+    if ($('.vrs-dashboard').length && vrsAdmin.autoRefresh) {
+        setInterval(function() {
+            $('.vrs-stats-grid .vrs-stat-number').each(function() {
+                var statElement = $(this);
+                var statType = statElement.closest('.vrs-stat-card').data('stat-type');
+                
+                if (statType) {
+                    // Refresh specific stat
+                    $.post(vrsAdmin.ajaxurl, {
+                        action: 'vrs_get_stat',
+                        stat_type: statType,
+                        nonce: vrsAdmin.nonce
+                    })
+                    .done(function(response) {
+                        if (response.success) {
+                            statElement.text(response.data.value);
+                        }
+                    });
+                }
+            });
+        }, 30000); // Refresh every 30 seconds
+    }
+    
+    // Advanced filters toggle
+    $(document).on('click', '.vrs-toggle-advanced-filters', function(e) {
+        e.preventDefault();
+        
+        var filtersContainer = $('.vrs-advanced-filters');
+        var button = $(this);
+        
+        filtersContainer.slideToggle();
+        
+        if (filtersContainer.is(':visible')) {
+            button.text('Gelişmiş Filtreleri Gizle');
+        } else {
+            button.text('Gelişmiş Filtreler');
+        }
+    });
     
     // Bulk actions for reservations
-    $('#doaction, #doaction2').on('click', function(e) {
-        var action = $(this).siblings('select').val();
-        if (action === 'cancel') {
-            var checkedBoxes = $('input[name="reservation[]"]:checked');
-            if (checkedBoxes.length === 0) {
-                e.preventDefault();
-                alert(vrsAdmin.selectReservationsText);
-                return;
-            }
+    $(document).on('change', '.vrs-select-all-reservations', function() {
+        var isChecked = $(this).is(':checked');
+        $('.vrs-reservation-checkbox').prop('checked', isChecked);
+        toggleBulkActions();
+    });
+    
+    $(document).on('change', '.vrs-reservation-checkbox', function() {
+        toggleBulkActions();
+        
+        // Update select all checkbox
+        var totalCheckboxes = $('.vrs-reservation-checkbox').length;
+        var checkedCheckboxes = $('.vrs-reservation-checkbox:checked').length;
+        
+        $('.vrs-select-all-reservations').prop('checked', totalCheckboxes === checkedCheckboxes);
+    });
+    
+    function toggleBulkActions() {
+        var checkedCount = $('.vrs-reservation-checkbox:checked').length;
+        var bulkActions = $('.vrs-bulk-actions');
+        
+        if (checkedCount > 0) {
+            bulkActions.show();
+            bulkActions.find('.selected-count').text(checkedCount);
+        } else {
+            bulkActions.hide();
+        }
+    }
+    
+    $(document).on('click', '.vrs-bulk-action-btn', function(e) {
+        e.preventDefault();
+        
+        var action = $(this).data('action');
+        var selectedIds = [];
+        
+        $('.vrs-reservation-checkbox:checked').each(function() {
+            selectedIds.push($(this).val());
+        });
+        
+        if (selectedIds.length === 0) {
+            showNotice('Lütfen en az bir rezervasyon seçin.', 'error');
+            return;
+        }
+        
+        var confirmMessage = 'Seçili ' + selectedIds.length + ' rezervasyon için ' + action + ' işlemini gerçekleştirmek istediğinizden emin misiniz?';
+        
+        if (!confirm(confirmMessage)) {
+            return;
+        }
+        
+        var button = $(this);
+        setLoadingState(button, true);
+        
+        adminAjax('bulk_reservation_action', {
+            action: action,
+            reservation_ids: selectedIds
+        }, function(success, data) {
+            setLoadingState(button, false);
             
-            if (!confirm(vrsAdmin.confirmBulkCancelText)) {
-                e.preventDefault();
-                return;
+            if (success) {
+                // Refresh page to show updated data
+                window.location.reload();
             }
+        });
+    });
+    
+    // Real-time search for reservations
+    var searchTimeout;
+    $(document).on('input', '.vrs-search-reservations', function() {
+        var searchTerm = $(this).val();
+        var searchContainer = $('.vrs-search-results');
+        
+        clearTimeout(searchTimeout);
+        
+        if (searchTerm.length < 3) {
+            searchContainer.empty().hide();
+            return;
+        }
+        
+        searchTimeout = setTimeout(function() {
+            $.post(vrsAdmin.ajaxurl, {
+                action: 'vrs_search_reservations',
+                search: searchTerm,
+                nonce: vrsAdmin.nonce
+            })
+            .done(function(response) {
+                if (response.success && response.data.results) {
+                    var resultsHtml = '';
+                    response.data.results.forEach(function(reservation) {
+                        resultsHtml += '<div class="vrs-search-result" data-id="' + reservation.id + '">';
+                        resultsHtml += '<strong>#' + reservation.id + '</strong> - ' + reservation.guest_name;
+                        resultsHtml += '<br><small>' + reservation.villa_name + ' (' + reservation.checkin_date + ')</small>';
+                        resultsHtml += '</div>';
+                    });
+                    
+                    searchContainer.html(resultsHtml).show();
+                } else {
+                    searchContainer.html('<div class="vrs-no-results">Sonuç bulunamadı</div>').show();
+                }
+            });
+        }, 500);
+    });
+    
+    // Search result click
+    $(document).on('click', '.vrs-search-result', function() {
+        var reservationId = $(this).data('id');
+        window.location.href = vrsAdmin.adminUrl + 'admin.php?page=vrs-reservation-details&id=' + reservationId;
+    });
+    
+    // Helper functions
+    function isValidEmail(email) {
+        var emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+        return emailRegex.test(email);
+    }
+    
+    function formatDate(date) {
+        return date.toLocaleDateString('tr-TR');
+    }
+    
+    function formatTime(date) {
+        return date.toLocaleTimeString('tr-TR', {hour: '2-digit', minute: '2-digit'});
+    }
+    
+    function formatCurrency(amount) {
+        return new Intl.NumberFormat('tr-TR', {
+            style: 'currency',
+            currency: 'TRY'
+        }).format(amount);
+    }
+    
+    // Initialize tooltips if available
+    if ($.fn.tooltip) {
+        $('[title]').tooltip();
+    }
+    
+    // Initialize date pickers
+    if ($.fn.datepicker) {
+        $('.vrs-date-picker').datepicker({
+            dateFormat: 'yy-mm-dd',
+            changeMonth: true,
+            changeYear: true
+        });
+    }
+    
+    // Print functionality
+    $(document).on('click', '.vrs-print', function(e) {
+        e.preventDefault();
+        window.print();
+    });
+    
+    // Keyboard shortcuts
+    $(document).on('keydown', function(e) {
+        // Ctrl+S to save (prevent browser save)
+        if (e.ctrlKey && e.keyCode === 83) {
+            e.preventDefault();
+            var saveButton = $('.vrs-btn-primary[type="submit"]');
+            if (saveButton.length) {
+                saveButton.click();
+            }
+        }
+        
+        // Escape to close modals
+        if (e.keyCode === 27) {
+            $('.vrs-modal').hide();
+            $('.vrs-search-results').hide();
         }
     });
     
-    // Auto-refresh reservations (every 30 seconds)
-    if ($('.vrs-reservations-list').length > 0) {
-        setInterval(function() {
-            refreshReservationsList();
-        }, 30000);
-    }
-    
-    function refreshReservationsList() {
-        var $table = $('.vrs-reservations-list table tbody');
-        var originalHtml = $table.html();
-        
-        $.ajax({
-            url: ajaxurl,
-            type: 'POST',
-            data: {
-                action: 'vrs_refresh_reservations',
-                nonce: vrsAdmin.nonce
-            },
-            success: function(response) {
-                if (response.success && response.data.html !== originalHtml) {
-                    $table.html(response.data.html);
-                    showAdminMessage(vrsAdmin.reservationsUpdatedText, 'info');
-                }
-            },
-            error: function() {
-                // Silently fail for auto-refresh
-                console.log('Auto-refresh failed');
-            }
-        });
-    }
-    
-    // Tooltips for admin interface
-    $('.vrs-tooltip').on('mouseenter', function() {
-        var tooltip = $(this).data('tooltip');
-        var $tooltip = $('<div class="vrs-tooltip-content">' + tooltip + '</div>');
-        
-        $('body').append($tooltip);
-        
-        var offset = $(this).offset();
-        $tooltip.css({
-            position: 'absolute',
-            top: offset.top - $tooltip.outerHeight() - 5,
-            left: offset.left + ($(this).outerWidth() / 2) - ($tooltip.outerWidth() / 2),
-            zIndex: 9999
-        });
-    }).on('mouseleave', function() {
-        $('.vrs-tooltip-content').remove();
+    // Dismiss notices
+    $(document).on('click', '.notice-dismiss', function() {
+        $(this).closest('.notice').fadeOut();
     });
-});
-
-// Global admin object for localization
-var vrsAdmin = vrsAdmin || {};
-
-// Add global functions for external use
-window.VRSAdmin = {
-    showMessage: function(message, type) {
-        jQuery(function($) {
-            var messageClass = 'notice-' + type;
-            var $notice = $('<div class="notice ' + messageClass + ' is-dismissible"><p>' + message + '</p></div>');
-            $('.wrap h1').after($notice);
-            
-            setTimeout(function() {
-                $notice.fadeOut(function() {
-                    $(this).remove();
-                });
-            }, 5000);
-        });
-    },
     
-    refreshData: function() {
-        jQuery(function($) {
-            location.reload();
-        });
-    }
-};
+    // Initialize page
+    console.log('VRS Admin Scripts Loaded');
+});
