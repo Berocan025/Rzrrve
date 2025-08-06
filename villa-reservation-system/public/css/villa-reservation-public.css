@@ -1,65 +1,56 @@
-/* Villa Reservation System - Public CSS */
+/* Villa Reservation System - Public Styles */
 
-/* Reset ve Base Styles */
-.vrs-reservation-form * {
-    box-sizing: border-box;
-}
-
-/* Ana Form Container */
+/* Main reservation form container */
 .vrs-reservation-form {
-    max-width: 800px;
+    max-width: 600px;
     margin: 0 auto;
     padding: 30px;
     background: #ffffff;
+    border: 1px solid #e1e5e9;
     border-radius: 12px;
-    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
-    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
-    line-height: 1.6;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
 }
 
-/* Form Başlığı */
-.vrs-reservation-form h3 {
-    color: #2c3e50;
-    margin-bottom: 25px;
-    font-size: 24px;
-    font-weight: 600;
-    text-align: center;
-    border-bottom: 2px solid #3498db;
-    padding-bottom: 15px;
-}
-
-/* Form Sections */
+/* Form sections */
 .vrs-form-section {
     margin-bottom: 30px;
-    padding: 20px;
-    background: #f8f9fa;
-    border-radius: 8px;
-    border-left: 4px solid #3498db;
+    padding-bottom: 25px;
+    border-bottom: 1px solid #f0f0f0;
 }
 
-.vrs-form-section h4 {
+.vrs-form-section:last-child {
+    border-bottom: none;
+    margin-bottom: 0;
+}
+
+.vrs-form-section h3 {
+    margin: 0 0 20px 0;
     color: #2c3e50;
-    margin-bottom: 15px;
     font-size: 18px;
-    font-weight: 500;
+    font-weight: 600;
+    border-left: 4px solid #3498db;
+    padding-left: 15px;
 }
 
-/* Form Row ve Columns */
+/* Form rows and columns */
 .vrs-form-row {
     display: flex;
-    gap: 20px;
+    gap: 15px;
     margin-bottom: 20px;
+    flex-wrap: wrap;
 }
 
 .vrs-form-col {
     flex: 1;
+    min-width: 200px;
 }
 
-.vrs-form-col-half {
-    flex: 0 0 48%;
+.vrs-form-col.full-width {
+    flex: 100%;
 }
 
-/* Form Groups */
+/* Form groups */
 .vrs-form-group {
     margin-bottom: 20px;
 }
@@ -67,8 +58,8 @@
 .vrs-form-group label {
     display: block;
     margin-bottom: 8px;
+    font-weight: 600;
     color: #34495e;
-    font-weight: 500;
     font-size: 14px;
 }
 
@@ -76,24 +67,24 @@
     color: #e74c3c;
 }
 
-/* Input Styles */
+/* Input styles */
 .vrs-form-group input[type="text"],
 .vrs-form-group input[type="email"],
 .vrs-form-group input[type="tel"],
-.vrs-form-group textarea,
-.vrs-form-group select {
+.vrs-form-group select,
+.vrs-form-group textarea {
     width: 100%;
-    padding: 12px 15px;
-    border: 2px solid #e1e8ed;
-    border-radius: 6px;
+    padding: 12px;
+    border: 2px solid #e1e5e9;
+    border-radius: 8px;
     font-size: 14px;
     transition: all 0.3s ease;
-    background-color: #ffffff;
+    box-sizing: border-box;
 }
 
 .vrs-form-group input:focus,
-.vrs-form-group textarea:focus,
-.vrs-form-group select:focus {
+.vrs-form-group select:focus,
+.vrs-form-group textarea:focus {
     outline: none;
     border-color: #3498db;
     box-shadow: 0 0 0 3px rgba(52, 152, 219, 0.1);
@@ -104,130 +95,97 @@
     resize: vertical;
 }
 
-/* Date Input Styles */
-.vrs-date-inputs {
-    display: flex;
-    gap: 15px;
-}
-
-.vrs-date-input {
-    flex: 1;
-    position: relative;
-}
-
-.vrs-date-input input {
-    padding-right: 45px;
-}
-
-.vrs-date-input::after {
-    content: '📅';
-    position: absolute;
-    right: 15px;
-    top: 50%;
-    transform: translateY(-50%);
-    pointer-events: none;
-    font-size: 16px;
-}
-
-/* Guest Counter Styles */
-.vrs-guest-counter {
+/* Number input controls */
+.vrs-number-input {
     display: flex;
     align-items: center;
     gap: 10px;
-    background: #ffffff;
-    border: 2px solid #e1e8ed;
-    border-radius: 6px;
-    padding: 5px;
 }
 
-.vrs-counter-btn {
-    background: #3498db;
-    color: white;
-    border: none;
-    width: 35px;
-    height: 35px;
+.vrs-number-input input {
+    width: 80px;
+    text-align: center;
+    margin: 0;
+}
+
+.vrs-number-btn {
+    width: 40px;
+    height: 40px;
+    border: 2px solid #3498db;
+    background: #ffffff;
+    color: #3498db;
     border-radius: 50%;
-    cursor: pointer;
     font-size: 18px;
     font-weight: bold;
-    transition: all 0.3s ease;
+    cursor: pointer;
     display: flex;
     align-items: center;
     justify-content: center;
+    transition: all 0.3s ease;
 }
 
-.vrs-counter-btn:hover {
-    background: #2980b9;
-    transform: scale(1.05);
+.vrs-number-btn:hover {
+    background: #3498db;
+    color: #ffffff;
 }
 
-.vrs-counter-btn:disabled {
-    background: #bdc3c7;
+.vrs-number-btn:disabled {
+    opacity: 0.5;
     cursor: not-allowed;
-    transform: none;
 }
 
-.vrs-counter-value {
-    min-width: 40px;
-    text-align: center;
-    font-weight: 600;
-    font-size: 16px;
-    color: #2c3e50;
-}
-
-/* Guest Summary */
+/* Guest summary */
 .vrs-guest-summary {
-    background: #ecf0f1;
+    background: #f8f9fa;
     padding: 15px;
-    border-radius: 6px;
+    border-radius: 8px;
     margin-top: 15px;
-    font-size: 14px;
-    color: #2c3e50;
 }
 
-/* Children Ages */
+.vrs-guest-summary h4 {
+    margin: 0 0 10px 0;
+    color: #2c3e50;
+    font-size: 16px;
+}
+
+.vrs-guest-summary p {
+    margin: 5px 0;
+    color: #7f8c8d;
+}
+
+/* Children ages */
 .vrs-children-ages {
     margin-top: 15px;
-    padding: 15px;
-    background: #ffffff;
-    border-radius: 6px;
-    border: 1px solid #e1e8ed;
 }
 
-.vrs-child-age-group {
-    display: flex;
-    align-items: center;
-    gap: 10px;
+.vrs-child-age {
     margin-bottom: 10px;
 }
 
-.vrs-child-age-group:last-child {
-    margin-bottom: 0;
+.vrs-child-age label {
+    font-size: 13px;
+    margin-bottom: 5px;
 }
 
-.vrs-child-age-group label {
-    flex: 0 0 100px;
-    margin-bottom: 0;
+.vrs-child-age select {
+    padding: 8px;
     font-size: 13px;
 }
 
-.vrs-child-age-group select {
-    flex: 1;
-    margin-bottom: 0;
-}
-
-/* Price Display */
-.vrs-price-display {
+/* Price display */
+.vrs-price-summary {
     background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
     color: white;
     padding: 25px;
-    border-radius: 8px;
+    border-radius: 12px;
     margin: 20px 0;
-    text-align: center;
 }
 
-.vrs-price-display.hidden {
-    display: none;
+.vrs-price-summary h3 {
+    margin: 0 0 15px 0;
+    font-size: 20px;
+    border: none;
+    padding: 0;
 }
 
 .vrs-price-breakdown {
@@ -241,82 +199,60 @@
     font-size: 14px;
 }
 
-.vrs-total-price {
+.vrs-price-total {
     border-top: 2px solid rgba(255, 255, 255, 0.3);
     padding-top: 15px;
+    display: flex;
+    justify-content: space-between;
     font-size: 24px;
     font-weight: bold;
 }
 
 .vrs-price-loading {
-    display: none;
     text-align: center;
     padding: 20px;
+    font-style: italic;
+    opacity: 0.8;
 }
 
-.vrs-spinner {
-    border: 3px solid #f3f3f3;
-    border-top: 3px solid #3498db;
-    border-radius: 50%;
-    width: 30px;
-    height: 30px;
-    animation: spin 1s linear infinite;
-    margin: 0 auto 10px;
+/* Terms and conditions */
+.vrs-terms {
+    margin: 20px 0;
 }
 
-@keyframes spin {
-    0% { transform: rotate(0deg); }
-    100% { transform: rotate(360deg); }
+.vrs-terms label {
+    display: flex;
+    align-items: flex-start;
+    gap: 10px;
+    font-size: 14px;
+    line-height: 1.5;
+    cursor: pointer;
 }
 
-/* Messages */
-.vrs-message {
-    padding: 15px;
-    border-radius: 6px;
-    margin: 15px 0;
-    font-weight: 500;
+.vrs-terms input[type="checkbox"] {
+    margin-top: 2px;
+    transform: scale(1.2);
 }
 
-.vrs-message.success {
-    background: #d4edda;
-    color: #155724;
-    border: 1px solid #c3e6cb;
-}
-
-.vrs-message.error {
-    background: #f8d7da;
-    color: #721c24;
-    border: 1px solid #f5c6cb;
-}
-
-.vrs-message.warning {
-    background: #fff3cd;
-    color: #856404;
-    border: 1px solid #ffeaa7;
-}
-
-.vrs-message.hidden {
-    display: none;
-}
-
-/* Submit Button */
+/* Submit button */
 .vrs-submit-btn {
-    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    width: 100%;
+    padding: 15px;
+    background: #27ae60;
     color: white;
-    padding: 15px 30px;
     border: none;
-    border-radius: 6px;
+    border-radius: 8px;
     font-size: 16px;
     font-weight: 600;
     cursor: pointer;
     transition: all 0.3s ease;
-    width: 100%;
-    position: relative;
+    margin-top: 20px;
 }
 
 .vrs-submit-btn:hover:not(:disabled) {
+    background: #219a52;
     transform: translateY(-2px);
-    box-shadow: 0 4px 15px rgba(102, 126, 234, 0.3);
+    box-shadow: 0 4px 12px rgba(39, 174, 96, 0.3);
 }
 
 .vrs-submit-btn:disabled {
@@ -326,143 +262,112 @@
     box-shadow: none;
 }
 
-.vrs-submit-loading {
-    display: none;
+/* Loading states */
+.vrs-loading {
+    position: relative;
+    overflow: hidden;
 }
 
-.vrs-submit-btn.loading .vrs-submit-text {
-    opacity: 0;
-}
-
-.vrs-submit-btn.loading .vrs-submit-loading {
-    display: block;
+.vrs-loading::after {
+    content: '';
     position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.4), transparent);
+    animation: loading 1.5s infinite;
 }
 
-/* Terms and Conditions */
-.vrs-terms {
-    display: flex;
-    align-items: flex-start;
-    gap: 10px;
-    margin: 20px 0;
+@keyframes loading {
+    0% { left: -100%; }
+    100% { left: 100%; }
 }
 
-.vrs-terms input[type="checkbox"] {
-    margin-top: 4px;
+/* Messages */
+.vrs-message {
+    padding: 15px;
+    border-radius: 8px;
+    margin: 15px 0;
+    font-weight: 500;
 }
 
-.vrs-terms label {
-    flex: 1;
-    font-size: 14px;
-    line-height: 1.5;
+.vrs-message.error {
+    background: #ffebee;
+    color: #c62828;
+    border: 1px solid #ffcdd2;
 }
 
-.vrs-terms a {
-    color: #3498db;
-    text-decoration: none;
+.vrs-message.success {
+    background: #e8f5e8;
+    color: #2e7d32;
+    border: 1px solid #c8e6c9;
 }
 
-.vrs-terms a:hover {
-    text-decoration: underline;
+.vrs-message.warning {
+    background: #fff3e0;
+    color: #ef6c00;
+    border: 1px solid #ffcc02;
 }
 
-/* jQuery UI Datepicker Customization */
+/* Calendar customizations */
 .ui-datepicker {
-    font-family: inherit !important;
-    font-size: 14px !important;
-    border-radius: 8px !important;
-    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15) !important;
-    border: none !important;
+    font-size: 14px;
+    border-radius: 8px;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15);
+    border: 1px solid #e1e5e9;
 }
 
 .ui-datepicker-header {
-    background: #3498db !important;
-    color: white !important;
-    border: none !important;
-    border-radius: 8px 8px 0 0 !important;
+    background: #3498db;
+    color: white;
+    border: none;
+    border-radius: 8px 8px 0 0;
 }
 
 .ui-datepicker-title {
-    color: white !important;
+    color: white;
+    font-weight: 600;
 }
 
 .ui-datepicker-prev,
 .ui-datepicker-next {
-    background: rgba(255, 255, 255, 0.2) !important;
-    border: none !important;
-    border-radius: 4px !important;
+    background: rgba(255, 255, 255, 0.2);
+    border: none;
+    border-radius: 4px;
 }
 
-.ui-datepicker-prev:hover,
-.ui-datepicker-next:hover {
-    background: rgba(255, 255, 255, 0.3) !important;
+.ui-datepicker td {
+    padding: 2px;
 }
 
 .ui-datepicker td a {
-    border: none !important;
-    border-radius: 4px !important;
-    transition: all 0.3s ease !important;
-}
-
-.ui-datepicker td a:hover {
-    background: #3498db !important;
-    color: white !important;
-}
-
-.ui-datepicker .ui-state-disabled {
-    background: #f8f9fa !important;
-    color: #adb5bd !important;
-}
-
-.ui-datepicker .ui-state-active {
-    background: #2c3e50 !important;
-    color: white !important;
-}
-
-/* Villa Calendar Styles */
-.vrs-calendar-container {
-    background: white;
-    border-radius: 8px;
-    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
-    overflow: hidden;
-}
-
-.vrs-calendar-header {
-    background: #3498db;
-    color: white;
-    padding: 20px;
-    text-align: center;
-}
-
-.vrs-calendar-navigation {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    margin-bottom: 10px;
-}
-
-.vrs-calendar-nav-btn {
-    background: rgba(255, 255, 255, 0.2);
-    color: white;
-    border: none;
-    padding: 8px 12px;
+    padding: 8px;
     border-radius: 4px;
-    cursor: pointer;
-    transition: all 0.3s ease;
+    transition: all 0.2s ease;
 }
 
-.vrs-calendar-nav-btn:hover {
-    background: rgba(255, 255, 255, 0.3);
+.ui-datepicker td.ui-datepicker-today a {
+    background: #ecf0f1;
+    color: #2c3e50;
+    font-weight: bold;
 }
 
-/* Responsive Design */
+.ui-datepicker td.ui-state-disabled {
+    opacity: 0.3;
+}
+
+.ui-datepicker td.ui-state-disabled a {
+    background: #f8f9fa;
+    color: #bdc3c7;
+    cursor: not-allowed;
+}
+
+/* Responsive design */
 @media (max-width: 768px) {
     .vrs-reservation-form {
+        margin: 20px;
         padding: 20px;
-        margin: 10px;
     }
     
     .vrs-form-row {
@@ -470,65 +375,178 @@
         gap: 0;
     }
     
-    .vrs-form-col-half {
-        flex: 1;
+    .vrs-form-col {
+        min-width: auto;
     }
     
-    .vrs-date-inputs {
-        flex-direction: column;
-        gap: 15px;
+    .vrs-number-input {
+        justify-content: center;
     }
     
-    .vrs-guest-counter {
-        justify-content: space-between;
-        padding: 10px;
-    }
-    
-    .vrs-price-display {
-        padding: 20px 15px;
-    }
-    
-    .vrs-total-price {
+    .vrs-price-total {
         font-size: 20px;
     }
 }
 
 @media (max-width: 480px) {
     .vrs-reservation-form {
+        margin: 10px;
         padding: 15px;
     }
     
-    .vrs-form-section {
-        padding: 15px;
+    .vrs-form-section h3 {
+        font-size: 16px;
     }
     
-    .vrs-submit-btn {
-        padding: 12px 20px;
-        font-size: 14px;
+    .vrs-number-btn {
+        width: 35px;
+        height: 35px;
+        font-size: 16px;
     }
     
-    .vrs-guest-counter {
-        flex-wrap: wrap;
-        justify-content: center;
-        gap: 15px;
-    }
-    
-    .vrs-counter-btn {
-        width: 40px;
-        height: 40px;
-        font-size: 20px;
+    .vrs-number-input input {
+        width: 60px;
     }
 }
 
-/* Print Styles */
-@media print {
-    .vrs-reservation-form {
-        box-shadow: none;
-        padding: 0;
-    }
-    
-    .vrs-submit-btn,
-    .vrs-message {
-        display: none !important;
-    }
+/* User reservations page */
+.vrs-user-reservations {
+    max-width: 1000px;
+    margin: 0 auto;
+    padding: 20px;
+}
+
+.vrs-reservation-card {
+    background: white;
+    border: 1px solid #e1e5e9;
+    border-radius: 8px;
+    padding: 20px;
+    margin-bottom: 20px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
+
+.vrs-reservation-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 15px;
+    flex-wrap: wrap;
+}
+
+.vrs-reservation-title {
+    font-size: 18px;
+    font-weight: 600;
+    color: #2c3e50;
+    margin: 0;
+}
+
+.vrs-reservation-status {
+    padding: 6px 12px;
+    border-radius: 20px;
+    font-size: 12px;
+    font-weight: 600;
+    text-transform: uppercase;
+}
+
+.vrs-status-confirmed {
+    background: #d4edda;
+    color: #155724;
+}
+
+.vrs-status-pending {
+    background: #fff3cd;
+    color: #856404;
+}
+
+.vrs-status-cancelled {
+    background: #f8d7da;
+    color: #721c24;
+}
+
+.vrs-reservation-details {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 15px;
+    margin: 15px 0;
+}
+
+.vrs-detail-item {
+    display: flex;
+    flex-direction: column;
+}
+
+.vrs-detail-label {
+    font-size: 12px;
+    color: #7f8c8d;
+    margin-bottom: 4px;
+    text-transform: uppercase;
+    font-weight: 600;
+}
+
+.vrs-detail-value {
+    font-size: 14px;
+    color: #2c3e50;
+    font-weight: 500;
+}
+
+.vrs-reservation-actions {
+    margin-top: 15px;
+    padding-top: 15px;
+    border-top: 1px solid #f0f0f0;
+}
+
+.vrs-btn {
+    padding: 8px 16px;
+    border: none;
+    border-radius: 4px;
+    font-size: 14px;
+    font-weight: 500;
+    cursor: pointer;
+    text-decoration: none;
+    display: inline-block;
+    margin-right: 10px;
+    transition: all 0.3s ease;
+}
+
+.vrs-btn-primary {
+    background: #3498db;
+    color: white;
+}
+
+.vrs-btn-primary:hover {
+    background: #2980b9;
+}
+
+.vrs-btn-danger {
+    background: #e74c3c;
+    color: white;
+}
+
+.vrs-btn-danger:hover {
+    background: #c0392b;
+}
+
+.vrs-btn-secondary {
+    background: #95a5a6;
+    color: white;
+}
+
+.vrs-btn-secondary:hover {
+    background: #7f8c8d;
+}
+
+/* Empty state */
+.vrs-empty-state {
+    text-align: center;
+    padding: 60px 20px;
+    color: #7f8c8d;
+}
+
+.vrs-empty-state h3 {
+    margin-bottom: 10px;
+    color: #95a5a6;
+}
+
+.vrs-empty-state p {
+    margin-bottom: 30px;
 }

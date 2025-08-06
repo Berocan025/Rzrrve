@@ -1,690 +1,689 @@
-# VILLA RESERVATION SYSTEM - TÜRKÇE
-# Copyright (C) 2024 Villa Reservation System
+# Villa Reservation System Turkish Translation
+# Copyright (C) 2024
 # This file is distributed under the same license as the Villa Reservation System package.
 msgid ""
 msgstr ""
 "Project-Id-Version: Villa Reservation System 1.0.0\n"
-"Report-Msgid-Bugs-To: support@example.com\n"
-"POT-Creation-Date: 2024-01-01 12:00+0000\n"
-"PO-Revision-Date: 2024-01-01 12:00+0000\n"
-"Last-Translator: Villa Reservation System Team\n"
-"Language-Team: Turkish <tr@li.org>\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2024-01-01 00:00+0000\n"
+"PO-Revision-Date: 2024-01-01 00:00+0000\n"
+"Last-Translator: \n"
+"Language-Team: Turkish\n"
 "Language: tr_TR\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
-# Plugin metadata
+# Villa Post Type
+msgid "Villa"
+msgstr "Villa"
+
+msgid "Villas"
+msgstr "Villalar"
+
+msgid "Add New Villa"
+msgstr "Yeni Villa Ekle"
+
+msgid "Add New"
+msgstr "Yeni Ekle"
+
+msgid "Edit Villa"
+msgstr "Villa Düzenle"
+
+msgid "New Villa"
+msgstr "Yeni Villa"
+
+msgid "View Villa"
+msgstr "Villayı Görüntüle"
+
+msgid "View Villas"
+msgstr "Villaları Görüntüle"
+
+msgid "Search Villas"
+msgstr "Villa Ara"
+
+msgid "No villas found"
+msgstr "Villa bulunamadı"
+
+msgid "No villas found in Trash"
+msgstr "Çöp kutusunda villa bulunamadı"
+
+# Villa Taxonomies
+msgid "Villa Categories"
+msgstr "Villa Kategorileri"
+
+msgid "Villa Category"
+msgstr "Villa Kategorisi"
+
+msgid "All Villa Categories"
+msgstr "Tüm Villa Kategorileri"
+
+msgid "Parent Villa Category"
+msgstr "Üst Villa Kategorisi"
+
+msgid "New Villa Category Name"
+msgstr "Yeni Villa Kategorisi Adı"
+
+msgid "Add New Villa Category"
+msgstr "Yeni Villa Kategorisi Ekle"
+
+msgid "Edit Villa Category"
+msgstr "Villa Kategorisini Düzenle"
+
+msgid "Update Villa Category"
+msgstr "Villa Kategorisini Güncelle"
+
+msgid "Villa Tags"
+msgstr "Villa Etiketleri"
+
+msgid "Villa Tag"
+msgstr "Villa Etiketi"
+
+msgid "All Villa Tags"
+msgstr "Tüm Villa Etiketleri"
+
+msgid "Add New Villa Tag"
+msgstr "Yeni Villa Etiketi Ekle"
+
+# Villa Meta Boxes
+msgid "Villa Settings"
+msgstr "Villa Ayarları"
+
+msgid "Villa Pricing"
+msgstr "Villa Fiyatlandırma"
+
+msgid "Google Sheets Integration"
+msgstr "Google Sheets Entegrasyonu"
+
+msgid "Reservations"
+msgstr "Rezervasyonlar"
+
+# Villa Settings
+msgid "Maximum Capacity"
+msgstr "Maksimum Kapasite"
+
+msgid "Maximum number of guests"
+msgstr "Maksimum misafir sayısı"
+
+msgid "Maximum Adults"
+msgstr "Maksimum Yetişkin"
+
+msgid "Maximum number of adults"
+msgstr "Maksimum yetişkin sayısı"
+
+msgid "Maximum Children"
+msgstr "Maksimum Çocuk"
+
+msgid "Maximum number of children"
+msgstr "Maksimum çocuk sayısı"
+
+msgid "Minimum Stay"
+msgstr "Minimum Konaklama"
+
+msgid "Minimum nights required"
+msgstr "Gerekli minimum gece sayısı"
+
+msgid "Maximum Stay"
+msgstr "Maksimum Konaklama"
+
+msgid "Maximum nights allowed"
+msgstr "İzin verilen maksimum gece sayısı"
+
+msgid "Check-in Time"
+msgstr "Giriş Saati"
+
+msgid "Default check-in time"
+msgstr "Varsayılan giriş saati"
+
+msgid "Check-out Time"
+msgstr "Çıkış Saati"
+
+msgid "Default check-out time"
+msgstr "Varsayılan çıkış saati"
+
+# Villa Pricing
+msgid "Pricing Type"
+msgstr "Fiyatlandırma Tipi"
+
+msgid "Per Person"
+msgstr "Kişi Başına"
+
+msgid "Fixed Price"
+msgstr "Sabit Fiyat"
+
+msgid "Base Price"
+msgstr "Temel Fiyat"
+
+msgid "Base price per night"
+msgstr "Gecelik temel fiyat"
+
+msgid "Adult Price"
+msgstr "Yetişkin Fiyatı"
+
+msgid "Price per adult per night"
+msgstr "Yetişkin başına gecelik fiyat"
+
+msgid "Child Price"
+msgstr "Çocuk Fiyatı"
+
+msgid "Price per child per night"
+msgstr "Çocuk başına gecelik fiyat"
+
+msgid "Child Discount"
+msgstr "Çocuk İndirimi"
+
+msgid "Discount percentage for children"
+msgstr "Çocuklar için indirim yüzdesi"
+
+# Google Sheets
+msgid "Google Sheet URL"
+msgstr "Google Sheet URL'si"
+
+msgid "Full URL of the Google Sheet"
+msgstr "Google Sheet'in tam URL'si"
+
+msgid "Sheet Name"
+msgstr "Sayfa Adı"
+
+msgid "Name of the specific sheet tab"
+msgstr "Belirli sayfa sekmesinin adı"
+
+msgid "Test Connection"
+msgstr "Bağlantıyı Test Et"
+
+msgid "Sync Now"
+msgstr "Şimdi Senkronize Et"
+
+msgid "Sync Status"
+msgstr "Senkronizasyon Durumu"
+
+msgid "Last Sync"
+msgstr "Son Senkronizasyon"
+
+msgid "Never"
+msgstr "Hiçbir zaman"
+
+# Reservation Form
+msgid "Villa Reservation"
+msgstr "Villa Rezervasyonu"
+
+msgid "Date Selection"
+msgstr "Tarih Seçimi"
+
+msgid "Check-in Date"
+msgstr "Giriş Tarihi"
+
+msgid "Check-out Date"
+msgstr "Çıkış Tarihi"
+
+msgid "Guest Selection"
+msgstr "Misafir Seçimi"
+
+msgid "Adults"
+msgstr "Yetişkinler"
+
+msgid "Children"
+msgstr "Çocuklar"
+
+msgid "Children Ages"
+msgstr "Çocuk Yaşları"
+
+msgid "Child %d Age"
+msgstr "Çocuk %d Yaşı"
+
+msgid "0-2 years"
+msgstr "0-2 yaş"
+
+msgid "3-12 years"
+msgstr "3-12 yaş"
+
+msgid "13-17 years"
+msgstr "13-17 yaş"
+
+msgid "Price Information"
+msgstr "Fiyat Bilgisi"
+
+msgid "Calculating price..."
+msgstr "Fiyat hesaplanıyor..."
+
+msgid "Contact Information"
+msgstr "İletişim Bilgileri"
+
+msgid "Full Name"
+msgstr "Ad Soyad"
+
+msgid "Email Address"
+msgstr "E-posta Adresi"
+
+msgid "Phone Number"
+msgstr "Telefon Numarası"
+
+msgid "Special Requests"
+msgstr "Özel İstekler"
+
+msgid "Any special requests or notes"
+msgstr "Özel istekler veya notlar"
+
+msgid "Terms & Conditions"
+msgstr "Şartlar ve Koşullar"
+
+msgid "I agree to the terms and conditions"
+msgstr "Şartları ve koşulları kabul ediyorum"
+
+msgid "terms and conditions"
+msgstr "şartlar ve koşullar"
+
+msgid "Make Reservation"
+msgstr "Rezervasyon Yap"
+
+msgid "Processing..."
+msgstr "İşleniyor..."
+
+# Validation Messages
+msgid "Please select check-in date"
+msgstr "Lütfen giriş tarihini seçin"
+
+msgid "Please select check-out date"
+msgstr "Lütfen çıkış tarihini seçin"
+
+msgid "Check-out date must be after check-in date"
+msgstr "Çıkış tarihi giriş tarihinden sonra olmalıdır"
+
+msgid "Please select at least 1 adult"
+msgstr "Lütfen en az 1 yetişkin seçin"
+
+msgid "Please enter your full name"
+msgstr "Lütfen adınızı ve soyadınızı girin"
+
+msgid "Please enter a valid email address"
+msgstr "Lütfen geçerli bir e-posta adresi girin"
+
+msgid "Please enter a valid phone number"
+msgstr "Lütfen geçerli bir telefon numarası girin"
+
+msgid "Please accept the terms and conditions"
+msgstr "Lütfen şartları ve koşulları kabul edin"
+
+msgid "Maximum capacity exceeded"
+msgstr "Maksimum kapasite aşıldı"
+
+msgid "Minimum stay requirement not met"
+msgstr "Minimum konaklama süresi karşılanmadı"
+
+msgid "Maximum stay limit exceeded"
+msgstr "Maksimum konaklama süresi aşıldı"
+
+msgid "Selected dates are not available"
+msgstr "Seçilen tarihler müsait değil"
+
+# Price Display
+msgid "Total Guests"
+msgstr "Toplam Misafir"
+
+msgid "Guest Summary"
+msgstr "Misafir Özeti"
+
+msgid "%d Adult"
+msgstr "%d Yetişkin"
+
+msgid "%d Child"
+msgstr "%d Çocuk"
+
+msgid "%d night"
+msgid_plural "%d nights"
+msgstr[0] "%d gece"
+msgstr[1] "%d gece"
+
+msgid "per person"
+msgstr "kişi başına"
+
+msgid "Base price"
+msgstr "Temel fiyat"
+
+msgid "Adult price"
+msgstr "Yetişkin fiyatı"
+
+msgid "Child price"
+msgstr "Çocuk fiyatı"
+
+msgid "Child discount"
+msgstr "Çocuk indirimi"
+
+msgid "Total Price"
+msgstr "Toplam Fiyat"
+
+# Reservation Status
+msgid "Pending"
+msgstr "Beklemede"
+
+msgid "Confirmed"
+msgstr "Onaylandı"
+
+msgid "Cancelled"
+msgstr "İptal Edildi"
+
+msgid "Completed"
+msgstr "Tamamlandı"
+
+# My Reservations
+msgid "My Reservations"
+msgstr "Rezervasyonlarım"
+
+msgid "You need to log in to view your reservations."
+msgstr "Rezervasyonlarınızı görmek için giriş yapmalısınız."
+
+msgid "You must be logged in to view this page."
+msgstr "Bu sayfayı görüntüleyebilmek için giriş yapmalısınız."
+
+msgid "Log In"
+msgstr "Giriş Yap"
+
+msgid "Hello %s, you can view your reservations below."
+msgstr "Merhaba %s, rezervasyonlarınızı aşağıda görebilirsiniz."
+
+msgid "No reservations yet"
+msgstr "Henüz rezervasyonunuz bulunmuyor"
+
+msgid "You can explore our villas to make a reservation."
+msgstr "Rezervasyon yapmak için villalarımızı inceleyebilirsiniz."
+
+msgid "Explore Villas"
+msgstr "Villaları İncele"
+
+msgid "Reservation #%d"
+msgstr "Rezervasyon #%d"
+
+msgid "Back to My Reservations"
+msgstr "Rezervasyonlarıma Dön"
+
+msgid "Villa Not Found"
+msgstr "Villa Bulunamadı"
+
+msgid "View Details"
+msgstr "Detayları Görüntüle"
+
+msgid "Cancel"
+msgstr "İptal Et"
+
+msgid "Cancel Reservation"
+msgstr "Rezervasyonu İptal Et"
+
+msgid "Are you sure you want to cancel this reservation?"
+msgstr "Rezervasyonu iptal etmek istediğinizden emin misiniz?"
+
+msgid "Are you sure you want to cancel this reservation? This action cannot be undone."
+msgstr "Rezervasyonu iptal etmek istediğinizden emin misiniz? Bu işlem geri alınamaz."
+
+msgid "Cancelling..."
+msgstr "İptal ediliyor..."
+
+msgid "Reservation cancelled successfully"
+msgstr "Rezervasyon başarıyla iptal edildi"
+
+msgid "Error cancelling reservation"
+msgstr "Rezervasyon iptal edilirken bir hata oluştu"
+
+msgid "An error occurred. Please try again."
+msgstr "Bir hata oluştu. Lütfen tekrar deneyin."
+
+# Reservation Details
+msgid "Reservation Not Found"
+msgstr "Rezervasyon Bulunamadı"
+
+msgid "Invalid reservation number."
+msgstr "Geçersiz rezervasyon numarası."
+
+msgid "This reservation was not found or you do not have permission to access this reservation."
+msgstr "Bu rezervasyon bulunamadı veya bu rezervasyona erişim yetkiniz bulunmuyor."
+
+msgid "Reservation Details"
+msgstr "Rezervasyon Detayları"
+
+msgid "Status"
+msgstr "Durum"
+
+msgid "Reservation Date"
+msgstr "Rezervasyon Tarihi"
+
+msgid "Stay Information"
+msgstr "Konaklama Bilgileri"
+
+msgid "Stay Duration"
+msgstr "Konaklama Süresi"
+
+msgid "Check-in Time: %s"
+msgstr "Giriş Saati: %s"
+
+msgid "Check-out Time: %s"
+msgstr "Çıkış Saati: %s"
+
+msgid "Guest Information"
+msgstr "Misafir Bilgileri"
+
+msgid "Number of Adults"
+msgstr "Yetişkin Sayısı"
+
+msgid "Number of Children"
+msgstr "Çocuk Sayısı"
+
+msgid "Total Guests"
+msgstr "Toplam Misafir"
+
+msgid "Contact Person"
+msgstr "İletişim Kişisi"
+
+msgid "Email"
+msgstr "E-posta"
+
+msgid "Phone"
+msgstr "Telefon"
+
+msgid "Special Requests"
+msgstr "Özel İstekler"
+
+msgid "Price Details"
+msgstr "Fiyat Detayları"
+
+msgid "Included"
+msgstr "Dahil"
+
+msgid "Total Amount"
+msgstr "Toplam Tutar"
+
+msgid "Villa Information"
+msgstr "Villa Bilgileri"
+
+msgid "Villa Name"
+msgstr "Villa Adı"
+
+msgid "person"
+msgstr "kişi"
+
+msgid "About Villa"
+msgstr "Villa Hakkında"
+
+msgid "Print"
+msgstr "Yazdır"
+
+# Admin Menu
+msgid "Villa Reservation"
+msgstr "Villa Rezervasyon"
+
+msgid "Google Sheets Settings"
+msgstr "Google Sheets Ayarları"
+
+msgid "Calendar View"
+msgstr "Takvim Görünümü"
+
+# Admin Pages
 msgid "Villa Reservation System"
 msgstr "Villa Rezervasyon Sistemi"
 
-msgid "Professional villa reservation system with WooCommerce integration and Google Sheets synchronization."
-msgstr "WooCommerce entegrasyonu ve Google Sheets senkronizasyonu olan profesyonel villa rezervasyon sistemi."
+msgid "Manage villa reservations and settings"
+msgstr "Villa rezervasyonları ve ayarlarını yönetin"
 
-# Villa post type
-msgid "Villa"
-msgstr "Villa"
+msgid "Upload Google Service Account JSON"
+msgstr "Google Servis Hesabı JSON Yükle"
 
-msgid "Villalar"
-msgstr "Villalar"
+msgid "Upload the JSON credentials file for Google Sheets API"
+msgstr "Google Sheets API için JSON kimlik bilgileri dosyasını yükleyin"
 
-msgid "Yeni Villa Ekle"
-msgstr "Yeni Villa Ekle"
+msgid "Choose File"
+msgstr "Dosya Seç"
 
-msgid "Villa Düzenle"
-msgstr "Villa Düzenle"
+msgid "Save Credentials"
+msgstr "Kimlik Bilgilerini Kaydet"
 
-msgid "Villa Görüntüle"
-msgstr "Villa Görüntüle"
+msgid "Google credentials saved successfully"
+msgstr "Google kimlik bilgileri başarıyla kaydedildi"
 
-msgid "Tüm Villaları Görüntüle"
-msgstr "Tüm Villaları Görüntüle"
+msgid "Error saving Google credentials"
+msgstr "Google kimlik bilgileri kaydedilirken hata oluştu"
 
-msgid "Villa ara"
-msgstr "Villa ara"
+# Villa Columns
+msgid "Availability"
+msgstr "Müsaitlik"
 
-msgid "Villa bulunamadı"
-msgstr "Villa bulunamadı"
+msgid "Available"
+msgstr "Müsait"
 
-msgid "Çöp kutusunda villa bulunamadı"
-msgstr "Çöp kutusunda villa bulunamadı"
+msgid "Unavailable"
+msgstr "Müsait Değil"
 
-# Villa taxonomies
-msgid "Villa Kategorisi"
-msgstr "Villa Kategorisi"
+msgid "Partially Available"
+msgstr "Kısmen Müsait"
 
-msgid "Villa Kategorileri"
-msgstr "Villa Kategorileri"
+msgid "%d reservations"
+msgstr "%d rezervasyon"
 
-msgid "Villa Etiketi"
-msgstr "Villa Etiketi"
+msgid "Next available: %s"
+msgstr "Sonraki müsait: %s"
 
-msgid "Villa Etiketleri"
-msgstr "Villa Etiketleri"
+# Email Templates
+msgid "Reservation Confirmation"
+msgstr "Rezervasyon Onayı"
 
-# Villa meta boxes
-msgid "Villa Ayarları"
-msgstr "Villa Ayarları"
+msgid "New Reservation"
+msgstr "Yeni Rezervasyon"
 
-msgid "Fiyatlandırma"
-msgstr "Fiyatlandırma"
+msgid "Reservation Cancelled"
+msgstr "Rezervasyon İptal Edildi"
 
-msgid "Google Sheets Entegrasyonu"
-msgstr "Google Sheets Entegrasyonu"
+msgid "Reservation Reminder"
+msgstr "Rezervasyon Hatırlatması"
 
-msgid "Rezervasyonlar"
-msgstr "Rezervasyonlar"
+msgid "Dear %s,"
+msgstr "Sayın %s,"
 
-# Villa settings fields
-msgid "Maksimum Kapasite"
-msgstr "Maksimum Kapasite"
+msgid "Thank you for your reservation!"
+msgstr "Rezervasyonunuz için teşekkür ederiz!"
 
-msgid "Maksimum Yetişkin Sayısı"
-msgstr "Maksimum Yetişkin Sayısı"
+msgid "Your reservation has been confirmed."
+msgstr "Rezervasyonunuz onaylanmıştır."
 
-msgid "Maksimum Çocuk Sayısı"
-msgstr "Maksimum Çocuk Sayısı"
+msgid "Your reservation has been cancelled."
+msgstr "Rezervasyonunuz iptal edilmiştir."
 
-msgid "Minimum Konaklama Süresi (gece)"
-msgstr "Minimum Konaklama Süresi (gece)"
+msgid "Your check-in is coming up!"
+msgstr "Giriş tarihiniz yaklaşıyor!"
 
-msgid "Maksimum Konaklama Süresi (gece)"
-msgstr "Maksimum Konaklama Süresi (gece)"
+msgid "We look forward to hosting you."
+msgstr "Sizi ağırlamak için sabırsızlanıyoruz."
 
-msgid "Check-in Saati"
-msgstr "Check-in Saati"
+msgid "Best regards,"
+msgstr "Saygılarımızla,"
 
-msgid "Check-out Saati"
-msgstr "Check-out Saati"
-
-# Pricing fields
-msgid "Fiyatlandırma Türü"
-msgstr "Fiyatlandırma Türü"
-
-msgid "Kişi Başı"
-msgstr "Kişi Başı"
-
-msgid "Sabit Fiyat"
-msgstr "Sabit Fiyat"
-
-msgid "Temel Fiyat (TL)"
-msgstr "Temel Fiyat (TL)"
-
-msgid "Yetişkin Fiyatı (TL)"
-msgstr "Yetişkin Fiyatı (TL)"
-
-msgid "Çocuk Fiyatı (TL)"
-msgstr "Çocuk Fiyatı (TL)"
-
-msgid "Çocuk İndirimi (%)"
-msgstr "Çocuk İndirimi (%)"
-
-# Google Sheets fields
-msgid "Google Sheets URL"
-msgstr "Google Sheets URL"
-
-msgid "Sayfa Adı"
-msgstr "Sayfa Adı"
-
-msgid "Bağlantı Durumu"
-msgstr "Bağlantı Durumu"
-
-msgid "Son Senkronizasyon"
-msgstr "Son Senkronizasyon"
-
-msgid "Test Bağlantısı"
-msgstr "Test Bağlantısı"
-
-msgid "Şimdi Senkronize Et"
-msgstr "Şimdi Senkronize Et"
-
-# Reservation form
-msgid "Villa Rezervasyonu"
-msgstr "Villa Rezervasyonu"
-
-msgid "Tarih Seçimi"
-msgstr "Tarih Seçimi"
-
-msgid "Giriş Tarihi"
-msgstr "Giriş Tarihi"
-
-msgid "Çıkış Tarihi"
-msgstr "Çıkış Tarihi"
-
-msgid "Misafir Seçimi"
-msgstr "Misafir Seçimi"
-
-msgid "Yetişkin Sayısı"
-msgstr "Yetişkin Sayısı"
-
-msgid "Çocuk Sayısı"
-msgstr "Çocuk Sayısı"
-
-msgid "Fiyat Bilgisi"
-msgstr "Fiyat Bilgisi"
-
-msgid "İletişim Bilgileri"
-msgstr "İletişim Bilgileri"
-
-msgid "Ad Soyad"
-msgstr "Ad Soyad"
-
-msgid "E-posta"
-msgstr "E-posta"
-
-msgid "Telefon"
-msgstr "Telefon"
-
-msgid "Özel İstekler"
-msgstr "Özel İstekler"
-
-msgid "Rezervasyon Yap"
-msgstr "Rezervasyon Yap"
-
-msgid "Şartlar ve Koşullar"
-msgstr "Şartlar ve Koşullar"
-
-msgid "Şartlar ve koşulları kabul ediyorum"
-msgstr "Şartlar ve koşulları kabul ediyorum"
-
-# Price display
-msgid "Toplam Gece"
-msgstr "Toplam Gece"
-
-msgid "Temel Fiyat"
-msgstr "Temel Fiyat"
-
-msgid "Yetişkin Ücreti"
-msgstr "Yetişkin Ücreti"
-
-msgid "Çocuk Ücreti"
-msgstr "Çocuk Ücreti"
-
-msgid "İndirim"
-msgstr "İndirim"
-
-msgid "Toplam Tutar"
-msgstr "Toplam Tutar"
-
-# Validation messages
-msgid "Lütfen giriş tarihini seçin."
-msgstr "Lütfen giriş tarihini seçin."
-
-msgid "Lütfen çıkış tarihini seçin."
-msgstr "Lütfen çıkış tarihini seçin."
-
-msgid "Çıkış tarihi giriş tarihinden sonra olmalıdır."
-msgstr "Çıkış tarihi giriş tarihinden sonra olmalıdır."
-
-msgid "Seçilen tarihler müsait değil."
-msgstr "Seçilen tarihler müsait değil."
-
-msgid "Maksimum kapasite aşıldı."
-msgstr "Maksimum kapasite aşıldı."
-
-msgid "Minimum konaklama süresi %d gecedir."
-msgstr "Minimum konaklama süresi %d gecedir."
-
-msgid "Maksimum konaklama süresi %d gecedir."
-msgstr "Maksimum konaklama süresi %d gecedir."
-
-msgid "Lütfen geçerli bir e-posta adresi girin."
-msgstr "Lütfen geçerli bir e-posta adresi girin."
-
-msgid "Lütfen geçerli bir telefon numarası girin."
-msgstr "Lütfen geçerli bir telefon numarası girin."
-
-msgid "Lütfen şartlar ve koşulları kabul edin."
-msgstr "Lütfen şartlar ve koşulları kabul edin."
-
-# Admin menu
-msgid "Villa Rezervasyon"
-msgstr "Villa Rezervasyon"
-
-msgid "Dashboard"
-msgstr "Dashboard"
-
-msgid "Rezervasyonlar"
-msgstr "Rezervasyonlar"
-
-msgid "Takvim Görünümü"
-msgstr "Takvim Görünümü"
-
-msgid "Google Sheets Ayarları"
-msgstr "Google Sheets Ayarları"
-
-msgid "Google Sheets"
-msgstr "Google Sheets"
-
-msgid "Ayarlar"
-msgstr "Ayarlar"
-
-# Dashboard
-msgid "Villa Rezervasyon Sistemi"
-msgstr "Villa Rezervasyon Sistemi"
-
-msgid "Villa rezervasyon sisteminizi buradan yönetebilirsiniz."
-msgstr "Villa rezervasyon sisteminizi buradan yönetebilirsiniz."
-
-msgid "Toplam Villa"
-msgstr "Toplam Villa"
-
-msgid "Toplam Rezervasyon"
-msgstr "Toplam Rezervasyon"
-
-msgid "Bekleyen Rezervasyonlar"
-msgstr "Bekleyen Rezervasyonlar"
-
-msgid "Bu Ay Gelir"
-msgstr "Bu Ay Gelir"
-
-msgid "Son Rezervasyonlar"
-msgstr "Son Rezervasyonlar"
-
-msgid "Hızlı İşlemler"
-msgstr "Hızlı İşlemler"
-
-msgid "Yeni Villa Ekle"
-msgstr "Yeni Villa Ekle"
-
-msgid "Rezervasyonları Görüntüle"
-msgstr "Rezervasyonları Görüntüle"
-
-msgid "Sistem Durumu"
-msgstr "Sistem Durumu"
-
-msgid "Aktif"
-msgstr "Aktif"
-
-msgid "Problem"
-msgstr "Problem"
-
-msgid "Henüz rezervasyon bulunmuyor."
-msgstr "Henüz rezervasyon bulunmuyor."
-
-# Reservations page
-msgid "Tüm rezervasyonları görüntüleyebilir ve yönetebilirsiniz."
-msgstr "Tüm rezervasyonları görüntüleyebilir ve yönetebilirsiniz."
-
-msgid "Durum"
-msgstr "Durum"
-
-msgid "Tümü"
-msgstr "Tümü"
-
-msgid "Beklemede"
-msgstr "Beklemede"
-
-msgid "Onaylandı"
-msgstr "Onaylandı"
-
-msgid "İptal Edildi"
-msgstr "İptal Edildi"
-
-msgid "Tamamlandı"
-msgstr "Tamamlandı"
-
-msgid "Villa"
-msgstr "Villa"
-
-msgid "Başlangıç Tarihi"
-msgstr "Başlangıç Tarihi"
-
-msgid "Bitiş Tarihi"
-msgstr "Bitiş Tarihi"
-
-msgid "Filtrele"
-msgstr "Filtrele"
-
-msgid "ID"
-msgstr "ID"
-
-msgid "Müşteri"
-msgstr "Müşteri"
-
-msgid "Check-in"
-msgstr "Check-in"
-
-msgid "Check-out"
-msgstr "Check-out"
-
-msgid "Misafir"
-msgstr "Misafir"
-
-msgid "Toplam"
-msgstr "Toplam"
-
-msgid "İşlemler"
-msgstr "İşlemler"
-
-msgid "Görüntüle"
-msgstr "Görüntüle"
-
-msgid "İptal Et"
-msgstr "İptal Et"
-
-msgid "Hiç rezervasyon bulunamadı."
-msgstr "Hiç rezervasyon bulunamadı."
-
-# Calendar page
-msgid "Villa rezervasyonlarını takvim görünümünde inceleyebilirsiniz."
-msgstr "Villa rezervasyonlarını takvim görünümünde inceleyebilirsiniz."
-
-msgid "Villa Seçin"
-msgstr "Villa Seçin"
-
-msgid "Villa seçin..."
-msgstr "Villa seçin..."
-
-msgid "Lütfen takvim görünümü için bir villa seçin."
-msgstr "Lütfen takvim görünümü için bir villa seçin."
-
-# Settings page
-msgid "Villa Rezervasyon Ayarları"
-msgstr "Villa Rezervasyon Ayarları"
-
-msgid "Genel sistem ayarlarını buradan yapılandırabilirsiniz."
-msgstr "Genel sistem ayarlarını buradan yapılandırabilirsiniz."
-
-msgid "Genel Ayarlar"
-msgstr "Genel Ayarlar"
-
-msgid "Villa rezervasyon sistemi için genel ayarlar."
-msgstr "Villa rezervasyon sistemi için genel ayarlar."
-
-msgid "Varsayılan Check-in Saati"
-msgstr "Varsayılan Check-in Saati"
-
-msgid "Varsayılan Check-out Saati"
-msgstr "Varsayılan Check-out Saati"
-
-msgid "İptal Politikası (saat)"
-msgstr "İptal Politikası (saat)"
-
-msgid "Admin E-posta Adresi"
-msgstr "Admin E-posta Adresi"
-
-# Google Sheets messages
-msgid "Google API Kimlik Bilgileri"
-msgstr "Google API Kimlik Bilgileri"
-
-msgid "Google service account JSON dosyasını yükleyin"
-msgstr "Google service account JSON dosyasını yükleyin"
-
-msgid "Dosya seç"
-msgstr "Dosya seç"
-
-msgid "Kaydet"
-msgstr "Kaydet"
-
-msgid "Google Sheets bağlantısı başarılı!"
-msgstr "Google Sheets bağlantısı başarılı!"
-
-msgid "Bağlantı hatası:"
-msgstr "Bağlantı hatası:"
-
-msgid "Senkronizasyon tamamlandı!"
-msgstr "Senkronizasyon tamamlandı!"
-
-msgid "Senkronizasyon hatası:"
-msgstr "Senkronizasyon hatası:"
-
-# Email subjects
-msgid "Rezervasyon Onayı - %s"
-msgstr "Rezervasyon Onayı - %s"
-
-msgid "Yeni Rezervasyon - %s"
-msgstr "Yeni Rezervasyon - %s"
-
-msgid "Rezervasyon İptali - %s"
-msgstr "Rezervasyon İptali - %s"
-
-msgid "Rezervasyon Hatırlatması - %s"
-msgstr "Rezervasyon Hatırlatması - %s"
-
-# Email messages
-msgid "Rezervasyonunuz başarıyla oluşturuldu."
-msgstr "Rezervasyonunuz başarıyla oluşturuldu."
-
-msgid "Rezervasyonunuz onaylandı."
-msgstr "Rezervasyonunuz onaylandı."
-
-msgid "Rezervasyonunuz iptal edildi."
-msgstr "Rezervasyonunuz iptal edildi."
-
-msgid "Check-in tarihine 1 gün kaldı."
-msgstr "Check-in tarihine 1 gün kaldı."
-
-msgid "Ödemeyi tamamlamak için lütfen aşağıdaki linke tıklayın:"
-msgstr "Ödemeyi tamamlamak için lütfen aşağıdaki linke tıklayın:"
-
-msgid "Ödeme Yap"
-msgstr "Ödeme Yap"
-
-msgid "Rezervasyon Detayları"
-msgstr "Rezervasyon Detayları"
-
-msgid "Rezervasyon ID"
-msgstr "Rezervasyon ID"
-
-msgid "Giriş Tarihi"
-msgstr "Giriş Tarihi"
-
-msgid "Çıkış Tarihi"
-msgstr "Çıkış Tarihi"
-
-msgid "Yetişkin"
-msgstr "Yetişkin"
-
-msgid "Çocuk"
-msgstr "Çocuk"
-
-msgid "Toplam Tutar"
-msgstr "Toplam Tutar"
-
-# Error messages
-msgid "Villa Rezervasyon Sistemi eklentisi çalışmak için %s gerektirir."
-msgstr "Villa Rezervasyon Sistemi eklentisi çalışmak için %s gerektirir."
-
-msgid "Villa Rezervasyon Sistemi en az WordPress %s ve WooCommerce %s gerektirir."
-msgstr "Villa Rezervasyon Sistemi en az WordPress %s ve WooCommerce %s gerektirir."
-
-msgid "Geçersiz villa ID."
+# AJAX Messages
+msgid "Invalid villa ID."
 msgstr "Geçersiz villa ID."
 
-msgid "Bu işlemi geri alamazsınız. Devam etmek istediğinizden emin misiniz?"
-msgstr "Bu işlemi geri alamazsınız. Devam etmek istediğinizden emin misiniz?"
+msgid "Invalid request."
+msgstr "Geçersiz istek."
 
-msgid "İşlem başarıyla tamamlandı."
-msgstr "İşlem başarıyla tamamlandı."
+msgid "Security check failed."
+msgstr "Güvenlik kontrolü başarısız."
 
-msgid "Bir hata oluştu. Lütfen tekrar deneyin."
-msgstr "Bir hata oluştu. Lütfen tekrar deneyin."
+msgid "Required fields missing."
+msgstr "Gerekli alanlar eksik."
 
-msgid "Villa ID bulunamadı!"
-msgstr "Villa ID bulunamadı!"
+msgid "Reservation created successfully."
+msgstr "Rezervasyon başarıyla oluşturuldu."
 
-msgid "Bu rezervasyonu iptal etmek istediğinizden emin misiniz?"
-msgstr "Bu rezervasyonu iptal etmek istediğinizden emin misiniz?"
+msgid "Error creating reservation."
+msgstr "Rezervasyon oluşturulurken hata oluştu."
 
-msgid "Seçili rezervasyonları iptal etmek istediğinizden emin misiniz?"
-msgstr "Seçili rezervasyonları iptal etmek istediğinizden emin misiniz?"
+msgid "Connection test successful."
+msgstr "Bağlantı testi başarılı."
 
-# AJAX messages
-msgid "Test ediliyor..."
-msgstr "Test ediliyor..."
+msgid "Connection test failed."
+msgstr "Bağlantı testi başarısız."
 
-msgid "Senkronize ediliyor..."
-msgstr "Senkronize ediliyor..."
+msgid "Sync completed successfully."
+msgstr "Senkronizasyon başarıyla tamamlandı."
 
-msgid "Bağlantı testi başarısız oldu."
-msgstr "Bağlantı testi başarısız oldu."
+msgid "Sync failed."
+msgstr "Senkronizasyon başarısız."
 
-msgid "Senkronizasyon başarısız oldu."
-msgstr "Senkronizasyon başarısız oldu."
-
-msgid "Kaydediliyor..."
-msgstr "Kaydediliyor..."
-
-msgid "Google API kimlik bilgileri başarıyla kaydedildi!"
-msgstr "Google API kimlik bilgileri başarıyla kaydedildi!"
-
-msgid "Kaydetme hatası:"
-msgstr "Kaydetme hatası:"
-
-msgid "Kimlik bilgileri kaydedilemedi."
-msgstr "Kimlik bilgileri kaydedilemedi."
-
-msgid "Rezervasyon durumu güncellendi."
-msgstr "Rezervasyon durumu güncellendi."
-
-msgid "Durum güncellenemedi:"
-msgstr "Durum güncellenemedi:"
-
-msgid "Rezervasyon durumu güncellenemedi."
-msgstr "Rezervasyon durumu güncellenemedi."
-
-msgid "Rezervasyon iptal edildi."
-msgstr "Rezervasyon iptal edildi."
-
-msgid "İptal işlemi başarısız:"
-msgstr "İptal işlemi başarısız:"
-
-msgid "Rezervasyon iptal edilemedi."
-msgstr "Rezervasyon iptal edilemedi."
-
-msgid "Takvim yükleniyor..."
-msgstr "Takvim yükleniyor..."
-
-msgid "Takvim yüklenemedi:"
-msgstr "Takvim yüklenemedi:"
-
-msgid "Takvim yüklenirken hata oluştu."
-msgstr "Takvim yüklenirken hata oluştu."
-
-msgid "Tarih bloke edildi."
-msgstr "Tarih bloke edildi."
-
-msgid "Tarih bloke edilemedi:"
-msgstr "Tarih bloke edilemedi:"
-
-msgid "Tarih bloke edilirken hata oluştu."
-msgstr "Tarih bloke edilirken hata oluştu."
-
-msgid "Tarih blokesi kaldırıldı."
-msgstr "Tarih blokesi kaldırıldı."
-
-msgid "Tarih blokesi kaldırılamadı:"
-msgstr "Tarih blokesi kaldırılamadı:"
-
-msgid "Tarih blokesi kaldırılırken hata oluştu."
-msgstr "Tarih blokesi kaldırılırken hata oluştu."
-
-msgid "AJAX hatası oluştu. Lütfen tekrar deneyin."
-msgstr "AJAX hatası oluştu. Lütfen tekrar deneyin."
-
-# WooCommerce integration
-msgid "Rezervasyon için Ödeme"
-msgstr "Rezervasyon için Ödeme"
-
-msgid "Ödemeye Geç"
+# WooCommerce Integration
+msgid "Proceed to Payment"
 msgstr "Ödemeye Geç"
 
-msgid "Bu rezervasyon süresi dolmuş veya iptal edilmiş."
-msgstr "Bu rezervasyon süresi dolmuş veya iptal edilmiş."
+msgid "Villa Reservation - %s"
+msgstr "Villa Rezervasyonu - %s"
 
-msgid "Villa rezervasyonu"
-msgstr "Villa rezervasyonu"
+msgid "Reservation for %s from %s to %s"
+msgstr "%s için %s - %s tarihleri arası rezervasyon"
 
-msgid "Rezervasyon süresi:"
-msgstr "Rezervasyon süresi:"
+msgid "Guests: %d Adults"
+msgstr "Misafirler: %d Yetişkin"
 
-msgid "Misafir sayısı:"
-msgstr "Misafir sayısı:"
+msgid "Guests: %d Adults, %d Children"
+msgstr "Misafirler: %d Yetişkin, %d Çocuk"
 
-# Month names
-msgid "Ocak"
-msgstr "Ocak"
+# Errors
+msgid "WooCommerce is required for this plugin to work."
+msgstr "Bu eklentinin çalışması için WooCommerce gereklidir."
 
-msgid "Şubat"
-msgstr "Şubat"
+msgid "This plugin requires WordPress version 5.0 or higher."
+msgstr "Bu eklenti WordPress 5.0 veya daha yüksek sürüm gerektirir."
 
-msgid "Mart"
-msgstr "Mart"
+msgid "This plugin requires PHP version 7.4 or higher."
+msgstr "Bu eklenti PHP 7.4 veya daha yüksek sürüm gerektirir."
 
-msgid "Nisan"
-msgstr "Nisan"
+# Success Messages
+msgid "Villa settings updated successfully."
+msgstr "Villa ayarları başarıyla güncellendi."
 
-msgid "Mayıs"
-msgstr "Mayıs"
+msgid "Reservation confirmed successfully."
+msgstr "Rezervasyon başarıyla onaylandı."
 
-msgid "Haziran"
-msgstr "Haziran"
+# Time Formats
+msgid "d F Y"
+msgstr "d F Y"
 
-msgid "Temmuz"
-msgstr "Temmuz"
+msgid "d F Y H:i"
+msgstr "d F Y H:i"
 
-msgid "Ağustos"
-msgstr "Ağustos"
+# Capacity Messages
+msgid "people"
+msgstr "kişi"
 
-msgid "Eylül"
-msgstr "Eylül"
+msgid "Maximum %d people"
+msgstr "Maksimum %d kişi"
 
-msgid "Ekim"
-msgstr "Ekim"
-
-msgid "Kasım"
-msgstr "Kasım"
-
-msgid "Aralık"
-msgstr "Aralık"
-
-# Day names
-msgid "Pzt"
-msgstr "Pzt"
-
-msgid "Sal"
-msgstr "Sal"
-
-msgid "Çar"
-msgstr "Çar"
-
-msgid "Per"
-msgstr "Per"
-
-msgid "Cum"
-msgstr "Cum"
-
-msgid "Cmt"
-msgstr "Cmt"
-
-msgid "Paz"
-msgstr "Paz"
-
-# User pages
-msgid "Rezervasyonlarım"
-msgstr "Rezervasyonlarım"
-
-msgid "Rezervasyon Detayları"
+# Checkout Integration
+msgid "Reservation Details"
 msgstr "Rezervasyon Detayları"
 
-msgid "Giriş yapmanız gerekiyor."
-msgstr "Giriş yapmanız gerekiyor."
+msgid "Check-in"
+msgstr "Giriş"
 
-msgid "Size ait rezervasyon bulunamadı."
-msgstr "Size ait rezervasyon bulunamadı."
+msgid "Check-out"
+msgstr "Çıkış"
 
-# Cancellation policy
-msgid "Check-in tarihine 24 saatten az kaldığı için rezervasyon iptal edilemez."
-msgstr "Check-in tarihine 24 saatten az kaldığı için rezervasyon iptal edilemez."
+msgid "Duration"
+msgstr "Süre"
 
-# Email templates
-msgid "Merhaba %s,"
-msgstr "Merhaba %s,"
-
-msgid "Teşekkürler,"
-msgstr "Teşekkürler,"
-
-msgid "Villa Rezervasyon Sistemi"
-msgstr "Villa Rezervasyon Sistemi"
+msgid "Guests"
+msgstr "Misafirler"

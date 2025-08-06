@@ -183,14 +183,14 @@ class VillaReservationSystem {
         
         wp_enqueue_style(
             'vrs-admin-style',
-            VRS_PLUGIN_URL . 'admin/css/villa-reservation-admin.css',
+            VRS_PLUGIN_URL . 'admin/admin-styles.css',
             array(),
             VRS_VERSION
         );
         
         wp_enqueue_script(
             'vrs-admin-script',
-            VRS_PLUGIN_URL . 'admin/js/villa-reservation-admin.js',
+            VRS_PLUGIN_URL . 'admin/admin-scripts.js',
             array('jquery', 'jquery-ui-datepicker'),
             VRS_VERSION,
             true
@@ -198,11 +198,44 @@ class VillaReservationSystem {
         
         wp_localize_script('vrs-admin-script', 'vrsAdmin', array(
             'ajaxUrl' => admin_url('admin-ajax.php'),
-            'nonce' => wp_create_nonce('vrs_admin_nonce'),
-            'strings' => array(
-                'confirmDelete' => __('Bu işlemi geri alamazsınız. Devam etmek istediğinizden emin misiniz?', 'villa-reservation-system'),
-                'success' => __('İşlem başarıyla tamamlandı.', 'villa-reservation-system'),
-                'error' => __('Bir hata oluştu. Lütfen tekrar deneyin.', 'villa-reservation-system'),
+            'nonce' => wp_create_nonce('vrs_nonce'),
+            'testingText' => __('Test ediliyor...', 'villa-reservation-system'),
+            'syncingText' => __('Senkronize ediliyor...', 'villa-reservation-system'),
+            'savingText' => __('Kaydediliyor...', 'villa-reservation-system'),
+            'cancellingText' => __('İptal ediliyor...', 'villa-reservation-system'),
+            'loadingCalendarText' => __('Takvim yükleniyor...', 'villa-reservation-system'),
+            'connectionSuccessText' => __('Bağlantı testi başarılı.', 'villa-reservation-system'),
+            'connectionFailedText' => __('Bağlantı testi başarısız.', 'villa-reservation-system'),
+            'syncSuccessText' => __('Senkronizasyon tamamlandı!', 'villa-reservation-system'),
+            'syncFailedText' => __('Senkronizasyon başarısız.', 'villa-reservation-system'),
+            'settingsUpdatedText' => __('Villa ayarları başarıyla güncellendi.', 'villa-reservation-system'),
+            'settingsUpdateFailedText' => __('Ayarlar güncellenemedi.', 'villa-reservation-system'),
+            'statusUpdatedText' => __('Rezervasyon durumu güncellendi.', 'villa-reservation-system'),
+            'statusUpdateFailedText' => __('Durum güncellenemedi.', 'villa-reservation-system'),
+            'cancelSuccessText' => __('Rezervasyon iptal edildi.', 'villa-reservation-system'),
+            'cancelFailedText' => __('İptal işlemi başarısız.', 'villa-reservation-system'),
+            'calendarLoadFailedText' => __('Takvim yüklenemedi.', 'villa-reservation-system'),
+            'calendarLoadErrorText' => __('Takvim yüklenirken hata oluştu.', 'villa-reservation-system'),
+            'dateBlockedText' => __('Tarih bloke edildi.', 'villa-reservation-system'),
+            'dateBlockFailedText' => __('Tarih bloke edilemedi.', 'villa-reservation-system'),
+            'dateBlockErrorText' => __('Tarih bloke edilirken hata oluştu.', 'villa-reservation-system'),
+            'dateUnblockedText' => __('Tarih blokesi kaldırıldı.', 'villa-reservation-system'),
+            'dateUnblockFailedText' => __('Tarih blokesi kaldırılamadı.', 'villa-reservation-system'),
+            'dateUnblockErrorText' => __('Tarih blokesi kaldırılırken hata oluştu.', 'villa-reservation-system'),
+            'ajaxErrorText' => __('Bir hata oluştu. Lütfen tekrar deneyin.', 'villa-reservation-system'),
+            'selectVillaText' => __('Lütfen takvim görünümü için bir villa seçin.', 'villa-reservation-system'),
+            'selectFileText' => __('Lütfen bir dosya seçin.', 'villa-reservation-system'),
+            'invalidFileTypeText' => __('Lütfen geçerli bir JSON dosyası seçin.', 'villa-reservation-system'),
+            'selectReservationsText' => __('Lütfen en az bir rezervasyon seçin.', 'villa-reservation-system'),
+            'reservationsUpdatedText' => __('Rezervasyonlar güncellendi.', 'villa-reservation-system'),
+            'confirmStatusChangeText' => __('Rezervasyon durumunu değiştirmek istediğinizden emin misiniz?', 'villa-reservation-system'),
+            'confirmCancelText' => __('Bu rezervasyonu iptal etmek istediğinizden emin misiniz?', 'villa-reservation-system'),
+            'confirmBulkCancelText' => __('Seçili rezervasyonları iptal etmek istediğinizden emin misiniz?', 'villa-reservation-system'),
+            'statusLabels' => array(
+                'pending' => __('Beklemede', 'villa-reservation-system'),
+                'confirmed' => __('Onaylandı', 'villa-reservation-system'),
+                'cancelled' => __('İptal Edildi', 'villa-reservation-system'),
+                'completed' => __('Tamamlandı', 'villa-reservation-system')
             )
         ));
     }
