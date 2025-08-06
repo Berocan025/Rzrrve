@@ -1,152 +1,151 @@
 /* Villa Reservation System - Admin Styles */
 
-/* Admin Page Layout */
-.villa-admin-page {
-    background: white;
-    margin: 20px 20px 0 2px;
-    padding: 30px;
-    border-radius: 8px;
-    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
-}
-
-.admin-header {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    margin-bottom: 30px;
-    padding-bottom: 20px;
-    border-bottom: 2px solid #f1f1f1;
-}
-
-.admin-header h1 {
-    margin: 0;
-    color: #333;
-    font-weight: 600;
-}
-
-/* Statistics Cards */
-.admin-stats {
+/* Dashboard İstatistik Kartları */
+.vrs-dashboard-stats {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
     gap: 20px;
-    margin-bottom: 30px;
+    margin: 20px 0;
 }
 
-.stat-card {
-    background: white;
-    padding: 25px;
-    border-radius: 10px;
-    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
-    text-align: center;
-    border-left: 5px solid #667eea;
-    transition: transform 0.3s ease;
+.vrs-stat-card {
+    background: #fff;
+    border: 1px solid #e1e8ed;
+    border-radius: 8px;
+    padding: 20px;
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+    transition: all 0.3s ease;
 }
 
-.stat-card:hover {
-    transform: translateY(-5px);
+.vrs-stat-card:hover {
+    box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+    transform: translateY(-2px);
 }
 
-.stat-card:nth-child(1) { border-left-color: #667eea; }
-.stat-card:nth-child(2) { border-left-color: #28a745; }
-.stat-card:nth-child(3) { border-left-color: #ffc107; }
-.stat-card:nth-child(4) { border-left-color: #17a2b8; }
-
-.stat-number {
-    font-size: 36px;
-    font-weight: bold;
-    color: #333;
-    margin-bottom: 8px;
-    display: block;
+.vrs-stat-icon {
+    width: 60px;
+    height: 60px;
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #fff;
+    font-size: 24px;
+    flex-shrink: 0;
 }
 
-.stat-card:nth-child(1) .stat-number { color: #667eea; }
-.stat-card:nth-child(2) .stat-number { color: #28a745; }
-.stat-card:nth-child(3) .stat-number { color: #ffc107; }
-.stat-card:nth-child(4) .stat-number { color: #17a2b8; }
+.vrs-stat-content h3 {
+    margin: 0 0 5px 0;
+    font-size: 28px;
+    font-weight: 700;
+    color: #2c3e50;
+    line-height: 1;
+}
 
-.stat-label {
-    color: #666;
+.vrs-stat-content p {
+    margin: 0 0 5px 0;
+    color: #7f8c8d;
     font-size: 14px;
-    text-transform: uppercase;
-    letter-spacing: 1px;
     font-weight: 500;
 }
 
-/* Admin Grid Layout */
-.admin-content {
-    margin-top: 30px;
-}
-
-.admin-row {
-    display: flex;
-    gap: 20px;
-    margin-bottom: 20px;
-}
-
-.admin-col-4 { flex: 0 0 33.333333%; }
-.admin-col-6 { flex: 0 0 50%; }
-.admin-col-8 { flex: 0 0 66.666667%; }
-
-.admin-card {
-    background: white;
-    border-radius: 8px;
-    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
-    overflow: hidden;
-}
-
-.admin-card h3 {
-    background: #f8f9fa;
-    margin: 0;
-    padding: 20px;
-    border-bottom: 1px solid #dee2e6;
-    color: #333;
-    font-size: 16px;
+.vrs-stat-change {
+    font-size: 12px;
     font-weight: 600;
+    padding: 2px 8px;
+    border-radius: 12px;
 }
 
-.admin-card .card-content {
-    padding: 20px;
+.vrs-stat-change.positive {
+    background: #d4edda;
+    color: #155724;
 }
 
-/* Widgets */
-.recent-reservations-list,
-.popular-villas-list {
-    list-style: none;
-    margin: 0;
-    padding: 20px;
+.vrs-stat-change.negative {
+    background: #f8d7da;
+    color: #721c24;
 }
 
-.reservation-item,
-.villa-item {
+.vrs-stat-link {
+    font-size: 12px;
+    color: #667eea;
+    text-decoration: none;
+    font-weight: 500;
+}
+
+.vrs-stat-link:hover {
+    color: #764ba2;
+    text-decoration: underline;
+}
+
+/* Dashboard Layout */
+.vrs-dashboard-content {
+    display: grid;
+    grid-template-columns: 2fr 1fr;
+    gap: 20px;
+    margin-top: 20px;
+}
+
+.vrs-dashboard-widget {
+    background: #fff;
+    border: 1px solid #e1e8ed;
+    border-radius: 8px;
+    margin-bottom: 20px;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+}
+
+.vrs-widget-header {
+    padding: 15px 20px;
+    border-bottom: 1px solid #e1e8ed;
     display: flex;
     justify-content: space-between;
     align-items: center;
-    padding: 15px 0;
-    border-bottom: 1px solid #eee;
+    background: #f8f9fa;
+    border-radius: 8px 8px 0 0;
 }
 
-.reservation-item:last-child,
-.villa-item:last-child {
-    border-bottom: none;
-}
-
-.reservation-villa,
-.villa-name {
+.vrs-widget-header h2 {
+    margin: 0;
+    font-size: 16px;
+    color: #2c3e50;
     font-weight: 600;
-    color: #333;
 }
 
-.reservation-guest {
-    color: #666;
+.vrs-widget-content {
+    padding: 20px;
+}
+
+/* Son Rezervasyonlar Tablosu */
+.vrs-recent-reservations {
+    width: 100%;
+    border-collapse: collapse;
     font-size: 14px;
 }
 
-.reservation-dates {
-    color: #999;
-    font-size: 12px;
+.vrs-recent-reservations th {
+    background: #f8f9fa;
+    padding: 12px 8px;
+    text-align: left;
+    font-weight: 600;
+    color: #2c3e50;
+    border-bottom: 2px solid #e1e8ed;
 }
 
-.reservation-status {
+.vrs-recent-reservations td {
+    padding: 12px 8px;
+    border-bottom: 1px solid #e1e8ed;
+    vertical-align: top;
+}
+
+.vrs-recent-reservations tr:hover {
+    background: #f8f9fa;
+}
+
+.vrs-reservation-status {
     padding: 4px 8px;
     border-radius: 12px;
     font-size: 11px;
@@ -154,341 +153,517 @@
     text-transform: uppercase;
 }
 
-.status-confirmed { background: #d4edda; color: #155724; }
-.status-pending { background: #fff3cd; color: #856404; }
-.status-cancelled { background: #f8d7da; color: #721c24; }
-
-.villa-count {
-    background: #e9ecef;
-    color: #495057;
-    padding: 4px 8px;
-    border-radius: 12px;
-    font-size: 12px;
-    font-weight: 600;
+.vrs-status-pending {
+    background: #fff3cd;
+    color: #856404;
 }
 
-/* Google Sheets Status Widget */
-.sync-status {
-    padding: 20px;
-    text-align: center;
+.vrs-status-confirmed {
+    background: #d4edda;
+    color: #155724;
 }
 
-.sync-stat {
-    margin-bottom: 15px;
+.vrs-status-cancelled {
+    background: #f8d7da;
+    color: #721c24;
 }
 
-.sync-stat .stat-number {
-    font-size: 24px;
-    color: #667eea;
-    display: block;
-    margin-bottom: 5px;
+/* Hızlı İşlemler */
+.vrs-quick-actions {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+    gap: 15px;
 }
 
-.sync-stat .stat-label {
-    color: #666;
-    font-size: 12px;
-    text-transform: uppercase;
-    letter-spacing: 1px;
-}
-
-.last-sync {
-    color: #999;
-    font-size: 12px;
-}
-
-/* Forms */
-.villa-meta-box {
-    background: #f9f9f9;
-    border: 1px solid #ddd;
-    border-radius: 5px;
-    padding: 20px;
-    margin: 10px 0;
-}
-
-.villa-meta-row {
+.vrs-quick-action {
     display: flex;
-    gap: 20px;
-    margin-bottom: 15px;
+    flex-direction: column;
     align-items: center;
-}
-
-.villa-meta-col {
-    flex: 1;
-}
-
-.villa-meta-col label {
-    display: block;
-    margin-bottom: 5px;
-    font-weight: 600;
-    color: #333;
-}
-
-.villa-meta-col input,
-.villa-meta-col select,
-.villa-meta-col textarea {
-    width: 100%;
-    padding: 8px 12px;
-    border: 1px solid #ddd;
-    border-radius: 4px;
+    gap: 8px;
+    padding: 20px 15px;
+    background: #f8f9fa;
+    border: 2px solid #e1e8ed;
+    border-radius: 8px;
+    text-decoration: none;
+    color: #2c3e50;
+    font-weight: 500;
+    transition: all 0.3s ease;
+    cursor: pointer;
     font-size: 14px;
 }
 
-.villa-meta-col input:focus,
-.villa-meta-col select:focus,
-.villa-meta-col textarea:focus {
-    outline: none;
+.vrs-quick-action:hover {
+    background: #667eea;
+    color: #fff;
     border-color: #667eea;
-    box-shadow: 0 0 0 2px rgba(102, 126, 234, 0.2);
+    transform: translateY(-2px);
 }
 
-/* Pricing Type Toggle */
-.pricing-toggle {
-    display: flex;
-    gap: 10px;
-    margin-bottom: 15px;
+.vrs-quick-action .dashicons {
+    font-size: 24px;
 }
 
-.pricing-toggle label {
-    display: flex;
-    align-items: center;
-    cursor: pointer;
-    padding: 8px 12px;
-    border: 2px solid #ddd;
-    border-radius: 6px;
-    transition: all 0.3s ease;
-}
-
-.pricing-toggle input {
-    margin-right: 8px;
-}
-
-.pricing-toggle label:hover {
-    border-color: #667eea;
-}
-
-.pricing-toggle input:checked + span {
-    font-weight: 600;
-    color: #667eea;
-}
-
-.pricing-fields {
-    display: none;
-}
-
-.pricing-fields.active {
-    display: block;
-}
-
-/* Google Sheets Integration */
-.google-sheets-status {
-    margin: 15px 0;
-    padding: 10px;
-    border-radius: 4px;
-}
-
-.google-sheets-status.connected {
-    background: #d4edda;
-    color: #155724;
-    border: 1px solid #c3e6cb;
-}
-
-.google-sheets-status.disconnected {
-    background: #f8d7da;
-    color: #721c24;
-    border: 1px solid #f5c6cb;
-}
-
-.google-sheets-actions {
-    margin-top: 10px;
-}
-
-.google-sheets-actions .button {
-    margin-right: 10px;
-}
-
-/* Reservations List */
-.reservations-meta-box {
-    max-height: 300px;
-    overflow-y: auto;
-}
-
-.reservations-list {
+/* Popüler Villalar */
+.vrs-popular-villas {
     list-style: none;
     margin: 0;
     padding: 0;
 }
 
-.reservation-meta-item {
-    padding: 10px;
-    border-bottom: 1px solid #eee;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
+.vrs-popular-villa {
+    padding: 15px 0;
+    border-bottom: 1px solid #e1e8ed;
 }
 
-.reservation-meta-item:last-child {
+.vrs-popular-villa:last-child {
     border-bottom: none;
 }
 
-/* Villa List Table Columns */
-.column-reservations,
-.column-availability {
-    width: 120px;
-    text-align: center;
-}
-
-.villa-reservation-count {
-    background: #667eea;
-    color: white;
-    padding: 3px 8px;
-    border-radius: 10px;
-    font-size: 11px;
-    font-weight: 600;
-}
-
-.villa-availability {
-    padding: 3px 8px;
-    border-radius: 10px;
-    font-size: 11px;
-    font-weight: 600;
-}
-
-.availability-available {
-    background: #d4edda;
-    color: #155724;
-}
-
-.availability-booked {
-    background: #f8d7da;
-    color: #721c24;
-}
-
-/* Reports Page */
-.report-filters {
-    background: #f8f9fa;
-    padding: 20px;
-    border-radius: 8px;
-    margin-bottom: 30px;
-    border: 1px solid #dee2e6;
-}
-
-.filter-row {
+.vrs-villa-info {
     display: flex;
-    gap: 20px;
-    align-items: end;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 8px;
 }
 
-.filter-col {
+.vrs-villa-info strong {
+    color: #2c3e50;
+}
+
+.vrs-reservation-count {
+    font-size: 12px;
+    color: #7f8c8d;
+}
+
+.vrs-progress-bar {
+    width: 100%;
+    height: 6px;
+    background: #e1e8ed;
+    border-radius: 3px;
+    overflow: hidden;
+}
+
+.vrs-progress-fill {
+    height: 100%;
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    border-radius: 3px;
+    transition: width 0.3s ease;
+}
+
+/* Sistem Durumu */
+.vrs-system-status {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
+
+.vrs-status-item {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 8px 12px;
+    background: #f8f9fa;
+    border-radius: 6px;
+}
+
+.vrs-status-indicator {
+    width: 12px;
+    height: 12px;
+    border-radius: 50%;
+    flex-shrink: 0;
+}
+
+.vrs-status-indicator.active {
+    background: #28a745;
+}
+
+.vrs-status-indicator.inactive {
+    background: #dc3545;
+}
+
+.vrs-status-indicator.warning {
+    background: #ffc107;
+}
+
+.vrs-status-label {
+    font-weight: 500;
+    color: #2c3e50;
     flex: 1;
 }
 
-.filter-col label {
-    display: block;
-    margin-bottom: 5px;
-    font-weight: 600;
-    color: #333;
+.vrs-status-value {
+    font-size: 12px;
+    color: #7f8c8d;
 }
 
-.filter-col input,
-.filter-col select {
+/* Modal Stilleri */
+.vrs-modal {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0,0,0,0.5);
+    z-index: 100000;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.vrs-modal-content {
+    background: #fff;
+    border-radius: 8px;
+    max-width: 500px;
+    width: 90%;
+    max-height: 90vh;
+    overflow-y: auto;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+}
+
+.vrs-modal-header {
+    padding: 20px;
+    border-bottom: 1px solid #e1e8ed;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background: #f8f9fa;
+    border-radius: 8px 8px 0 0;
+}
+
+.vrs-modal-header h3 {
+    margin: 0;
+    color: #2c3e50;
+}
+
+.vrs-modal-close {
+    background: none;
+    border: none;
+    font-size: 24px;
+    cursor: pointer;
+    color: #7f8c8d;
+    padding: 0;
+    width: 30px;
+    height: 30px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.vrs-modal-close:hover {
+    color: #2c3e50;
+}
+
+.vrs-modal-body {
+    padding: 20px;
+}
+
+/* Form Stilleri */
+.vrs-form-group {
+    margin-bottom: 20px;
+}
+
+.vrs-form-group label {
+    display: block;
+    margin-bottom: 5px;
+    color: #2c3e50;
+    font-weight: 500;
+}
+
+.vrs-form-group input,
+.vrs-form-group select,
+.vrs-form-group textarea {
+    width: 100%;
+    padding: 8px 12px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    font-size: 14px;
+}
+
+.vrs-form-group input:focus,
+.vrs-form-group select:focus,
+.vrs-form-group textarea:focus {
+    outline: none;
+    border-color: #667eea;
+    box-shadow: 0 0 0 2px rgba(102, 126, 234, 0.1);
+}
+
+.vrs-form-actions {
+    display: flex;
+    gap: 10px;
+    justify-content: flex-end;
+    margin-top: 20px;
+}
+
+/* Villa Meta Box Stilleri */
+.vrs-meta-box {
+    padding: 15px;
+}
+
+.vrs-meta-row {
+    display: flex;
+    gap: 15px;
+    margin-bottom: 15px;
+}
+
+.vrs-meta-col {
+    flex: 1;
+}
+
+.vrs-meta-col label {
+    display: block;
+    margin-bottom: 5px;
+    font-weight: 500;
+    color: #2c3e50;
+}
+
+.vrs-meta-col input,
+.vrs-meta-col select {
     width: 100%;
     padding: 8px 12px;
     border: 1px solid #ddd;
     border-radius: 4px;
 }
 
-#report-results {
-    margin-top: 20px;
+.vrs-pricing-toggle {
+    display: none;
 }
 
-#report-results table {
-    margin-top: 20px;
+.vrs-pricing-toggle.show {
+    display: block;
+    animation: slideDown 0.3s ease;
 }
 
-/* Tools Page */
-.tool-section {
-    background: #f8f9fa;
-    padding: 25px;
-    border-radius: 8px;
-    margin-bottom: 20px;
-    border-left: 4px solid #667eea;
+@keyframes slideDown {
+    from {
+        opacity: 0;
+        max-height: 0;
+    }
+    to {
+        opacity: 1;
+        max-height: 200px;
+    }
 }
 
-.tool-section h3 {
-    margin-top: 0;
-    color: #333;
+/* Google Sheets Status */
+.vrs-sync-status {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin: 10px 0;
 }
 
-.tool-section p {
-    color: #666;
-    margin-bottom: 15px;
+.vrs-sync-status .status-indicator {
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
 }
 
-.progress-bar {
-    width: 100%;
-    height: 20px;
-    background: #e9ecef;
-    border-radius: 10px;
-    overflow: hidden;
+.vrs-sync-status .status-connected {
+    background: #28a745;
+}
+
+.vrs-sync-status .status-disconnected {
+    background: #dc3545;
+}
+
+.vrs-sync-status .status-pending {
+    background: #ffc107;
+}
+
+.vrs-sync-buttons {
+    display: flex;
+    gap: 10px;
     margin-top: 10px;
 }
 
-.progress-fill {
-    height: 100%;
-    background: linear-gradient(90deg, #667eea, #764ba2);
-    border-radius: 10px;
-    transition: width 0.3s ease;
+.vrs-sync-buttons button {
+    padding: 6px 12px;
+    border: 1px solid #ddd;
+    background: #f8f9fa;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 12px;
 }
 
-/* Buttons */
-.button-primary {
-    background: #667eea !important;
-    border-color: #667eea !important;
-    text-shadow: none !important;
-    box-shadow: none !important;
+.vrs-sync-buttons button:hover {
+    background: #e9ecef;
 }
 
-.button-primary:hover {
-    background: #5a6fd8 !important;
-    border-color: #5a6fd8 !important;
-}
-
-.button-secondary {
-    color: #667eea !important;
-    border-color: #667eea !important;
-}
-
-.button-secondary:hover {
-    background: #667eea !important;
-    color: white !important;
-}
-
-/* Loading States */
-.loading {
-    opacity: 0.6;
-    pointer-events: none;
-}
-
-.loading-overlay {
-    position: fixed;
-    top: 0;
-    left: 0;
+/* Rezervasyon Liste Tablosu */
+.vrs-reservations-table {
     width: 100%;
-    height: 100%;
-    background: rgba(0, 0, 0, 0.5);
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    z-index: 999999;
+    border-collapse: collapse;
+    margin-top: 20px;
 }
 
-.loading-spinner {
-    width: 40px;
-    height: 40px;
-    border: 4px solid #f3f3f3;
-    border-top: 4px solid #667eea;
+.vrs-reservations-table th,
+.vrs-reservations-table td {
+    padding: 12px 8px;
+    text-align: left;
+    border-bottom: 1px solid #ddd;
+}
+
+.vrs-reservations-table th {
+    background: #f8f9fa;
+    font-weight: 600;
+    color: #2c3e50;
+}
+
+.vrs-reservations-table tr:hover {
+    background: #f8f9fa;
+}
+
+/* Takvim Stilleri */
+.vrs-calendar-container {
+    background: #fff;
+    border-radius: 8px;
+    padding: 20px;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+}
+
+.vrs-calendar-header {
+    display: flex;
+    justify-content: between;
+    align-items: center;
+    margin-bottom: 20px;
+    padding-bottom: 15px;
+    border-bottom: 1px solid #e1e8ed;
+}
+
+.vrs-calendar-controls {
+    display: flex;
+    gap: 10px;
+    align-items: center;
+}
+
+.vrs-calendar-grid {
+    display: grid;
+    grid-template-columns: repeat(7, 1fr);
+    gap: 1px;
+    background: #e1e8ed;
+    border-radius: 8px;
+    overflow: hidden;
+}
+
+.vrs-calendar-day {
+    background: #fff;
+    padding: 15px 5px;
+    text-align: center;
+    min-height: 80px;
+    position: relative;
+    border: 1px solid transparent;
+}
+
+.vrs-calendar-day.other-month {
+    background: #f8f9fa;
+    color: #bdc3c7;
+}
+
+.vrs-calendar-day.has-reservation {
+    background: #e3f2fd;
+    border-color: #2196f3;
+}
+
+.vrs-calendar-day.blocked {
+    background: #ffebee;
+    border-color: #f44336;
+}
+
+.vrs-calendar-day.today {
+    background: #fff3e0;
+    border-color: #ff9800;
+}
+
+.vrs-calendar-day-number {
+    font-weight: 600;
+    margin-bottom: 5px;
+}
+
+.vrs-calendar-day-events {
+    font-size: 10px;
+    line-height: 1.2;
+}
+
+.vrs-calendar-event {
+    background: rgba(52, 152, 219, 0.8);
+    color: #fff;
+    padding: 1px 3px;
+    border-radius: 2px;
+    margin: 1px 0;
+    text-overflow: ellipsis;
+    overflow: hidden;
+    white-space: nowrap;
+}
+
+/* Responsive Tasarım */
+@media (max-width: 1200px) {
+    .vrs-dashboard-content {
+        grid-template-columns: 1fr;
+    }
+}
+
+@media (max-width: 768px) {
+    .vrs-dashboard-stats {
+        grid-template-columns: 1fr;
+    }
+    
+    .vrs-stat-card {
+        flex-direction: column;
+        text-align: center;
+    }
+    
+    .vrs-quick-actions {
+        grid-template-columns: repeat(2, 1fr);
+    }
+    
+    .vrs-meta-row {
+        flex-direction: column;
+    }
+    
+    .vrs-recent-reservations {
+        font-size: 12px;
+    }
+    
+    .vrs-recent-reservations th,
+    .vrs-recent-reservations td {
+        padding: 8px 4px;
+    }
+    
+    .vrs-calendar-grid {
+        font-size: 12px;
+    }
+    
+    .vrs-calendar-day {
+        min-height: 60px;
+        padding: 10px 3px;
+    }
+}
+
+@media (max-width: 480px) {
+    .vrs-quick-actions {
+        grid-template-columns: 1fr;
+    }
+    
+    .vrs-modal-content {
+        width: 95%;
+        margin: 10px;
+    }
+    
+    .vrs-form-actions {
+        flex-direction: column;
+    }
+}
+
+/* Loading ve Spinner */
+.vrs-loading {
+    display: inline-block;
+    width: 20px;
+    height: 20px;
+    border: 2px solid #f3f3f3;
+    border-top: 2px solid #667eea;
     border-radius: 50%;
     animation: spin 1s linear infinite;
+    margin-right: 8px;
 }
 
 @keyframes spin {
@@ -496,131 +671,130 @@
     100% { transform: rotate(360deg); }
 }
 
-/* Messages */
-.admin-message {
-    padding: 15px;
+/* Bildirimler */
+.vrs-notice {
+    padding: 12px 15px;
     margin: 15px 0;
-    border-radius: 6px;
-    font-weight: 500;
-}
-
-.admin-message.success {
-    background: #d4edda;
-    color: #155724;
-    border: 1px solid #c3e6cb;
-}
-
-.admin-message.error {
-    background: #f8d7da;
-    color: #721c24;
-    border: 1px solid #f5c6cb;
-}
-
-.admin-message.info {
-    background: #d1ecf1;
-    color: #0c5460;
-    border: 1px solid #bee5eb;
-}
-
-/* Responsive Design */
-@media (max-width: 1200px) {
-    .admin-row {
-        flex-direction: column;
-    }
-    
-    .admin-col-4,
-    .admin-col-6,
-    .admin-col-8 {
-        flex: 1;
-    }
-}
-
-@media (max-width: 768px) {
-    .villa-admin-page {
-        margin: 10px;
-        padding: 20px;
-    }
-    
-    .admin-header {
-        flex-direction: column;
-        gap: 15px;
-        text-align: center;
-    }
-    
-    .admin-stats {
-        grid-template-columns: 1fr;
-    }
-    
-    .villa-meta-row {
-        flex-direction: column;
-        gap: 0;
-    }
-    
-    .filter-row {
-        flex-direction: column;
-        gap: 15px;
-    }
-    
-    .reservation-item,
-    .villa-item {
-        flex-direction: column;
-        align-items: flex-start;
-        gap: 5px;
-    }
-}
-
-/* Settings Page Specific */
-.form-table th {
-    width: 200px;
-    font-weight: 600;
-    color: #333;
-}
-
-.form-table td {
-    padding: 20px 10px;
-}
-
-.form-table input[type="text"],
-.form-table input[type="email"],
-.form-table input[type="number"],
-.form-table input[type="time"],
-.form-table select {
-    width: 350px;
-    padding: 8px 12px;
-    border: 1px solid #ddd;
+    border-left: 4px solid;
     border-radius: 4px;
 }
 
-.form-table input[type="checkbox"] {
-    transform: scale(1.2);
+.vrs-notice.success {
+    background: #d4edda;
+    border-color: #28a745;
+    color: #155724;
 }
 
-/* Chart Container */
-#reservationChart {
-    max-height: 400px;
+.vrs-notice.error {
+    background: #f8d7da;
+    border-color: #dc3545;
+    color: #721c24;
 }
 
-/* Custom Post Type Admin */
-.post-type-villa .wp-list-table {
-    background: white;
-    border-radius: 8px;
-    overflow: hidden;
+.vrs-notice.warning {
+    background: #fff3cd;
+    border-color: #ffc107;
+    color: #856404;
 }
 
-.post-type-villa .wp-list-table th {
+.vrs-notice.info {
+    background: #d1ecf1;
+    border-color: #17a2b8;
+    color: #0c5460;
+}
+
+/* Tooltip */
+.vrs-tooltip {
+    position: relative;
+    display: inline-block;
+    cursor: help;
+}
+
+.vrs-tooltip::after {
+    content: attr(data-tooltip);
+    position: absolute;
+    bottom: 125%;
+    left: 50%;
+    transform: translateX(-50%);
+    background: #2c3e50;
+    color: #fff;
+    padding: 8px 12px;
+    border-radius: 4px;
+    font-size: 12px;
+    white-space: nowrap;
+    opacity: 0;
+    visibility: hidden;
+    transition: all 0.3s ease;
+    z-index: 1000;
+}
+
+.vrs-tooltip::before {
+    content: '';
+    position: absolute;
+    bottom: 115%;
+    left: 50%;
+    transform: translateX(-50%);
+    border: 5px solid transparent;
+    border-top-color: #2c3e50;
+    opacity: 0;
+    visibility: hidden;
+    transition: all 0.3s ease;
+}
+
+.vrs-tooltip:hover::after,
+.vrs-tooltip:hover::before {
+    opacity: 1;
+    visibility: visible;
+}
+
+/* Grafik Konteyner */
+.vrs-chart-container {
+    position: relative;
+    height: 300px;
+    margin: 20px 0;
+}
+
+/* Pagination */
+.vrs-pagination {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 5px;
+    margin: 20px 0;
+}
+
+.vrs-pagination a,
+.vrs-pagination span {
+    padding: 8px 12px;
+    border: 1px solid #ddd;
+    text-decoration: none;
+    color: #2c3e50;
+    border-radius: 4px;
+}
+
+.vrs-pagination a:hover {
     background: #f8f9fa;
-    color: #333;
-    font-weight: 600;
 }
 
-/* Hide WordPress Admin Notices on Plugin Pages */
-.villa-admin-page .notice,
-.villa-admin-page .error,
-.villa-admin-page .updated {
-    display: none;
+.vrs-pagination .current {
+    background: #667eea;
+    color: #fff;
+    border-color: #667eea;
 }
 
-/* Show only our plugin notices */
-.villa-admin-page .vrs-notice {
-    display: block !important;
+/* Export Buttons */
+.vrs-export-buttons {
+    display: flex;
+    gap: 10px;
+    margin-bottom: 20px;
+}
+
+.vrs-export-buttons .button {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+}
+
+.vrs-export-buttons .button .dashicons {
+    font-size: 16px;
 }
