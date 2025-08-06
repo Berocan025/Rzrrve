@@ -1,574 +1,768 @@
 <?php
 /**
- * Admin Pages for Villa Reservation System
- *
+ * Villa Reservation System - Admin Pages
+ * 
  * @package VillaReservationSystem
+ * @since 1.0.0
  */
 
-// Prevent direct access
 if (!defined('ABSPATH')) {
     exit;
 }
 
+/**
+ * Villa Reservation System Admin Pages
+ */
 class VRS_Admin_Pages {
     
+    /**
+     * Constructor
+     */
     public function __construct() {
         add_action('admin_menu', array($this, 'add_admin_menu'));
         add_action('admin_enqueue_scripts', array($this, 'enqueue_admin_scripts'));
-        add_action('wp_ajax_vrs_admin_action', array($this, 'handle_admin_ajax'));
+        add_action('admin_init', array($this, 'admin_init'));
     }
     
     /**
-     * Add admin menu pages
+     * Admin menu oluştur
      */
     public function add_admin_menu() {
-        // Main menu page
+        // Ana menü
         add_menu_page(
             __('Villa Rezervasyon', 'villa-reservation-system'),
             __('Villa Rezervasyon', 'villa-reservation-system'),
             'manage_options',
-            'villa-reservation-system',
-            array($this, 'main_dashboard'),
+            'villa-reservations',
+            array($this, 'main_page'),
             'dashicons-calendar-alt',
-            26
+            25
         );
         
-        // Dashboard submenu
+        // Alt menüler
         add_submenu_page(
-            'villa-reservation-system',
-            __('Panel', 'villa-reservation-system'),
-            __('Panel', 'villa-reservation-system'),
+            'villa-reservations',
+            __('Genel Bakış', 'villa-reservation-system'),
+            __('Genel Bakış', 'villa-reservation-system'),
             'manage_options',
-            'villa-reservation-system',
-            array($this, 'main_dashboard')
+            'villa-reservations',
+            array($this, 'main_page')
         );
         
-        // Reservations submenu
         add_submenu_page(
-            'villa-reservation-system',
-            __('Rezervasyonlar', 'villa-reservation-system'),
-            __('Rezervasyonlar', 'villa-reservation-system'),
-            'manage_options',
-            'vrs-reservations',
-            array($this, 'reservations_page')
+            'villa-reservations',
+            __('Tüm Villalar', 'villa-reservation-system'),
+            __('Tüm Villalar', 'villa-reservation-system'),
+            'edit_posts',
+            'edit.php?post_type=villa'
         );
         
-        // Calendar view submenu
         add_submenu_page(
-            'villa-reservation-system',
-            __('Takvim Görünümü', 'villa-reservation-system'),
-            __('Takvim Görünümü', 'villa-reservation-system'),
-            'manage_options',
-            'vrs-calendar',
-            array($this, 'calendar_page')
+            'villa-reservations',
+            __('Villa Ekle', 'villa-reservation-system'),
+            __('Villa Ekle', 'villa-reservation-system'),
+            'edit_posts',
+            'post-new.php?post_type=villa'
         );
         
-        // Reports submenu
         add_submenu_page(
-            'villa-reservation-system',
-            __('Raporlar', 'villa-reservation-system'),
-            __('Raporlar', 'villa-reservation-system'),
-            'manage_options',
-            'vrs-reports',
-            array($this, 'reports_page')
-        );
-        
-        // Settings submenu
-        add_submenu_page(
-            'villa-reservation-system',
+            'villa-reservations',
             __('Ayarlar', 'villa-reservation-system'),
             __('Ayarlar', 'villa-reservation-system'),
             'manage_options',
-            'vrs-settings',
+            'villa-reservation-settings',
             array($this, 'settings_page')
         );
+        
+        add_submenu_page(
+            'villa-reservations',
+            __('Raporlar', 'villa-reservation-system'),
+            __('Raporlar', 'villa-reservation-system'),
+            'manage_options',
+            'villa-reservation-reports',
+            array($this, 'reports_page')
+        );
     }
     
     /**
-     * Enqueue admin scripts and styles
+     * Admin scripts enqueue
      */
-    public function enqueue_admin_scripts($hook_suffix) {
-        // Only load on our admin pages
-        if (strpos($hook_suffix, 'villa-reservation-system') === false && 
-            strpos($hook_suffix, 'vrs-') === false) {
-            return;
+    public function enqueue_admin_scripts($hook) {
+        if (strpos($hook, 'villa-reservation') !== false || get_post_type() === 'villa') {
+            wp_enqueue_script('jquery-ui-datepicker');
+            wp_enqueue_style('jquery-ui-style', 'https://code.jquery.com/ui/1.12.1/themes/ui-lightness/jquery-ui.css');
+            
+            wp_enqueue_style(
+                'vrs-admin-styles',
+                VRS_PLUGIN_URL . 'admin/admin-styles.css',
+                array(),
+                VRS_VERSION
+            );
+            
+            wp_enqueue_script(
+                'vrs-admin-script',
+                VRS_PLUGIN_URL . 'admin/admin-script.js',
+                array('jquery', 'jquery-ui-datepicker'),
+                VRS_VERSION,
+                true
+            );
+            
+            wp_localize_script('vrs-admin-script', 'vrsAdmin', array(
+                'ajax_url' => admin_url('admin-ajax.php'),
+                'nonce' => wp_create_nonce('vrs_admin_nonce'),
+                'strings' => array(
+                    'confirm_delete' => __('Bu işlemi geri alamazsınız. Emin misiniz?', 'villa-reservation-system'),
+                    'loading' => __('Yükleniyor...', 'villa-reservation-system'),
+                    'error' => __('Bir hata oluştu.', 'villa-reservation-system'),
+                    'success' => __('İşlem başarıyla tamamlandı.', 'villa-reservation-system'),
+                )
+            ));
         }
-        
-        wp_enqueue_script('jquery-ui-datepicker');
-        wp_enqueue_script('jquery-ui-dialog');
-        wp_enqueue_style('jquery-ui-css', 'https://code.jquery.com/ui/1.12.1/themes/ui-lightness/jquery-ui.css');
-        
-        wp_enqueue_script(
-            'vrs-admin-js',
-            plugin_dir_url(__FILE__) . '../assets/js/admin.js',
-            array('jquery', 'jquery-ui-datepicker', 'jquery-ui-dialog'),
-            VRS_VERSION,
-            true
-        );
-        
-        wp_enqueue_style(
-            'vrs-admin-css',
-            plugin_dir_url(__FILE__) . '../assets/css/admin.css',
-            array(),
-            VRS_VERSION
-        );
-        
-        // Localize script
-        wp_localize_script('vrs-admin-js', 'vrsAdmin', array(
-            'ajax_url' => admin_url('admin-ajax.php'),
-            'nonce' => wp_create_nonce('vrs_admin_nonce'),
-            'messages' => array(
-                'confirm_delete' => __('Bu rezervasyonu silmek istediğinizden emin misiniz?', 'villa-reservation-system'),
-                'confirm_cancel' => __('Bu rezervasyonu iptal etmek istediğinizden emin misiniz?', 'villa-reservation-system'),
-                'saving' => __('Kaydediliyor...', 'villa-reservation-system'),
-                'saved' => __('Kaydedildi!', 'villa-reservation-system'),
-                'error' => __('Hata oluştu!', 'villa-reservation-system'),
-            )
-        ));
     }
     
     /**
-     * Main dashboard page
+     * Admin init
      */
-    public function main_dashboard() {
+    public function admin_init() {
+        // Settings
+        register_setting('vrs_settings', 'vrs_general_settings');
+        register_setting('vrs_settings', 'vrs_email_settings');
+        register_setting('vrs_settings', 'vrs_google_settings');
+        
+        // Settings sections
+        add_settings_section(
+            'vrs_general_section',
+            __('Genel Ayarlar', 'villa-reservation-system'),
+            array($this, 'general_section_callback'),
+            'vrs_general_settings'
+        );
+        
+        add_settings_section(
+            'vrs_email_section',
+            __('E-posta Ayarları', 'villa-reservation-system'),
+            array($this, 'email_section_callback'),
+            'vrs_email_settings'
+        );
+        
+        add_settings_section(
+            'vrs_google_section',
+            __('Google Sheets Ayarları', 'villa-reservation-system'),
+            array($this, 'google_section_callback'),
+            'vrs_google_settings'
+        );
+        
+        // Settings fields
+        $this->add_settings_fields();
+    }
+    
+    /**
+     * Ana sayfa
+     */
+    public function main_page() {
+        ?>
+        <div class="wrap vrs-admin-page">
+            <h1><?php _e('Villa Rezervasyon Sistemi', 'villa-reservation-system'); ?></h1>
+            
+            <?php $this->show_dashboard_stats(); ?>
+            
+            <div class="vrs-admin-card">
+                <h2><?php _e('Son Rezervasyonlar', 'villa-reservation-system'); ?></h2>
+                <?php $this->show_recent_reservations(); ?>
+            </div>
+            
+            <div class="vrs-admin-card">
+                <h2><?php _e('Hızlı İşlemler', 'villa-reservation-system'); ?></h2>
+                <?php $this->show_quick_actions(); ?>
+            </div>
+        </div>
+        <?php
+    }
+    
+    /**
+     * Ayarlar sayfası
+     */
+    public function settings_page() {
+        if (isset($_POST['submit'])) {
+            $this->save_settings();
+        }
+        ?>
+        <div class="wrap vrs-admin-page">
+            <h1><?php _e('Villa Rezervasyon Ayarları', 'villa-reservation-system'); ?></h1>
+            
+            <form method="post" action="">
+                <?php wp_nonce_field('vrs_settings_nonce'); ?>
+                
+                <div class="vrs-settings-section">
+                    <h2><?php _e('Genel Ayarlar', 'villa-reservation-system'); ?></h2>
+                    <div class="vrs-admin-card">
+                        <?php $this->render_general_settings(); ?>
+                    </div>
+                </div>
+                
+                <div class="vrs-settings-section">
+                    <h2><?php _e('E-posta Ayarları', 'villa-reservation-system'); ?></h2>
+                    <div class="vrs-admin-card">
+                        <?php $this->render_email_settings(); ?>
+                    </div>
+                </div>
+                
+                <div class="vrs-settings-section">
+                    <h2><?php _e('Google Sheets Ayarları', 'villa-reservation-system'); ?></h2>
+                    <div class="vrs-admin-card">
+                        <?php $this->render_google_settings(); ?>
+                    </div>
+                </div>
+                
+                <?php submit_button(__('Ayarları Kaydet', 'villa-reservation-system')); ?>
+            </form>
+        </div>
+        <?php
+    }
+    
+    /**
+     * Raporlar sayfası
+     */
+    public function reports_page() {
+        ?>
+        <div class="wrap vrs-admin-page">
+            <h1><?php _e('Rezervasyon Raporları', 'villa-reservation-system'); ?></h1>
+            
+            <?php $this->show_reports_filters(); ?>
+            <?php $this->show_reports_content(); ?>
+        </div>
+        <?php
+    }
+    
+    /**
+     * Dashboard istatistikleri
+     */
+    private function show_dashboard_stats() {
         global $wpdb;
         
-        // Get statistics
+        // Bugünkü rezervasyonlar
+        $today_reservations = $wpdb->get_var($wpdb->prepare("
+            SELECT COUNT(*) FROM {$wpdb->prefix}vrs_reservations 
+            WHERE DATE(created_at) = %s
+        ", date('Y-m-d')));
+        
+        // Bu ayki rezervasyonlar
+        $month_reservations = $wpdb->get_var($wpdb->prepare("
+            SELECT COUNT(*) FROM {$wpdb->prefix}vrs_reservations 
+            WHERE YEAR(created_at) = %d AND MONTH(created_at) = %d
+        ", date('Y'), date('n')));
+        
+        // Toplam rezervasyonlar
         $total_reservations = $wpdb->get_var("
             SELECT COUNT(*) FROM {$wpdb->prefix}vrs_reservations
         ");
         
-        $pending_reservations = $wpdb->get_var("
-            SELECT COUNT(*) FROM {$wpdb->prefix}vrs_reservations
-            WHERE status = 'pending'
-        ");
+        // Aktif villalar
+        $active_villas = wp_count_posts('villa')->publish;
         
-        $confirmed_reservations = $wpdb->get_var("
-            SELECT COUNT(*) FROM {$wpdb->prefix}vrs_reservations
+        // Bu ayki gelir
+        $month_revenue = $wpdb->get_var($wpdb->prepare("
+            SELECT SUM(total_price) FROM {$wpdb->prefix}vrs_reservations 
             WHERE status = 'confirmed'
-        ");
+            AND YEAR(created_at) = %d AND MONTH(created_at) = %d
+        ", date('Y'), date('n')));
         
-        $total_villas = wp_count_posts('villa')->publish;
+        ?>
+        <div class="vrs-stats-grid">
+            <div class="vrs-stat-widget">
+                <span class="vrs-stat-number"><?php echo $today_reservations; ?></span>
+                <div class="vrs-stat-label"><?php _e('Bugünkü Rezervasyonlar', 'villa-reservation-system'); ?></div>
+            </div>
+            <div class="vrs-stat-widget">
+                <span class="vrs-stat-number"><?php echo $month_reservations; ?></span>
+                <div class="vrs-stat-label"><?php _e('Bu Ayki Rezervasyonlar', 'villa-reservation-system'); ?></div>
+            </div>
+            <div class="vrs-stat-widget">
+                <span class="vrs-stat-number"><?php echo $total_reservations; ?></span>
+                <div class="vrs-stat-label"><?php _e('Toplam Rezervasyonlar', 'villa-reservation-system'); ?></div>
+            </div>
+            <div class="vrs-stat-widget">
+                <span class="vrs-stat-number"><?php echo $active_villas; ?></span>
+                <div class="vrs-stat-label"><?php _e('Aktif Villalar', 'villa-reservation-system'); ?></div>
+            </div>
+            <div class="vrs-stat-widget">
+                <span class="vrs-stat-number"><?php echo number_format($month_revenue, 2); ?> ₺</span>
+                <div class="vrs-stat-label"><?php _e('Bu Ayki Gelir', 'villa-reservation-system'); ?></div>
+            </div>
+        </div>
+        <?php
+    }
+    
+    /**
+     * Son rezervasyonları göster
+     */
+    private function show_recent_reservations() {
+        global $wpdb;
         
-        $recent_reservations = $wpdb->get_results("
-            SELECT r.*, p.post_title as villa_name
+        $reservations = $wpdb->get_results("
+            SELECT r.*, p.post_title as villa_name, gi.guest_name, gi.guest_email
             FROM {$wpdb->prefix}vrs_reservations r
             LEFT JOIN {$wpdb->posts} p ON r.villa_id = p.ID
+            LEFT JOIN {$wpdb->prefix}vrs_guest_info gi ON r.id = gi.reservation_id
             ORDER BY r.created_at DESC
             LIMIT 10
         ");
         
-        include_once plugin_dir_path(__FILE__) . 'templates/dashboard.php';
+        if (empty($reservations)) {
+            echo '<p>' . __('Henüz rezervasyon bulunmuyor.', 'villa-reservation-system') . '</p>';
+            return;
+        }
+        
+        ?>
+        <table class="vrs-reservations-table">
+            <thead>
+                <tr>
+                    <th><?php _e('Villa', 'villa-reservation-system'); ?></th>
+                    <th><?php _e('Misafir', 'villa-reservation-system'); ?></th>
+                    <th><?php _e('Check-in', 'villa-reservation-system'); ?></th>
+                    <th><?php _e('Check-out', 'villa-reservation-system'); ?></th>
+                    <th><?php _e('Durum', 'villa-reservation-system'); ?></th>
+                    <th><?php _e('Tutar', 'villa-reservation-system'); ?></th>
+                    <th><?php _e('İşlemler', 'villa-reservation-system'); ?></th>
+                </tr>
+            </thead>
+            <tbody>
+                <?php foreach ($reservations as $reservation): ?>
+                <tr>
+                    <td><?php echo esc_html($reservation->villa_name); ?></td>
+                    <td><?php echo esc_html($reservation->guest_name); ?></td>
+                    <td><?php echo date_i18n('d.m.Y', strtotime($reservation->checkin_date)); ?></td>
+                    <td><?php echo date_i18n('d.m.Y', strtotime($reservation->checkout_date)); ?></td>
+                    <td>
+                        <span class="vrs-status-badge vrs-status-<?php echo esc_attr($reservation->status); ?>">
+                            <?php echo $this->get_status_label($reservation->status); ?>
+                        </span>
+                    </td>
+                    <td><?php echo number_format($reservation->total_price, 2); ?> ₺</td>
+                    <td>
+                        <a href="<?php echo admin_url('admin.php?page=villa-reservations&action=view&id=' . $reservation->id); ?>" 
+                           class="vrs-button vrs-button-primary"><?php _e('Görüntüle', 'villa-reservation-system'); ?></a>
+                    </td>
+                </tr>
+                <?php endforeach; ?>
+            </tbody>
+        </table>
+        <?php
     }
     
     /**
-     * Reservations page
+     * Hızlı işlemler
      */
-    public function reservations_page() {
+    private function show_quick_actions() {
+        ?>
+        <div class="vrs-quick-actions" style="display: flex; gap: 15px; flex-wrap: wrap;">
+            <a href="<?php echo admin_url('post-new.php?post_type=villa'); ?>" class="vrs-button vrs-button-primary">
+                <?php _e('Yeni Villa Ekle', 'villa-reservation-system'); ?>
+            </a>
+            <a href="<?php echo admin_url('admin.php?page=villa-reservation-calendar'); ?>" class="vrs-button vrs-button-secondary">
+                <?php _e('Takvim Görünümü', 'villa-reservation-system'); ?>
+            </a>
+            <a href="<?php echo admin_url('admin.php?page=villa-reservation-reports'); ?>" class="vrs-button vrs-button-secondary">
+                <?php _e('Raporları Görüntüle', 'villa-reservation-system'); ?>
+            </a>
+            <button type="button" class="vrs-button vrs-button-success" id="sync-all-sheets">
+                <?php _e('Tüm Sheets\'i Senkronize Et', 'villa-reservation-system'); ?>
+            </button>
+        </div>
+        <?php
+    }
+    
+    /**
+     * Genel ayarlar render
+     */
+    private function render_general_settings() {
+        $settings = get_option('vrs_general_settings', array());
+        ?>
+        <div class="vrs-form-grid">
+            <div class="vrs-form-group">
+                <label for="default_checkin_time"><?php _e('Varsayılan Check-in Saati', 'villa-reservation-system'); ?></label>
+                <input type="time" name="vrs_general_settings[default_checkin_time]" 
+                       value="<?php echo esc_attr($settings['default_checkin_time'] ?? '15:00'); ?>" />
+            </div>
+            
+            <div class="vrs-form-group">
+                <label for="default_checkout_time"><?php _e('Varsayılan Check-out Saati', 'villa-reservation-system'); ?></label>
+                <input type="time" name="vrs_general_settings[default_checkout_time]" 
+                       value="<?php echo esc_attr($settings['default_checkout_time'] ?? '11:00'); ?>" />
+            </div>
+            
+            <div class="vrs-form-group">
+                <label for="min_stay_days"><?php _e('Minimum Konaklama (Gün)', 'villa-reservation-system'); ?></label>
+                <input type="number" name="vrs_general_settings[min_stay_days]" 
+                       value="<?php echo esc_attr($settings['min_stay_days'] ?? '2'); ?>" min="1" />
+            </div>
+            
+            <div class="vrs-form-group">
+                <label for="max_stay_days"><?php _e('Maksimum Konaklama (Gün)', 'villa-reservation-system'); ?></label>
+                <input type="number" name="vrs_general_settings[max_stay_days]" 
+                       value="<?php echo esc_attr($settings['max_stay_days'] ?? '30'); ?>" min="1" />
+            </div>
+            
+            <div class="vrs-form-group">
+                <label for="advance_booking_days"><?php _e('Kaç Gün Önceden Rezervasyon', 'villa-reservation-system'); ?></label>
+                <input type="number" name="vrs_general_settings[advance_booking_days]" 
+                       value="<?php echo esc_attr($settings['advance_booking_days'] ?? '365'); ?>" min="1" />
+            </div>
+            
+            <div class="vrs-form-group">
+                <label for="cancellation_hours"><?php _e('İptal Süresi (Saat)', 'villa-reservation-system'); ?></label>
+                <input type="number" name="vrs_general_settings[cancellation_hours]" 
+                       value="<?php echo esc_attr($settings['cancellation_hours'] ?? '24'); ?>" min="1" />
+                <div class="description"><?php _e('Check-in tarihinden kaç saat öncesine kadar iptal edilebilir.', 'villa-reservation-system'); ?></div>
+            </div>
+        </div>
+        <?php
+    }
+    
+    /**
+     * E-posta ayarları render
+     */
+    private function render_email_settings() {
+        $settings = get_option('vrs_email_settings', array());
+        ?>
+        <div class="vrs-form-grid">
+            <div class="vrs-form-group">
+                <label for="from_name"><?php _e('Gönderen Adı', 'villa-reservation-system'); ?></label>
+                <input type="text" name="vrs_email_settings[from_name]" 
+                       value="<?php echo esc_attr($settings['from_name'] ?? get_bloginfo('name')); ?>" />
+            </div>
+            
+            <div class="vrs-form-group">
+                <label for="from_email"><?php _e('Gönderen E-posta', 'villa-reservation-system'); ?></label>
+                <input type="email" name="vrs_email_settings[from_email]" 
+                       value="<?php echo esc_attr($settings['from_email'] ?? get_option('admin_email')); ?>" />
+            </div>
+            
+            <div class="vrs-form-group">
+                <label for="admin_email"><?php _e('Yönetici E-posta', 'villa-reservation-system'); ?></label>
+                <input type="email" name="vrs_email_settings[admin_email]" 
+                       value="<?php echo esc_attr($settings['admin_email'] ?? get_option('admin_email')); ?>" />
+            </div>
+            
+            <div class="vrs-form-group">
+                <label for="send_confirmation"><?php _e('Onay E-postası Gönder', 'villa-reservation-system'); ?></label>
+                <input type="checkbox" name="vrs_email_settings[send_confirmation]" 
+                       value="1" <?php checked($settings['send_confirmation'] ?? '1', '1'); ?> />
+            </div>
+            
+            <div class="vrs-form-group">
+                <label for="send_reminder"><?php _e('Hatırlatma E-postası Gönder', 'villa-reservation-system'); ?></label>
+                <input type="checkbox" name="vrs_email_settings[send_reminder]" 
+                       value="1" <?php checked($settings['send_reminder'] ?? '1', '1'); ?> />
+            </div>
+            
+            <div class="vrs-form-group">
+                <label for="reminder_days"><?php _e('Hatırlatma Günleri', 'villa-reservation-system'); ?></label>
+                <input type="text" name="vrs_email_settings[reminder_days]" 
+                       value="<?php echo esc_attr($settings['reminder_days'] ?? '3,1'); ?>" />
+                <div class="description"><?php _e('Check-in tarihinden kaç gün önce hatırlatma gönderilsin (virgülle ayırın).', 'villa-reservation-system'); ?></div>
+            </div>
+        </div>
+        <?php
+    }
+    
+    /**
+     * Google ayarları render
+     */
+    private function render_google_settings() {
+        $settings = get_option('vrs_google_settings', array());
+        ?>
+        <div class="vrs-form-grid">
+            <div class="vrs-form-group">
+                <label for="auto_sync"><?php _e('Otomatik Senkronizasyon', 'villa-reservation-system'); ?></label>
+                <input type="checkbox" name="vrs_google_settings[auto_sync]" 
+                       value="1" <?php checked($settings['auto_sync'] ?? '1', '1'); ?> />
+                <div class="description"><?php _e('Google Sheets ile otomatik senkronizasyon yapılsın.', 'villa-reservation-system'); ?></div>
+            </div>
+            
+            <div class="vrs-form-group">
+                <label for="sync_interval"><?php _e('Senkronizasyon Aralığı', 'villa-reservation-system'); ?></label>
+                <select name="vrs_google_settings[sync_interval]">
+                    <option value="hourly" <?php selected($settings['sync_interval'] ?? 'daily', 'hourly'); ?>><?php _e('Saatlik', 'villa-reservation-system'); ?></option>
+                    <option value="daily" <?php selected($settings['sync_interval'] ?? 'daily', 'daily'); ?>><?php _e('Günlük', 'villa-reservation-system'); ?></option>
+                    <option value="weekly" <?php selected($settings['sync_interval'] ?? 'daily', 'weekly'); ?>><?php _e('Haftalık', 'villa-reservation-system'); ?></option>
+                </select>
+            </div>
+            
+            <div class="vrs-form-group">
+                <label for="color_reservations"><?php _e('Rezervasyonları Renklendir', 'villa-reservation-system'); ?></label>
+                <input type="checkbox" name="vrs_google_settings[color_reservations]" 
+                       value="1" <?php checked($settings['color_reservations'] ?? '1', '1'); ?> />
+                <div class="description"><?php _e('Rezerve tarihleri Google Sheets\'te renklendir.', 'villa-reservation-system'); ?></div>
+            </div>
+            
+            <div class="vrs-form-group">
+                <label for="reservation_color"><?php _e('Rezervasyon Rengi', 'villa-reservation-system'); ?></label>
+                <input type="color" name="vrs_google_settings[reservation_color]" 
+                       value="<?php echo esc_attr($settings['reservation_color'] ?? '#ff0000'); ?>" />
+            </div>
+        </div>
+        
+        <div style="margin-top: 20px;">
+            <h3><?php _e('Service Account JSON', 'villa-reservation-system'); ?></h3>
+            <div class="vrs-credentials-upload">
+                <input type="file" name="service_account_json" accept=".json" />
+                <p><?php _e('Google Service Account JSON dosyasını yükleyin.', 'villa-reservation-system'); ?></p>
+                <?php if (!empty($settings['service_account_file'])): ?>
+                    <p><strong><?php _e('Mevcut dosya:', 'villa-reservation-system'); ?></strong> <?php echo esc_html($settings['service_account_file']); ?></p>
+                <?php endif; ?>
+            </div>
+        </div>
+        <?php
+    }
+    
+    /**
+     * Rapor filtreleri
+     */
+    private function show_reports_filters() {
+        ?>
+        <div class="vrs-filters">
+            <h3><?php _e('Filtreler', 'villa-reservation-system'); ?></h3>
+            <form method="get" action="">
+                <input type="hidden" name="page" value="villa-reservation-reports" />
+                <div class="vrs-filter-row">
+                    <div class="vrs-filter-group">
+                        <label for="date_from"><?php _e('Başlangıç Tarihi', 'villa-reservation-system'); ?></label>
+                        <input type="date" name="date_from" value="<?php echo esc_attr($_GET['date_from'] ?? ''); ?>" />
+                    </div>
+                    <div class="vrs-filter-group">
+                        <label for="date_to"><?php _e('Bitiş Tarihi', 'villa-reservation-system'); ?></label>
+                        <input type="date" name="date_to" value="<?php echo esc_attr($_GET['date_to'] ?? ''); ?>" />
+                    </div>
+                    <div class="vrs-filter-group">
+                        <label for="villa_id"><?php _e('Villa', 'villa-reservation-system'); ?></label>
+                        <select name="villa_id">
+                            <option value=""><?php _e('Tüm Villalar', 'villa-reservation-system'); ?></option>
+                            <?php
+                            $villas = get_posts(array('post_type' => 'villa', 'numberposts' => -1));
+                            foreach ($villas as $villa) {
+                                echo '<option value="' . $villa->ID . '" ' . selected($_GET['villa_id'] ?? '', $villa->ID, false) . '>' . esc_html($villa->post_title) . '</option>';
+                            }
+                            ?>
+                        </select>
+                    </div>
+                    <div class="vrs-filter-group">
+                        <label for="status"><?php _e('Durum', 'villa-reservation-system'); ?></label>
+                        <select name="status">
+                            <option value=""><?php _e('Tüm Durumlar', 'villa-reservation-system'); ?></option>
+                            <option value="pending" <?php selected($_GET['status'] ?? '', 'pending'); ?>><?php _e('Beklemede', 'villa-reservation-system'); ?></option>
+                            <option value="confirmed" <?php selected($_GET['status'] ?? '', 'confirmed'); ?>><?php _e('Onaylandı', 'villa-reservation-system'); ?></option>
+                            <option value="cancelled" <?php selected($_GET['status'] ?? '', 'cancelled'); ?>><?php _e('İptal Edildi', 'villa-reservation-system'); ?></option>
+                        </select>
+                    </div>
+                    <div class="vrs-filter-group">
+                        <button type="submit" class="vrs-button vrs-button-primary"><?php _e('Filtrele', 'villa-reservation-system'); ?></button>
+                    </div>
+                </div>
+            </form>
+        </div>
+        <?php
+    }
+    
+    /**
+     * Rapor içeriği
+     */
+    private function show_reports_content() {
         global $wpdb;
         
-        // Handle actions
-        if (isset($_POST['action']) && wp_verify_nonce($_POST['vrs_nonce'], 'vrs_admin_action')) {
-            $this->handle_reservation_actions();
+        // Filter değerlerini al
+        $date_from = $_GET['date_from'] ?? date('Y-m-01');
+        $date_to = $_GET['date_to'] ?? date('Y-m-t');
+        $villa_id = $_GET['villa_id'] ?? '';
+        $status = $_GET['status'] ?? '';
+        
+        // WHERE clause oluştur
+        $where_conditions = array("r.created_at BETWEEN %s AND %s");
+        $where_values = array($date_from . ' 00:00:00', $date_to . ' 23:59:59');
+        
+        if ($villa_id) {
+            $where_conditions[] = "r.villa_id = %d";
+            $where_values[] = $villa_id;
         }
         
-        // Get filter parameters
-        $status_filter = isset($_GET['status']) ? sanitize_text_field($_GET['status']) : '';
-        $villa_filter = isset($_GET['villa']) ? intval($_GET['villa']) : 0;
-        $date_filter = isset($_GET['date']) ? sanitize_text_field($_GET['date']) : '';
-        
-        // Build query
-        $where_clauses = array();
-        $query_params = array();
-        
-        if ($status_filter) {
-            $where_clauses[] = "r.status = %s";
-            $query_params[] = $status_filter;
+        if ($status) {
+            $where_conditions[] = "r.status = %s";
+            $where_values[] = $status;
         }
         
-        if ($villa_filter) {
-            $where_clauses[] = "r.villa_id = %d";
-            $query_params[] = $villa_filter;
-        }
+        $where_clause = implode(' AND ', $where_conditions);
         
-        if ($date_filter) {
-            $where_clauses[] = "DATE(r.checkin_date) = %s";
-            $query_params[] = $date_filter;
-        }
+        // Toplam istatistikler
+        $total_reservations = $wpdb->get_var($wpdb->prepare("
+            SELECT COUNT(*) FROM {$wpdb->prefix}vrs_reservations r
+            WHERE $where_clause
+        ", $where_values));
         
-        $where_sql = '';
-        if (!empty($where_clauses)) {
-            $where_sql = 'WHERE ' . implode(' AND ', $where_clauses);
-        }
+        $total_revenue = $wpdb->get_var($wpdb->prepare("
+            SELECT SUM(total_price) FROM {$wpdb->prefix}vrs_reservations r
+            WHERE $where_clause AND status = 'confirmed'
+        ", $where_values));
         
-        // Get reservations
-        $reservations = $wpdb->get_results($wpdb->prepare("
-            SELECT r.*, p.post_title as villa_name,
-                   gi.guest_name, gi.guest_email, gi.guest_phone
-            FROM {$wpdb->prefix}vrs_reservations r
-            LEFT JOIN {$wpdb->posts} p ON r.villa_id = p.ID
-            LEFT JOIN {$wpdb->prefix}vrs_guest_info gi ON r.id = gi.reservation_id
-            {$where_sql}
-            ORDER BY r.created_at DESC
-        ", $query_params));
+        $avg_nights = $wpdb->get_var($wpdb->prepare("
+            SELECT AVG(DATEDIFF(checkout_date, checkin_date)) FROM {$wpdb->prefix}vrs_reservations r
+            WHERE $where_clause
+        ", $where_values));
         
-        // Get villas for filter
-        $villas = get_posts(array(
-            'post_type' => 'villa',
-            'post_status' => 'publish',
-            'numberposts' => -1,
-            'orderby' => 'title',
-            'order' => 'ASC'
-        ));
+        ?>
+        <div class="vrs-stats-grid">
+            <div class="vrs-stat-widget">
+                <span class="vrs-stat-number"><?php echo $total_reservations; ?></span>
+                <div class="vrs-stat-label"><?php _e('Toplam Rezervasyon', 'villa-reservation-system'); ?></div>
+            </div>
+            <div class="vrs-stat-widget">
+                <span class="vrs-stat-number"><?php echo number_format($total_revenue, 2); ?> ₺</span>
+                <div class="vrs-stat-label"><?php _e('Toplam Gelir', 'villa-reservation-system'); ?></div>
+            </div>
+            <div class="vrs-stat-widget">
+                <span class="vrs-stat-number"><?php echo number_format($avg_nights, 1); ?></span>
+                <div class="vrs-stat-label"><?php _e('Ortalama Gece Sayısı', 'villa-reservation-system'); ?></div>
+            </div>
+        </div>
         
-        include_once plugin_dir_path(__FILE__) . 'templates/reservations.php';
+        <div class="vrs-admin-card">
+            <h2><?php _e('Detaylı Rezervasyon Listesi', 'villa-reservation-system'); ?></h2>
+            <?php
+            $reservations = $wpdb->get_results($wpdb->prepare("
+                SELECT r.*, p.post_title as villa_name, gi.guest_name, gi.guest_email
+                FROM {$wpdb->prefix}vrs_reservations r
+                LEFT JOIN {$wpdb->posts} p ON r.villa_id = p.ID
+                LEFT JOIN {$wpdb->prefix}vrs_guest_info gi ON r.id = gi.reservation_id
+                WHERE $where_clause
+                ORDER BY r.created_at DESC
+            ", $where_values));
+            
+            if (!empty($reservations)) {
+                ?>
+                <table class="vrs-reservations-table">
+                    <thead>
+                        <tr>
+                            <th><?php _e('Villa', 'villa-reservation-system'); ?></th>
+                            <th><?php _e('Misafir', 'villa-reservation-system'); ?></th>
+                            <th><?php _e('Check-in', 'villa-reservation-system'); ?></th>
+                            <th><?php _e('Check-out', 'villa-reservation-system'); ?></th>
+                            <th><?php _e('Gece', 'villa-reservation-system'); ?></th>
+                            <th><?php _e('Misafir Sayısı', 'villa-reservation-system'); ?></th>
+                            <th><?php _e('Durum', 'villa-reservation-system'); ?></th>
+                            <th><?php _e('Tutar', 'villa-reservation-system'); ?></th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <?php foreach ($reservations as $reservation): ?>
+                        <tr>
+                            <td><?php echo esc_html($reservation->villa_name); ?></td>
+                            <td><?php echo esc_html($reservation->guest_name); ?></td>
+                            <td><?php echo date_i18n('d.m.Y', strtotime($reservation->checkin_date)); ?></td>
+                            <td><?php echo date_i18n('d.m.Y', strtotime($reservation->checkout_date)); ?></td>
+                            <td><?php echo $this->calculate_nights($reservation->checkin_date, $reservation->checkout_date); ?></td>
+                            <td><?php echo ($reservation->adults + $reservation->children); ?></td>
+                            <td>
+                                <span class="vrs-status-badge vrs-status-<?php echo esc_attr($reservation->status); ?>">
+                                    <?php echo $this->get_status_label($reservation->status); ?>
+                                </span>
+                            </td>
+                            <td><?php echo number_format($reservation->total_price, 2); ?> ₺</td>
+                        </tr>
+                        <?php endforeach; ?>
+                    </tbody>
+                </table>
+                <?php
+            } else {
+                echo '<p>' . __('Belirtilen kriterlere uygun rezervasyon bulunamadı.', 'villa-reservation-system') . '</p>';
+            }
+            ?>
+        </div>
+        <?php
     }
     
     /**
-     * Calendar page
-     */
-    public function calendar_page() {
-        // Get current month/year or from request
-        $current_month = isset($_GET['month']) ? intval($_GET['month']) : date('n');
-        $current_year = isset($_GET['year']) ? intval($_GET['year']) : date('Y');
-        
-        // Get villas
-        $villas = get_posts(array(
-            'post_type' => 'villa',
-            'post_status' => 'publish',
-            'numberposts' => -1,
-            'orderby' => 'title',
-            'order' => 'ASC'
-        ));
-        
-        // Get reservations for the month
-        global $wpdb;
-        $start_date = sprintf('%04d-%02d-01', $current_year, $current_month);
-        $end_date = date('Y-m-t', strtotime($start_date));
-        
-        $reservations = $wpdb->get_results($wpdb->prepare("
-            SELECT r.*, p.post_title as villa_name
-            FROM {$wpdb->prefix}vrs_reservations r
-            LEFT JOIN {$wpdb->posts} p ON r.villa_id = p.ID
-            WHERE (r.checkin_date BETWEEN %s AND %s)
-               OR (r.checkout_date BETWEEN %s AND %s)
-               OR (r.checkin_date <= %s AND r.checkout_date >= %s)
-            ORDER BY r.checkin_date
-        ", $start_date, $end_date, $start_date, $end_date, $start_date, $end_date));
-        
-        include_once plugin_dir_path(__FILE__) . 'templates/calendar.php';
-    }
-    
-    /**
-     * Reports page
-     */
-    public function reports_page() {
-        global $wpdb;
-        
-        // Get date range from request
-        $start_date = isset($_GET['start_date']) ? sanitize_text_field($_GET['start_date']) : date('Y-m-01');
-        $end_date = isset($_GET['end_date']) ? sanitize_text_field($_GET['end_date']) : date('Y-m-t');
-        
-        // Revenue report
-        $revenue_data = $wpdb->get_results($wpdb->prepare("
-            SELECT 
-                DATE(r.checkin_date) as date,
-                SUM(r.total_price) as daily_revenue,
-                COUNT(*) as reservations_count
-            FROM {$wpdb->prefix}vrs_reservations r
-            WHERE r.status = 'confirmed'
-            AND r.checkin_date BETWEEN %s AND %s
-            GROUP BY DATE(r.checkin_date)
-            ORDER BY date
-        ", $start_date, $end_date));
-        
-        // Villa popularity
-        $villa_stats = $wpdb->get_results($wpdb->prepare("
-            SELECT 
-                p.post_title as villa_name,
-                COUNT(*) as reservation_count,
-                SUM(r.total_price) as total_revenue,
-                AVG(r.total_price) as avg_price
-            FROM {$wpdb->prefix}vrs_reservations r
-            LEFT JOIN {$wpdb->posts} p ON r.villa_id = p.ID
-            WHERE r.status = 'confirmed'
-            AND r.checkin_date BETWEEN %s AND %s
-            GROUP BY r.villa_id
-            ORDER BY reservation_count DESC
-        ", $start_date, $end_date));
-        
-        // Monthly comparison
-        $monthly_stats = $wpdb->get_results("
-            SELECT 
-                YEAR(r.checkin_date) as year,
-                MONTH(r.checkin_date) as month,
-                COUNT(*) as reservations,
-                SUM(r.total_price) as revenue
-            FROM {$wpdb->prefix}vrs_reservations r
-            WHERE r.status = 'confirmed'
-            GROUP BY YEAR(r.checkin_date), MONTH(r.checkin_date)
-            ORDER BY year DESC, month DESC
-            LIMIT 12
-        ");
-        
-        include_once plugin_dir_path(__FILE__) . 'templates/reports.php';
-    }
-    
-    /**
-     * Settings page
-     */
-    public function settings_page() {
-        if (isset($_POST['submit']) && wp_verify_nonce($_POST['vrs_settings_nonce'], 'vrs_save_settings')) {
-            $this->save_settings();
-        }
-        
-        $settings = get_option('vrs_settings', array());
-        
-        include_once plugin_dir_path(__FILE__) . 'templates/settings.php';
-    }
-    
-    /**
-     * Handle reservation actions
-     */
-    private function handle_reservation_actions() {
-        $action = sanitize_text_field($_POST['action']);
-        $reservation_id = intval($_POST['reservation_id']);
-        
-        switch ($action) {
-            case 'confirm_reservation':
-                $this->confirm_reservation($reservation_id);
-                break;
-                
-            case 'cancel_reservation':
-                $this->cancel_reservation($reservation_id);
-                break;
-                
-            case 'delete_reservation':
-                $this->delete_reservation($reservation_id);
-                break;
-        }
-    }
-    
-    /**
-     * Confirm reservation
-     */
-    private function confirm_reservation($reservation_id) {
-        global $wpdb;
-        
-        $result = $wpdb->update(
-            $wpdb->prefix . 'vrs_reservations',
-            array('status' => 'confirmed'),
-            array('id' => $reservation_id),
-            array('%s'),
-            array('%d')
-        );
-        
-        if ($result) {
-            do_action('vrs_reservation_confirmed', $reservation_id);
-            add_action('admin_notices', function() {
-                echo '<div class="notice notice-success"><p>' . __('Rezervasyon onaylandı.', 'villa-reservation-system') . '</p></div>';
-            });
-        }
-    }
-    
-    /**
-     * Cancel reservation
-     */
-    private function cancel_reservation($reservation_id) {
-        global $wpdb;
-        
-        $result = $wpdb->update(
-            $wpdb->prefix . 'vrs_reservations',
-            array('status' => 'cancelled'),
-            array('id' => $reservation_id),
-            array('%s'),
-            array('%d')
-        );
-        
-        if ($result) {
-            do_action('vrs_reservation_cancelled', $reservation_id);
-            add_action('admin_notices', function() {
-                echo '<div class="notice notice-warning"><p>' . __('Rezervasyon iptal edildi.', 'villa-reservation-system') . '</p></div>';
-            });
-        }
-    }
-    
-    /**
-     * Delete reservation
-     */
-    private function delete_reservation($reservation_id) {
-        global $wpdb;
-        
-        // Delete guest info first
-        $wpdb->delete(
-            $wpdb->prefix . 'vrs_guest_info',
-            array('reservation_id' => $reservation_id),
-            array('%d')
-        );
-        
-        // Delete reservation
-        $result = $wpdb->delete(
-            $wpdb->prefix . 'vrs_reservations',
-            array('id' => $reservation_id),
-            array('%d')
-        );
-        
-        if ($result) {
-            add_action('admin_notices', function() {
-                echo '<div class="notice notice-success"><p>' . __('Rezervasyon silindi.', 'villa-reservation-system') . '</p></div>';
-            });
-        }
-    }
-    
-    /**
-     * Save settings
+     * Ayarları kaydet
      */
     private function save_settings() {
-        $settings = array(
-            'email_from_name' => sanitize_text_field($_POST['email_from_name']),
-            'email_from_email' => sanitize_email($_POST['email_from_email']),
-            'admin_email' => sanitize_email($_POST['admin_email']),
-            'default_checkin_time' => sanitize_text_field($_POST['default_checkin_time']),
-            'default_checkout_time' => sanitize_text_field($_POST['default_checkout_time']),
-            'currency_symbol' => sanitize_text_field($_POST['currency_symbol']),
-            'date_format' => sanitize_text_field($_POST['date_format']),
-            'time_format' => sanitize_text_field($_POST['time_format']),
-            'google_sheets_sync_interval' => intval($_POST['google_sheets_sync_interval']),
-            'reservation_expiry_minutes' => intval($_POST['reservation_expiry_minutes']),
-            'allow_same_day_booking' => isset($_POST['allow_same_day_booking']),
-            'require_phone' => isset($_POST['require_phone']),
-            'show_calendar_on_villa_page' => isset($_POST['show_calendar_on_villa_page']),
-            'enable_email_notifications' => isset($_POST['enable_email_notifications']),
-            'enable_sms_notifications' => isset($_POST['enable_sms_notifications']),
+        if (!wp_verify_nonce($_POST['_wpnonce'], 'vrs_settings_nonce')) {
+            return;
+        }
+        
+        if (isset($_POST['vrs_general_settings'])) {
+            update_option('vrs_general_settings', $_POST['vrs_general_settings']);
+        }
+        
+        if (isset($_POST['vrs_email_settings'])) {
+            update_option('vrs_email_settings', $_POST['vrs_email_settings']);
+        }
+        
+        if (isset($_POST['vrs_google_settings'])) {
+            update_option('vrs_google_settings', $_POST['vrs_google_settings']);
+        }
+        
+        // Service account dosyası yükleme
+        if (isset($_FILES['service_account_json']) && $_FILES['service_account_json']['error'] === UPLOAD_ERR_OK) {
+            $upload_dir = wp_upload_dir();
+            $vrs_dir = $upload_dir['basedir'] . '/villa-reservation-system';
+            
+            if (!file_exists($vrs_dir)) {
+                wp_mkdir_p($vrs_dir);
+            }
+            
+            $file_name = 'service-account.json';
+            $file_path = $vrs_dir . '/' . $file_name;
+            
+            if (move_uploaded_file($_FILES['service_account_json']['tmp_name'], $file_path)) {
+                $settings = get_option('vrs_google_settings', array());
+                $settings['service_account_file'] = $file_name;
+                update_option('vrs_google_settings', $settings);
+            }
+        }
+        
+        echo '<div class="vrs-admin-notice success"><p>' . __('Ayarlar başarıyla kaydedildi.', 'villa-reservation-system') . '</p></div>';
+    }
+    
+    /**
+     * Durum etiketi al
+     */
+    private function get_status_label($status) {
+        $labels = array(
+            'pending' => __('Beklemede', 'villa-reservation-system'),
+            'confirmed' => __('Onaylandı', 'villa-reservation-system'),
+            'cancelled' => __('İptal Edildi', 'villa-reservation-system'),
+            'completed' => __('Tamamlandı', 'villa-reservation-system')
         );
         
-        update_option('vrs_settings', $settings);
-        
-        add_action('admin_notices', function() {
-            echo '<div class="notice notice-success"><p>' . __('Ayarlar kaydedildi.', 'villa-reservation-system') . '</p></div>';
-        });
+        return $labels[$status] ?? $status;
     }
     
     /**
-     * Handle admin AJAX requests
+     * Gece sayısını hesapla
      */
-    public function handle_admin_ajax() {
-        check_ajax_referer('vrs_admin_nonce', 'nonce');
-        
-        if (!current_user_can('manage_options')) {
-            wp_die(__('Yetkiniz yok.', 'villa-reservation-system'));
-        }
-        
-        $action = sanitize_text_field($_POST['admin_action']);
-        
-        switch ($action) {
-            case 'block_dates':
-                $this->ajax_block_dates();
-                break;
-                
-            case 'unblock_dates':
-                $this->ajax_unblock_dates();
-                break;
-                
-            case 'get_reservation_details':
-                $this->ajax_get_reservation_details();
-                break;
-                
-            case 'sync_google_sheets':
-                $this->ajax_sync_google_sheets();
-                break;
-                
-            default:
-                wp_send_json_error(array('message' => __('Geçersiz işlem.', 'villa-reservation-system')));
-        }
+    private function calculate_nights($checkin, $checkout) {
+        $checkin_date = new DateTime($checkin);
+        $checkout_date = new DateTime($checkout);
+        return $checkin_date->diff($checkout_date)->days;
     }
     
     /**
-     * AJAX: Block dates
+     * Settings sections callbacks
      */
-    private function ajax_block_dates() {
-        $villa_id = intval($_POST['villa_id']);
-        $start_date = sanitize_text_field($_POST['start_date']);
-        $end_date = sanitize_text_field($_POST['end_date']);
-        $reason = sanitize_text_field($_POST['reason']);
-        
-        global $wpdb;
-        
-        $start = strtotime($start_date);
-        $end = strtotime($end_date);
-        
-        for ($date = $start; $date <= $end; $date += 24 * 60 * 60) {
-            $current_date = date('Y-m-d', $date);
-            
-            $wpdb->replace(
-                $wpdb->prefix . 'vrs_blocked_dates',
-                array(
-                    'villa_id' => $villa_id,
-                    'blocked_date' => $current_date,
-                    'reason' => $reason,
-                    'created_at' => current_time('mysql')
-                ),
-                array('%d', '%s', '%s', '%s')
-            );
-        }
-        
-        wp_send_json_success(array('message' => __('Tarihler bloke edildi.', 'villa-reservation-system')));
+    public function general_section_callback() {
+        echo '<p>' . __('Rezervasyon sistemi için genel ayarları yapılandırın.', 'villa-reservation-system') . '</p>';
+    }
+    
+    public function email_section_callback() {
+        echo '<p>' . __('E-posta bildirimlerini yapılandırın.', 'villa-reservation-system') . '</p>';
+    }
+    
+    public function google_section_callback() {
+        echo '<p>' . __('Google Sheets entegrasyonunu yapılandırın.', 'villa-reservation-system') . '</p>';
     }
     
     /**
-     * AJAX: Unblock dates
+     * Settings fields ekle
      */
-    private function ajax_unblock_dates() {
-        $villa_id = intval($_POST['villa_id']);
-        $start_date = sanitize_text_field($_POST['start_date']);
-        $end_date = sanitize_text_field($_POST['end_date']);
-        
-        global $wpdb;
-        
-        $wpdb->query($wpdb->prepare("
-            DELETE FROM {$wpdb->prefix}vrs_blocked_dates
-            WHERE villa_id = %d
-            AND blocked_date BETWEEN %s AND %s
-        ", $villa_id, $start_date, $end_date));
-        
-        wp_send_json_success(array('message' => __('Tarihler açıldı.', 'villa-reservation-system')));
-    }
-    
-    /**
-     * AJAX: Get reservation details
-     */
-    private function ajax_get_reservation_details() {
-        $reservation_id = intval($_POST['reservation_id']);
-        
-        $reservation = VRS_Reservations::get_reservation($reservation_id);
-        
-        if ($reservation) {
-            wp_send_json_success($reservation);
-        } else {
-            wp_send_json_error(array('message' => __('Rezervasyon bulunamadı.', 'villa-reservation-system')));
-        }
-    }
-    
-    /**
-     * AJAX: Sync Google Sheets
-     */
-    private function ajax_sync_google_sheets() {
-        $villa_id = intval($_POST['villa_id']);
-        
-        if (class_exists('VRS_Google_Sheets')) {
-            $google_sheets = new VRS_Google_Sheets();
-            $result = $google_sheets->sync_villa($villa_id);
-            
-            if ($result) {
-                wp_send_json_success(array('message' => __('Google Sheets senkronizasyonu tamamlandı.', 'villa-reservation-system')));
-            } else {
-                wp_send_json_error(array('message' => __('Senkronizasyon hatası oluştu.', 'villa-reservation-system')));
-            }
-        } else {
-            wp_send_json_error(array('message' => __('Google Sheets sınıfı bulunamadı.', 'villa-reservation-system')));
-        }
+    private function add_settings_fields() {
+        // Bu method settings fields eklemek için kullanılabilir
+        // Şimdilik boş bırakıyoruz çünkü custom render kullanıyoruz
     }
 }
-
-// Initialize admin pages
-new VRS_Admin_Pages();

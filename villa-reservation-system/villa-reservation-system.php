@@ -491,6 +491,12 @@ class VillaReservationSystem {
      * Sınıfları başlat
      */
     private function init_classes() {
+        // Admin classes
+        if (is_admin()) {
+            require_once VRS_PLUGIN_DIR . 'admin/admin-pages.php';
+            new VRS_Admin_Pages();
+        }
+        
         new VRS_Villa_System();
         new VRS_Google_Sheets();
         new VRS_Reservations();
