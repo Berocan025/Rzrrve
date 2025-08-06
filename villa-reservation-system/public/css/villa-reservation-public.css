@@ -1,0 +1,534 @@
+/* Villa Reservation System - Public CSS */
+
+/* Reset ve Base Styles */
+.vrs-reservation-form * {
+    box-sizing: border-box;
+}
+
+/* Ana Form Container */
+.vrs-reservation-form {
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 30px;
+    background: #ffffff;
+    border-radius: 12px;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+    line-height: 1.6;
+}
+
+/* Form Başlığı */
+.vrs-reservation-form h3 {
+    color: #2c3e50;
+    margin-bottom: 25px;
+    font-size: 24px;
+    font-weight: 600;
+    text-align: center;
+    border-bottom: 2px solid #3498db;
+    padding-bottom: 15px;
+}
+
+/* Form Sections */
+.vrs-form-section {
+    margin-bottom: 30px;
+    padding: 20px;
+    background: #f8f9fa;
+    border-radius: 8px;
+    border-left: 4px solid #3498db;
+}
+
+.vrs-form-section h4 {
+    color: #2c3e50;
+    margin-bottom: 15px;
+    font-size: 18px;
+    font-weight: 500;
+}
+
+/* Form Row ve Columns */
+.vrs-form-row {
+    display: flex;
+    gap: 20px;
+    margin-bottom: 20px;
+}
+
+.vrs-form-col {
+    flex: 1;
+}
+
+.vrs-form-col-half {
+    flex: 0 0 48%;
+}
+
+/* Form Groups */
+.vrs-form-group {
+    margin-bottom: 20px;
+}
+
+.vrs-form-group label {
+    display: block;
+    margin-bottom: 8px;
+    color: #34495e;
+    font-weight: 500;
+    font-size: 14px;
+}
+
+.vrs-form-group .required {
+    color: #e74c3c;
+}
+
+/* Input Styles */
+.vrs-form-group input[type="text"],
+.vrs-form-group input[type="email"],
+.vrs-form-group input[type="tel"],
+.vrs-form-group textarea,
+.vrs-form-group select {
+    width: 100%;
+    padding: 12px 15px;
+    border: 2px solid #e1e8ed;
+    border-radius: 6px;
+    font-size: 14px;
+    transition: all 0.3s ease;
+    background-color: #ffffff;
+}
+
+.vrs-form-group input:focus,
+.vrs-form-group textarea:focus,
+.vrs-form-group select:focus {
+    outline: none;
+    border-color: #3498db;
+    box-shadow: 0 0 0 3px rgba(52, 152, 219, 0.1);
+}
+
+.vrs-form-group textarea {
+    min-height: 100px;
+    resize: vertical;
+}
+
+/* Date Input Styles */
+.vrs-date-inputs {
+    display: flex;
+    gap: 15px;
+}
+
+.vrs-date-input {
+    flex: 1;
+    position: relative;
+}
+
+.vrs-date-input input {
+    padding-right: 45px;
+}
+
+.vrs-date-input::after {
+    content: '📅';
+    position: absolute;
+    right: 15px;
+    top: 50%;
+    transform: translateY(-50%);
+    pointer-events: none;
+    font-size: 16px;
+}
+
+/* Guest Counter Styles */
+.vrs-guest-counter {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    background: #ffffff;
+    border: 2px solid #e1e8ed;
+    border-radius: 6px;
+    padding: 5px;
+}
+
+.vrs-counter-btn {
+    background: #3498db;
+    color: white;
+    border: none;
+    width: 35px;
+    height: 35px;
+    border-radius: 50%;
+    cursor: pointer;
+    font-size: 18px;
+    font-weight: bold;
+    transition: all 0.3s ease;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.vrs-counter-btn:hover {
+    background: #2980b9;
+    transform: scale(1.05);
+}
+
+.vrs-counter-btn:disabled {
+    background: #bdc3c7;
+    cursor: not-allowed;
+    transform: none;
+}
+
+.vrs-counter-value {
+    min-width: 40px;
+    text-align: center;
+    font-weight: 600;
+    font-size: 16px;
+    color: #2c3e50;
+}
+
+/* Guest Summary */
+.vrs-guest-summary {
+    background: #ecf0f1;
+    padding: 15px;
+    border-radius: 6px;
+    margin-top: 15px;
+    font-size: 14px;
+    color: #2c3e50;
+}
+
+/* Children Ages */
+.vrs-children-ages {
+    margin-top: 15px;
+    padding: 15px;
+    background: #ffffff;
+    border-radius: 6px;
+    border: 1px solid #e1e8ed;
+}
+
+.vrs-child-age-group {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 10px;
+}
+
+.vrs-child-age-group:last-child {
+    margin-bottom: 0;
+}
+
+.vrs-child-age-group label {
+    flex: 0 0 100px;
+    margin-bottom: 0;
+    font-size: 13px;
+}
+
+.vrs-child-age-group select {
+    flex: 1;
+    margin-bottom: 0;
+}
+
+/* Price Display */
+.vrs-price-display {
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    color: white;
+    padding: 25px;
+    border-radius: 8px;
+    margin: 20px 0;
+    text-align: center;
+}
+
+.vrs-price-display.hidden {
+    display: none;
+}
+
+.vrs-price-breakdown {
+    margin-bottom: 15px;
+}
+
+.vrs-price-item {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 8px;
+    font-size: 14px;
+}
+
+.vrs-total-price {
+    border-top: 2px solid rgba(255, 255, 255, 0.3);
+    padding-top: 15px;
+    font-size: 24px;
+    font-weight: bold;
+}
+
+.vrs-price-loading {
+    display: none;
+    text-align: center;
+    padding: 20px;
+}
+
+.vrs-spinner {
+    border: 3px solid #f3f3f3;
+    border-top: 3px solid #3498db;
+    border-radius: 50%;
+    width: 30px;
+    height: 30px;
+    animation: spin 1s linear infinite;
+    margin: 0 auto 10px;
+}
+
+@keyframes spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+}
+
+/* Messages */
+.vrs-message {
+    padding: 15px;
+    border-radius: 6px;
+    margin: 15px 0;
+    font-weight: 500;
+}
+
+.vrs-message.success {
+    background: #d4edda;
+    color: #155724;
+    border: 1px solid #c3e6cb;
+}
+
+.vrs-message.error {
+    background: #f8d7da;
+    color: #721c24;
+    border: 1px solid #f5c6cb;
+}
+
+.vrs-message.warning {
+    background: #fff3cd;
+    color: #856404;
+    border: 1px solid #ffeaa7;
+}
+
+.vrs-message.hidden {
+    display: none;
+}
+
+/* Submit Button */
+.vrs-submit-btn {
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    color: white;
+    padding: 15px 30px;
+    border: none;
+    border-radius: 6px;
+    font-size: 16px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    width: 100%;
+    position: relative;
+}
+
+.vrs-submit-btn:hover:not(:disabled) {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 15px rgba(102, 126, 234, 0.3);
+}
+
+.vrs-submit-btn:disabled {
+    background: #bdc3c7;
+    cursor: not-allowed;
+    transform: none;
+    box-shadow: none;
+}
+
+.vrs-submit-loading {
+    display: none;
+}
+
+.vrs-submit-btn.loading .vrs-submit-text {
+    opacity: 0;
+}
+
+.vrs-submit-btn.loading .vrs-submit-loading {
+    display: block;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}
+
+/* Terms and Conditions */
+.vrs-terms {
+    display: flex;
+    align-items: flex-start;
+    gap: 10px;
+    margin: 20px 0;
+}
+
+.vrs-terms input[type="checkbox"] {
+    margin-top: 4px;
+}
+
+.vrs-terms label {
+    flex: 1;
+    font-size: 14px;
+    line-height: 1.5;
+}
+
+.vrs-terms a {
+    color: #3498db;
+    text-decoration: none;
+}
+
+.vrs-terms a:hover {
+    text-decoration: underline;
+}
+
+/* jQuery UI Datepicker Customization */
+.ui-datepicker {
+    font-family: inherit !important;
+    font-size: 14px !important;
+    border-radius: 8px !important;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15) !important;
+    border: none !important;
+}
+
+.ui-datepicker-header {
+    background: #3498db !important;
+    color: white !important;
+    border: none !important;
+    border-radius: 8px 8px 0 0 !important;
+}
+
+.ui-datepicker-title {
+    color: white !important;
+}
+
+.ui-datepicker-prev,
+.ui-datepicker-next {
+    background: rgba(255, 255, 255, 0.2) !important;
+    border: none !important;
+    border-radius: 4px !important;
+}
+
+.ui-datepicker-prev:hover,
+.ui-datepicker-next:hover {
+    background: rgba(255, 255, 255, 0.3) !important;
+}
+
+.ui-datepicker td a {
+    border: none !important;
+    border-radius: 4px !important;
+    transition: all 0.3s ease !important;
+}
+
+.ui-datepicker td a:hover {
+    background: #3498db !important;
+    color: white !important;
+}
+
+.ui-datepicker .ui-state-disabled {
+    background: #f8f9fa !important;
+    color: #adb5bd !important;
+}
+
+.ui-datepicker .ui-state-active {
+    background: #2c3e50 !important;
+    color: white !important;
+}
+
+/* Villa Calendar Styles */
+.vrs-calendar-container {
+    background: white;
+    border-radius: 8px;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+    overflow: hidden;
+}
+
+.vrs-calendar-header {
+    background: #3498db;
+    color: white;
+    padding: 20px;
+    text-align: center;
+}
+
+.vrs-calendar-navigation {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 10px;
+}
+
+.vrs-calendar-nav-btn {
+    background: rgba(255, 255, 255, 0.2);
+    color: white;
+    border: none;
+    padding: 8px 12px;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.vrs-calendar-nav-btn:hover {
+    background: rgba(255, 255, 255, 0.3);
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+    .vrs-reservation-form {
+        padding: 20px;
+        margin: 10px;
+    }
+    
+    .vrs-form-row {
+        flex-direction: column;
+        gap: 0;
+    }
+    
+    .vrs-form-col-half {
+        flex: 1;
+    }
+    
+    .vrs-date-inputs {
+        flex-direction: column;
+        gap: 15px;
+    }
+    
+    .vrs-guest-counter {
+        justify-content: space-between;
+        padding: 10px;
+    }
+    
+    .vrs-price-display {
+        padding: 20px 15px;
+    }
+    
+    .vrs-total-price {
+        font-size: 20px;
+    }
+}
+
+@media (max-width: 480px) {
+    .vrs-reservation-form {
+        padding: 15px;
+    }
+    
+    .vrs-form-section {
+        padding: 15px;
+    }
+    
+    .vrs-submit-btn {
+        padding: 12px 20px;
+        font-size: 14px;
+    }
+    
+    .vrs-guest-counter {
+        flex-wrap: wrap;
+        justify-content: center;
+        gap: 15px;
+    }
+    
+    .vrs-counter-btn {
+        width: 40px;
+        height: 40px;
+        font-size: 20px;
+    }
+}
+
+/* Print Styles */
+@media print {
+    .vrs-reservation-form {
+        box-shadow: none;
+        padding: 0;
+    }
+    
+    .vrs-submit-btn,
+    .vrs-message {
+        display: none !important;
+    }
+}
